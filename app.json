@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Amaken",
-    "slug": "Amaken-app",
+    "slug": "amaken-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/amakenLogo.png",
@@ -12,24 +12,45 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "amaken.app"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "amaken.app"
     },
     "web": {
       "bundler": "metro",
       "output": "static",
       "favicon": "./assets/images/favicon.png"
     },
-    "plugins": ["expo-router"],
+    "plugins": [
+      "expo-router"
+    ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "d527c57e-92ef-4df0-b02b-36c53f6ef0e8"
+      }
+    },
+    "owner": "ahd02",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/d527c57e-92ef-4df0-b02b-36c53f6ef0e8"
     }
   }
 }
