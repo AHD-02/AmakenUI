@@ -42,15 +42,15 @@
         "origin": false
       },
       "eas": {
-        "projectId": "d527c57e-92ef-4df0-b02b-36c53f6ef0e8"
+        "projectId": "e3685e78-37a2-44bf-aefd-dd98c55760c0"
       }
     },
-    "owner": "ahd02",
+    "owner": "amaken-organization",
     "runtimeVersion": {
       "policy": "appVersion"
     },
     "updates": {
-      "url": "https://u.expo.dev/d527c57e-92ef-4df0-b02b-36c53f6ef0e8"
+      "url": "https://u.expo.dev/e3685e78-37a2-44bf-aefd-dd98c55760c0"
     }
   }
 }
