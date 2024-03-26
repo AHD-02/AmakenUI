@@ -1,13 +1,24 @@
-import { StyleSheet } from 'react-native';
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
+import { StyleSheet } from "react-native";
+import { Text, View } from "@/components/Themed";
+import { ButtonComponent, TextInput } from "@/components/sharedComponents";
+import { VStack } from "native-base";
 
 export default function TabFourScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab Two</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/two.tsx" />
+      <Text style={styles.title}>
+        This Is The Fourth Tab
+      </Text>
+
+      <VStack>
+        <TextInput
+          onChangeText={() => {}}
+          value=""
+          label="Email"
+          placeholder="email"
+        />
+        <ButtonComponent onPress={() => {}} title="Login" />
+      </VStack>
     </View>
   );
 }
@@ -15,16 +26,18 @@ export default function TabFourScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 25,
+    gap: 50,
   },
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   separator: {
     marginVertical: 30,
     height: 1,
-    width: '80%',
+    width: "80%",
   },
 });
