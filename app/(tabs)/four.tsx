@@ -2,6 +2,7 @@ import { StyleSheet } from "react-native";
 import { Text, View } from "@/components/Themed";
 import { ButtonComponent, TextInput } from "@/components/sharedComponents";
 import { VStack } from "native-base";
+import { router } from "expo-router";
 
 export default function TabFourScreen() {
   return (
@@ -17,7 +18,7 @@ export default function TabFourScreen() {
           label="Email"
           placeholder="email"
         />
-        <ButtonComponent onPress={() => {}} title="Login" />
+        <ButtonComponent onPress={() => router.replace('/(auth)')} title="Logout" />
       </VStack>
     </View>
   );

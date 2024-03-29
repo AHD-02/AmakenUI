@@ -10,7 +10,10 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 
 import { useColorScheme } from "@/components/useColorScheme";
-import { NativeBaseProvider } from "native-base";
+import { NativeBaseProvider, extendTheme } from "native-base";
+import Toast, { BaseToastProps, ErrorToast } from "react-native-toast-message";
+import Colors, { colors } from "./theme/Colors";
+import {StyleSheet} from 'react-native';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -19,7 +22,7 @@ export {
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: "(tabs)",
+  initialRouteName: "(auth)/Login",
 };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -46,12 +49,44 @@ export default function RootLayout() {
     return null;
   }
 
+  
+  const toastConfig = {
+    error: (props: JSX.IntrinsicAttributes & BaseToastProps) => (
+      <ErrorToast
+        {...props}
+        style={{ borderLeftColor: colors.primary }}
+        contentContainerStyle={styles.contentContainer}
+        text1Style={styles.text}
+      />
+    )
+  };
+  
+  const colorScheme = useColorScheme();
+    const nativeBaseTheme = extendTheme({
+        colors: Colors[colorScheme ?? 'light'],
+        fonts: {
+            urbanist: 'Urbanist-Regular',
+        },
+    });
+
   return (
-    <NativeBaseProvider>
+    <NativeBaseProvider theme={nativeBaseTheme}>
       <RootLayoutNav />
+      <Toast config={toastConfig}/>
     </NativeBaseProvider>
   );
 }
+
+const styles = StyleSheet.create({
+  contentContainer: {
+    paddingHorizontal: 15,
+  },
+  text: {
+    fontSize: 15,
+    fontWeight: '600',
+    fontFamily: 'Urbanist-Regular',
+  },
+});
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();

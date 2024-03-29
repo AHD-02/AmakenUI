@@ -18,6 +18,9 @@ export const userSlice = createSlice({
         login: state => {
             state.isLoggedIn = true;
         },
+        setTheme: (state, action: PayloadAction<'light' | 'dark'>) => {
+            state.theme = action.payload;
+        },
     },
 });
 

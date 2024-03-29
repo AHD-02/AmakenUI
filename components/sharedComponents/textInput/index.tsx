@@ -1,6 +1,6 @@
 import React from "react";
 import { KeyboardTypeOptions, StyleProp, TextStyle } from "react-native";
-import { Box, HStack, Icon, Input, Text, useTheme } from "native-base";
+import { Box, HStack, Icon, Input, Text } from "native-base";
 import { ResponsiveValue } from "native-base/lib/typescript/components/types";
 import styles from "./styles";
 import WarningMessage from "../warningMessage";
@@ -22,7 +22,6 @@ interface IProps {
   borderRadius?: number;
   marginBottom?: number;
   width?: number | string;
-  currencyLabel?: boolean;
   backgroundColor?: string;
   paddingHorizontal?: number;
   InputLeftElement?: JSX.Element;
@@ -33,8 +32,6 @@ interface IProps {
   justifyContent?: ResponsiveValue<string>;
   variant?: ResponsiveValue<VariantType>;
   onChangeText: (val: string) => void;
-  onLeftElementPress?: () => void;
-  onRightElementPress?: () => void;
   errorMsg?: string;
   fontWeight?: any;
   onTouchStart?: () => void;
@@ -50,13 +47,10 @@ const TextInput = ({
   placeholder,
   onChangeText,
   marginTop = 2,
-  currencyLabel,
   backgroundColor,
   editable = true,
   inputStyles = {},
   borderRadius = 10,
-  InputLeftElement,
-  InputRightElement,
   marginBottom = 2,
   paddingX = 1,
   autoFocus = false,
@@ -66,8 +60,6 @@ const TextInput = ({
   paddingHorizontal = 0,
   justifyContent = "flex-start",
   fontWeight,
-  onLeftElementPress = () => {},
-  onRightElementPress = () => {},
   errorMsg,
 }: IProps) => {
   return (
@@ -119,17 +111,6 @@ const TextInput = ({
           //     ) : null
           //   }
         />
-        {currencyLabel && (
-          <Text
-            width={"45%"}
-            fontSize={48}
-            fontWeight={700}
-            fontFamily="Urbanist-Regular"
-            color={"#A5583A"}
-          >
-            SR
-          </Text>
-        )}
       </HStack>
       {Boolean(errorMsg) && (
         <WarningMessage

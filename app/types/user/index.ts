@@ -5,6 +5,7 @@ export const initialState: UserState = {
     isBlocked: false,
     isGuest: false,
     phoneNumber: '',
+    theme: null
 };
 
 
@@ -17,6 +18,7 @@ export interface UserState {
     isBlocked: boolean;
     isGuest: boolean;
     phoneNumber: string;
+    theme: 'dark' | 'light' | null;
 }
 
 export type Tokens = {
@@ -37,4 +39,10 @@ export const loggedOutState: UserState = {
     isBlocked: false,
     isGuest: false,
     phoneNumber: '',
+    theme: null,
 };
+
+export interface LoginModel {
+    username: string
+    password: string
+}
