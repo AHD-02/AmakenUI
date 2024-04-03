@@ -8,7 +8,6 @@ import WarningMessage from "../warningMessage";
 type VariantType = "outline" | "rounded" | "underlined" | "filled" | "unstyled";
 
 interface IProps {
-  error?: boolean;
   value: string;
   flex?: number;
   label?: string;
@@ -35,6 +34,8 @@ interface IProps {
   errorMsg?: string;
   fontWeight?: any;
   onTouchStart?: () => void;
+  leftIcon?: JSX.Element
+  rightIcon?: JSX.Element
 }
 
 const TextInput = ({
@@ -61,6 +62,8 @@ const TextInput = ({
   justifyContent = "flex-start",
   fontWeight,
   errorMsg,
+  leftIcon,
+  rightIcon,
 }: IProps) => {
   return (
     <Box onTouchStart={onTouchStart} paddingX={paddingHorizontal}>
@@ -100,16 +103,8 @@ const TextInput = ({
           onChangeText={onChangeText}
           fontWeight={fontWeight}
           style={[styles.input, inputStyles]}
-          //   InputLeftElement={
-          //     InputLeftElement ? (
-          //       <Icon as={InputLeftElement} onPress={onLeftElementPress} />
-          //     ) : null
-          //   }
-          //   InputRightElement={
-          //     InputRightElement ? (
-          //       <Icon as={InputRightElement} onPress={onRightElementPress} />
-          //     ) : null
-          //   }
+          InputLeftElement={leftIcon}
+          InputRightElement={rightIcon}
         />
       </HStack>
       {Boolean(errorMsg) && (

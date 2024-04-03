@@ -2,6 +2,7 @@ export enum SCREENS {
     Auth='(auth)',
     Main='(main)',
 
-    Login='(login)',
-    Signup='(signup)',
+    Login='index',
+    Signup='userSignUp',
+    ForgotPassword='forgotPassword'
 }

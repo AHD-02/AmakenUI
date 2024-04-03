@@ -1,10 +1,12 @@
-import { StyleSheet } from "react-native";
-import { View, Platform, KeyboardAvoidingView } from "react-native";
-import { Center, Image, VStack, Text, HStack } from "native-base";
+import { SafeAreaView, StyleSheet } from "react-native";
+import { Platform, KeyboardAvoidingView } from "react-native";
+import { Center, Image, VStack, Text, HStack, Pressable } from "native-base";
 import { ButtonComponent, TextInput } from "@/components/sharedComponents";
 import { LOGO } from "@/assets/images";
 import { colors } from "../theme/Colors";
 import useLogin from "../hooks/useLogin";
+import { Link, router } from "expo-router";
+import { SCREENS } from "@/components/screens";
 
 
 const Login = () => {
@@ -16,7 +18,7 @@ const Login = () => {
             style={styles.screenContainer}
             keyboardVerticalOffset={20}
             >
-            <View style={styles.body}>
+            <SafeAreaView style={styles.body}>
                 <VStack space={16}>
                     <Center>
                         <Image source={LOGO} height={160} width={180} />
@@ -41,16 +43,18 @@ const Login = () => {
                                 placeholder="password"
                                 errorMsg={errors.password}
                             />
-                            <Text style={styles.forgotPassword}>Forgot Password?</Text>
+                            <Pressable onPress={() => router.push(`/${SCREENS.ForgotPassword}`)}>
+                                <Text style={styles.forgotPassword}>Forgot Password?</Text>
+                            </Pressable>
                         </VStack>
                         <ButtonComponent onPress={() => submitForm()} title="Login" />
                     </VStack>
                 </VStack>
                 <HStack justifyContent={'center'} marginBottom={"16"}>
-                    <Text color={colors.black} style={styles.dontHaveAccountText}>Don't have an account? </Text>
-                    <Text color={colors.primary} style={styles.dontHaveAccountText}>Sign up</Text>
+                    <Text style={styles.dontHaveAccountText}>Don't have an account? </Text>
+                    <Link push href={`/${SCREENS.Signup}`} style={styles.signupText}>Sign up</Link>
                 </HStack>
-            </View>
+            </SafeAreaView>
         </KeyboardAvoidingView>
     )
 }
@@ -60,7 +64,7 @@ const styles = StyleSheet.create({
         flex: 1,
         height: '100%',
         padding: 25,
-        paddingTop: Platform.OS === 'ios' ? 0 : 25,
+        paddingTop: Platform.OS === 'ios' ? 0 : 40,
     },
     body: {
         flexDirection: 'column',
@@ -81,7 +85,13 @@ const styles = StyleSheet.create({
     dontHaveAccountText: {
         fontSize: 14,
         fontWeight: "500",
-    }
+    },
+    signupText: {
+        fontSize: 14,
+        fontWeight: "500",
+        alignSelf: 'center',
+        color: colors.primary
+    },
 });
 
 export default Login;
