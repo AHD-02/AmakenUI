@@ -29,7 +29,7 @@ export const SignUpInitialValues: SignupModel = {
 export const SignUpValidationSchema = yup.object({
     firstName: yup.string().required('Please complete this field'),
     lastName: yup.string().required('Please complete this field'),
-    email: yup.string().email('Please complete this field').required(''),
+    email: yup.string().email('invalid email address').required('Please complete this field'),
     countryCode: yup.string().required('Please complete this field'),
     phoneNumber: yup.string().required('Please complete this field'),
     date: yup.date().nullable().required('Please complete this field'),

@@ -61,13 +61,13 @@ const UserSignUp = () => {
                         />
                     </Stack>
                     <Stack>
-                        <DateTimePicker
+                        {/* <DateTimePicker
                             date={values.date ?? new Date()}
                             setDate={(date: Date) => setFieldValue('date', date)}
                             placeHolder='DD/MM/YYYY'
                             label='Date Of Birth'
                             errorMsg={errors.date}
-                        />
+                        /> */}
                     </Stack>
                     <Stack>
                         <Pressable onPress={() => setModal('country')}>
@@ -116,6 +116,7 @@ const styles = StyleSheet.create({
         paddingTop: 0,
         flexDirection: 'row',
         justifyContent: 'center',
+        backgroundColor:'white'
     },
     haveAnAccountText: {
         fontSize: 14,
