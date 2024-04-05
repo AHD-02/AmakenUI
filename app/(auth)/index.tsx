@@ -7,6 +7,7 @@ import { colors } from "../theme/Colors";
 import useLogin from "../hooks/useLogin";
 import { Link, router } from "expo-router";
 import { SCREENS } from "@/components/screens";
+import PasswordInput from "@/components/sharedComponents/PasswordInput";
 
 
 const Login = () => {
@@ -29,6 +30,7 @@ const Login = () => {
                         </Text>
 
                         <VStack>
+                            {/* email */}
                             <TextInput
                                 onChangeText={(value) => setFieldValue('username', value)}
                                 value={values.username}
@@ -36,12 +38,13 @@ const Login = () => {
                                 placeholder="username"
                                 errorMsg={errors.username}
                             />
-                            <TextInput
+                            <PasswordInput
                                 onChangeText={(value) => setFieldValue('password', value)}
                                 value={values.password}
                                 label="password"
                                 placeholder="password"
                                 errorMsg={errors.password}
+
                             />
                             <Pressable onPress={() => router.push(`/${SCREENS.ForgotPassword}`)}>
                                 <Text style={styles.forgotPassword}>Forgot Password?</Text>
@@ -65,6 +68,7 @@ const styles = StyleSheet.create({
         height: '100%',
         padding: 25,
         paddingTop: Platform.OS === 'ios' ? 0 : 40,
+        backgroundColor:'white'
     },
     body: {
         flexDirection: 'column',
@@ -74,7 +78,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         fontWeight: "bold",
-        color: colors.primary
+        color: 'black'
     },
     forgotPassword: {
         fontSize: 12,

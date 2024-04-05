@@ -7,6 +7,7 @@ const useSignUp = () => {
     const {values, setFieldValue, errors, submitForm} = useFormik({
         validationSchema: SignUpValidationSchema,
         initialValues: SignUpInitialValues,
+        validateOnChange: false,
         onSubmit: (values: SignupModel) => {
             router.replace('/(tabs)')
         }

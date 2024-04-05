@@ -2,12 +2,13 @@ import React, { SetStateAction, useEffect, useState } from 'react';
 import CountryPicker, { getAllCountries, CountryFilter } from 'react-native-country-picker-modal';
 import { useColorScheme } from 'react-native';
 
-import { Text, Input, Box } from 'native-base';
+import { Text, Input, Box, HStack } from 'native-base';
 import Colors from '@/constants/Colors';
 
 interface IProps {
     errorMsg?: string;
     showErrorMsg: boolean;
+    label:string;
     setMobileNumber: (arg: string) => void;
     mobileNumber: string;
     setCountryCode: (arg: string) => void;
@@ -28,6 +29,7 @@ const PhoneInput = ({
     setCountryCode,
     countryCode,
     setCountry,
+    label,
 }: IProps) => {
     const [filter, setFilter] = useState('');
     const [filteredCountries, setFilteredCountries] = useState([]);
@@ -69,7 +71,19 @@ const PhoneInput = ({
         );
     };
     return (
-        <>
+        <Box>
+              {label && (
+                <HStack alignItems="center">
+                  <Text
+                    color={"#191E3A"}
+                    fontSize={14}
+                    fontWeight={500}
+                    fontFamily={"Cairo"}
+                  >
+                    {label}
+                  </Text>
+                </HStack>
+              )}
             <Box
                 width={'360'}
                 flexDirection="row"
@@ -81,6 +95,7 @@ const PhoneInput = ({
                 paddingX={1}
                 marginBottom={2}
             >
+              
                 <Box
                     display="flex"
                     alignItems="center"
@@ -99,10 +114,11 @@ const PhoneInput = ({
                         withFilter
                         onSelect={i => { onSelectCountryCode(i); setMobileNumber('') }}
                     />
+                    
                 </Box>
                 <Input
                     onFocus={() => setFocusedInput(true)}
-                    placeholder={'000 000 000'}
+                    placeholder={'xxxx'}
                     width="70%"
                     fontSize={14}
                     fontWeight="600"
@@ -123,7 +139,7 @@ const PhoneInput = ({
                 />
             </Box>
             {showErrorMsg && <Text style={{ color: 'red' }}>{errorMsg}</Text>}
-        </>
+        </Box>
     );
 };
 
