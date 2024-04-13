@@ -1,7 +1,7 @@
-import { Camera } from "@/assets/images";
 import {
   ButtonComponent,
   PhoneInput,
+  ProfileImageUploader,
   TextInput,
 } from "@/components/sharedComponents";
 import DateTimePicker from "@/components/sharedComponents/dateTimePicker";
@@ -11,11 +11,11 @@ import {
   Text,
   HStack,
   Stack,
-  View,
   Center,
   VStack,
   Pressable,
   ScrollView,
+  View,
 } from "native-base";
 import { StyleSheet } from "react-native";
 import useSignUp from "../hooks/useSignUp";
@@ -23,7 +23,6 @@ import { useState } from "react";
 import { ArrowDownIcon } from "@/assets/icons";
 import { Link } from "expo-router";
 import { colors } from "../theme/Colors";
-import { useTakeImage } from "../hooks";
 import PasswordInput from "@/components/sharedComponents/PasswordInput";
 
 const UserSignUp = () => {
@@ -33,11 +32,10 @@ const UserSignUp = () => {
   return (
     <KeyboardAvoidingView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Pressable onPress={() => useTakeImage()}>
-          <Center>
-            <Image source={Camera} height={120} width={120} my={"6"} />
-          </Center>
-        </Pressable>
+          <View>
+            <ProfileImageUploader />
+            {/* <Image source={Camera} height={120} width={120} my={"6"} /> */}
+          </View>
         <VStack space={"2"}>
           <HStack justifyContent={"space-between"}>
             <Stack width={"45%"}>

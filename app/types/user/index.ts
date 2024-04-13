@@ -43,6 +43,6 @@ export const loggedOutState: UserState = {
 };
 
 export interface LoginModel {
-    username: string
+    email: string
     password: string
 }

@@ -5,17 +5,15 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
-
-import { useColorScheme } from "@/components/useColorScheme";
-import { NativeBaseProvider, extendTheme } from "native-base";
 import Toast, { BaseToastProps, ErrorToast } from "react-native-toast-message";
-import Colors, { colors } from "./theme/Colors";
+import { colors } from "./theme/Colors";
 import { StyleSheet } from 'react-native';
 import { Provider } from "react-redux";
-import { store } from "./state/store";
+import { persistor, store } from "./state/store";
+import RootLayoutNav from "./rootLayoutNav";
+import { PersistGate } from "redux-persist/integration/react";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -63,19 +61,14 @@ export default function RootLayout() {
     )
   };
 
-  const colorScheme = useColorScheme();
-  const nativeBaseTheme = extendTheme({
-    colors: Colors[colorScheme ?? 'light'],
-    fonts: {
-      urbanist: 'Urbanist-Regular',
-    },
-  });
 
   return (
-    <NativeBaseProvider theme={nativeBaseTheme}>
-      <RootLayoutNav />
-      <Toast config={toastConfig} />
-    </NativeBaseProvider>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <RootLayoutNav />
+        <Toast config={toastConfig} />
+      </PersistGate>
+    </Provider>
   );
 }
 
@@ -89,19 +82,3 @@ const styles = StyleSheet.create({
     fontFamily: 'Urbanist-Regular',
   },
 });
-
-function RootLayoutNav() {
-  const colorScheme = useColorScheme();
-
-  return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Provider store={store}>
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-        </Stack>
-      </Provider>
-    </ThemeProvider>
-  );
-}

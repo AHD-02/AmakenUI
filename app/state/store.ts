@@ -3,10 +3,12 @@ import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 import {persistReducer, persistStore} from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { userSlice } from './user/slice';
+import { appSlice } from './app/slice';
 
 
 const reducers = combineReducers({
     user: userSlice.reducer,
+    app: appSlice.reducer,
 });
 const persistConfig = {
     key: 'root',

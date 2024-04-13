@@ -30,13 +30,12 @@ const Login = () => {
                         </Text>
 
                         <VStack>
-                            {/* email */}
                             <TextInput
-                                onChangeText={(value) => setFieldValue('username', value)}
-                                value={values.username}
-                                label="username"
-                                placeholder="username"
-                                errorMsg={errors.username}
+                                onChangeText={(value) => setFieldValue('email', value)}
+                                value={values.email}
+                                label="email"
+                                placeholder="email"
+                                errorMsg={errors.email}
                             />
                             <PasswordInput
                                 onChangeText={(value) => setFieldValue('password', value)}
@@ -89,6 +88,7 @@ const styles = StyleSheet.create({
     dontHaveAccountText: {
         fontSize: 14,
         fontWeight: "500",
+        color: 'black'
     },
     signupText: {
         fontSize: 14,

@@ -1,4 +1,4 @@
-import { initialState, loggedOutState } from '@/app/types';
+import { Tokens, initialState, loggedOutState } from '@/app/types';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 export const userSlice = createSlice({
@@ -21,12 +21,17 @@ export const userSlice = createSlice({
         setTheme: (state, action: PayloadAction<'light' | 'dark'>) => {
             state.theme = action.payload;
         },
+        setTokens: (state, action: PayloadAction<Tokens>) => {
+            state.accessToken = action.payload.accessToken;
+            state.refreshToken = action.payload.refreshToken;
+        },
     },
 });
 
 export const {
     logout,
     login,
+    setTokens,
 } = userSlice.actions;
 
 export default userSlice.reducer;

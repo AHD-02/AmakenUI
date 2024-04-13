@@ -1,8 +1,15 @@
 export enum SCREENS {
-    Auth='(auth)',
-    Main='(main)',
+    Auth = '(auth)',
+    Main = '(tabs)',
 
-    Login='index',
-    Signup='userSignUp',
-    ForgotPassword='forgotPassword'
+    // Auth
+    Login = 'index',
+    Signup = 'userSignUp',
+    ForgotPassword = 'forgotPassword',
+
+    // Main
+    Home = 'index',
+    Saved = 'saved',
+    Booking = 'booking',
+    Profile = 'profile',
 }

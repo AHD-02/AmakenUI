@@ -1,0 +1,1 @@
+export const BASE_URL = '' //TODO: ADD THE BASE_URL
