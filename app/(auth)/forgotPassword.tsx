@@ -31,21 +31,21 @@ const forgetPassword = () => {
                         <VStack>
                           {/* Email */}
                             <TextInput
-                                onChangeText={(value) => setFieldValue('username', value)}
-                                value={values.username}
-                                label="username"
-                                placeholder="username"
-                                errorMsg={errors.username}
+                                onChangeText={(value) => setFieldValue('email', value)}
+                                value={values.email}
+                                label="email"
+                                placeholder="email"
+                                errorMsg={errors.email}
                             />
                           
                         </VStack>
-                        {/* otpPage */}
+                        {/* OTP Page */}
                         <ButtonComponent onPress={() => submitForm()} title="Send OTP" />
                     </VStack>
                 </VStack>
                 <HStack justifyContent={'center'} marginBottom={"16"}>
                     <Text style={styles.rememberPasswordText}>Remember Password? </Text>
-                    <Link push href={`/(auth)/otp`} style={styles.loginText}>Login</Link>
+                    <Link push href={`/`} style={styles.loginText}>Login</Link>
                 </HStack>
             </SafeAreaView>
         </KeyboardAvoidingView>

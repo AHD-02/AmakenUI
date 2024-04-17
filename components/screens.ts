@@ -6,6 +6,8 @@ export enum SCREENS {
     Login = 'index',
     Signup = 'userSignUp',
     ForgotPassword = 'forgotPassword',
+    SetNewPassword='setNewPassword',
+    OTP='otp',
 
     // Main
     Home = 'index',
