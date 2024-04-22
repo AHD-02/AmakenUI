@@ -11,19 +11,21 @@ import PasswordInput from "@/components/sharedComponents/PasswordInput";
 
 
 const Login = () => {
-    const {values, setFieldValue, errors, submitForm} = useLogin();
+    const { values, setFieldValue, errors, submitForm } = useLogin();
 
     return (
         <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             style={styles.screenContainer}
             keyboardVerticalOffset={20}
-            >
+        >
             <SafeAreaView style={styles.body}>
                 <VStack space={16}>
-                    <Center>
-                        <Image source={LOGO} height={160} width={180} />
-                    </Center>
+                    <Pressable onPress={() => router.replace(`/${SCREENS.Main}`)}>
+                        <Center>
+                            <Image source={LOGO} height={160} width={180} />
+                        </Center>
+                    </Pressable>
                     <VStack space={6}>
                         <Text style={styles.title}>
                             Login
@@ -31,7 +33,7 @@ const Login = () => {
 
                         <VStack>
                             <TextInput
-                                onChangeText={(value) => setFieldValue('email', value)}
+                                onChangeText={(value) => setFieldValue('email', value?.trim())}
                                 value={values.email}
                                 label="email"
                                 placeholder="email"
@@ -67,7 +69,7 @@ const styles = StyleSheet.create({
         height: '100%',
         padding: 25,
         paddingTop: Platform.OS === 'ios' ? 0 : 40,
-        backgroundColor:'white'
+        backgroundColor: 'white'
     },
     body: {
         flexDirection: 'column',

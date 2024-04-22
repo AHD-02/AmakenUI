@@ -2,19 +2,19 @@ import * as ImagePicker from 'expo-image-picker';
 import React from 'react'
 import Toast from 'react-native-toast-message';
 
-const useTakeImage = async () => {
+const usePickImage = async () => {
 
     try {
-        const { status } = await ImagePicker.requestCameraPermissionsAsync();
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (status !== 'granted') {
             Toast.show({
                 type: 'info',
-                text1: 'Permission to access the camera is required!'
+                text1: 'Permission to access the gallery is required!'
             });
             return { image: null }
         }
 
-        let result = await ImagePicker.launchCameraAsync({
+        let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
             aspect: [4, 3],
@@ -31,4 +31,4 @@ const useTakeImage = async () => {
     return { image: null }
 };
 
-export default useTakeImage
+export default usePickImage

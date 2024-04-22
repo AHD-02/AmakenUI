@@ -10,7 +10,7 @@ export const UserApi = createApi({
     endpoints: builder => ({
         login: builder.mutation<RefreshToken, LoginModel>({
             query: body => ({
-                url: 'accounts/login',
+                url: 'user/SignIn',
                 method: 'POST',
                 body,
             }),

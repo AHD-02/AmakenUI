@@ -12,20 +12,22 @@ import Toast from 'react-native-toast-message'
 
 const useLogin = () => {
     const dispatch = useAppDispatch()
-    const [login, {data, error, isLoading, isSuccess, isError}] = useLoginMutation()
+    const [login, res] = useLoginMutation()
+    const  {data, error, isLoading, isSuccess, isError} = res
 
     const {values, setFieldValue, errors, submitForm} = useFormik({
         validationSchema: yup.object({
-            email: yup.string().required('required'),
+            email: yup.string().email('please enter a valid email address').required('required'),
             password: yup.string().required('required'),
         }),
         initialValues: {
             email: '',
             password: '',
         },
+        validateOnChange: false,
+        validateOnBlur: false,
         onSubmit: async (values: LoginModel) => {
             await login(values)
-            router.replace('/(tabs)')
         }
     })
 
@@ -44,6 +46,7 @@ const useLogin = () => {
                 text1: 'error',
                 text2: JSON.stringify((error as any).data ?? '')
             })
+            console.log(res)
         }
     },[data, error, isLoading])
 

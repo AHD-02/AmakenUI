@@ -24,7 +24,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "amaken.app"
+      "package": "amaken.app",
+      "permissions": ["CAMERA", "CAMERA_ROLL"]
     },
     "web": {
       "bundler": "metro",

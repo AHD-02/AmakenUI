@@ -3,6 +3,7 @@ import * as yup from "yup";
 export interface SignupModel {
   firstName: string;
   lastName: string;
+  image: string | null;
   email: string;
   countryCode: string;
   phoneNumber: string;
@@ -16,6 +17,7 @@ export interface SignupModel {
 export const SignUpInitialValues: SignupModel = {
   firstName: "",
   lastName: "",
+  image: null,
   email: "",
   countryCode: "JO",
   phoneNumber: "",

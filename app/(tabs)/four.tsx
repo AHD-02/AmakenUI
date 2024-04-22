@@ -12,12 +12,6 @@ export default function TabFourScreen() {
       </Text>
 
       <VStack>
-        <TextInput
-          onChangeText={() => {}}
-          value=""
-          label="Email"
-          placeholder="email"
-        />
         <ButtonComponent onPress={() => router.replace('/(auth)')} title="Logout" />
       </VStack>
     </View>

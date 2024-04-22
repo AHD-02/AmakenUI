@@ -38,7 +38,7 @@ const DateTimePicker: React.FC<PProps> = ({
 
         setDate(selectedDate || date);
     };
-
+    const [xx, yy] = useState(new Date())
     return (
         <>
             <Box width={'100%'}>

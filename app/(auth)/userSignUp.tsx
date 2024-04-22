@@ -5,13 +5,12 @@ import {
   TextInput,
 } from "@/components/sharedComponents";
 import DateTimePicker from "@/components/sharedComponents/dateTimePicker";
+import CountryPicker, { getAllCountries, CountryFilter } from 'react-native-country-picker-modal';
 import {
   KeyboardAvoidingView,
-  Image,
   Text,
   HStack,
   Stack,
-  Center,
   VStack,
   Pressable,
   ScrollView,
@@ -19,7 +18,7 @@ import {
 } from "native-base";
 import { StyleSheet } from "react-native";
 import useSignUp from "../hooks/useSignUp";
-import { useState } from "react";
+import React, { useState } from "react";
 import { ArrowDownIcon } from "@/assets/icons";
 import { Link } from "expo-router";
 import { colors } from "../theme/Colors";
@@ -29,13 +28,23 @@ const UserSignUp = () => {
   const { values, setFieldValue, errors, submitForm } = useSignUp();
   const [modal, setModal] = useState<"country" | "city" | null>(null);
 
+  const renderFilter = () => {
+    return (
+      <CountryFilter
+        style={{ width: '90%' }}
+        placeholder="Filter..."
+        onChangeText={(text) => { }}
+      />
+
+    );
+  };
+
   return (
     <KeyboardAvoidingView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-          <View>
-            <ProfileImageUploader />
-            {/* <Image source={Camera} height={120} width={120} my={"6"} /> */}
-          </View>
+        <View>
+          <ProfileImageUploader image={values.image} setImage={(date) => setFieldValue('image', date)}/>
+        </View>
         <VStack space={"2"}>
           <HStack justifyContent={"space-between"}>
             <Stack width={"45%"}>

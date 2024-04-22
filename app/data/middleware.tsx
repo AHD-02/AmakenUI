@@ -50,59 +50,59 @@ import { Mutex } from 'async-mutex';
         `${new Date()} Got an unauthorized response from ${(args as any).url} `,
       );
   
-      if (!mutex.isLocked()) {
-        const release = await mutex.acquire();
-        try {
-          const refreshToken: any = (api.getState() as RootState)?.user
-            ?.refreshToken;
-          console.debug(`${new Date()} Using as a refreshToken`);
-          if (refreshToken) {
-            const refreshResult = (await baseQuery(
-              {
-                url: 'StaffUsers/login',
-                method: 'POST',
-                body: {
-                  refreshToken,
-                },
-              },
-              api,
-              extraOptions,
-            )) as any;
+      // if (!mutex.isLocked()) {
+      //   const release = await mutex.acquire();
+      //   try {
+      //     const refreshToken: any = (api.getState() as RootState)?.user
+      //       ?.refreshToken;
+      //     console.debug(`${new Date()} Using as a refreshToken`);
+      //     if (refreshToken) {
+      //       const refreshResult = (await baseQuery(
+      //         {
+      //           url: 'StaffUsers/login',
+      //           method: 'POST',
+      //           body: {
+      //             refreshToken,
+      //           },
+      //         },
+      //         api,
+      //         extraOptions,
+      //       )) as any;
   
-            if (refreshResult?.data?.jwt) {
-              console.debug(`${new Date()} Getting a new access token`);
+      //       if (refreshResult?.data?.jwt) {
+      //         console.debug(`${new Date()} Getting a new access token`);
   
-              const accessToken = refreshResult.data?.jwt;
-              const refreshToken1 = refreshResult?.data?.refreshToken;
+      //         const accessToken = refreshResult.data?.jwt;
+      //         const refreshToken1 = refreshResult?.data?.refreshToken;
   
-              api.dispatch(
-                setTokens({
-                  accessToken,
-                  refreshToken: refreshToken1,
-                }),
-              );
-              await persistor.flush();
-            }
-            if (refreshResult.data) {
-              result = await baseQuery(args, api, extraOptions);
-              console.debug(
-                `${new Date()} Retired the request successfully with the new jwt `,
-              );
-            } else {
-              console.debug('logout');
-              api.dispatch(logoutAction());
-            }
-          } else {
-            console.debug('logout');
-            api.dispatch(logoutAction());
-          }
-        } finally {
-          release();
-        }
-      } else {
-        await mutex.waitForUnlock();
-        result = await baseQuery(args, api, extraOptions);
-      }
+      //         api.dispatch(
+      //           setTokens({
+      //             accessToken,
+      //             refreshToken: refreshToken1,
+      //           }),
+      //         );
+      //         await persistor.flush();
+      //       }
+      //       if (refreshResult.data) {
+      //         result = await baseQuery(args, api, extraOptions);
+      //         console.debug(
+      //           `${new Date()} Retired the request successfully with the new jwt `,
+      //         );
+      //       } else {
+      //         console.debug('logout');
+      //         api.dispatch(logoutAction());
+      //       }
+      //     } else {
+      //       console.debug('logout');
+      //       api.dispatch(logoutAction());
+      //     }
+      //   } finally {
+      //     release();
+      //   }
+      // } else {
+      //   await mutex.waitForUnlock();
+      //   result = await baseQuery(args, api, extraOptions);
+      // }
     }
   
     return result;
