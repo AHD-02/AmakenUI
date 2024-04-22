@@ -1,8 +1,8 @@
 import { StyleSheet } from "react-native";
-import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
-import { ButtonComponent, TextInput } from "@/components/sharedComponents";
 import { VStack } from "native-base";
+import EventPage from "@/components/homePageComponent/eventCard";
+import { EventImage } from "@/assets/images";
 
 export default function TabOneScreen() {
   return (
@@ -12,13 +12,14 @@ export default function TabOneScreen() {
       </Text>
 
       <VStack>
-        <TextInput
-          onChangeText={() => {}}
-          value=""
-          label="Email"
-          placeholder="email"
+        <EventPage
+          title={"Burj Al Hamam"}
+          city={"Dead Sea"}
+          image={EventImage}
+          onPress={() => {}}
+          rate={"3.5"}
+          description={"Crowne Plaza Dead Sea Resort & Spa.."}
         />
-        <ButtonComponent onPress={() => {}} title="Login" />
       </VStack>
     </View>
   );
@@ -27,8 +28,6 @@ export default function TabOneScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
     paddingHorizontal: 25,
     gap: 50,
   },
