@@ -3,6 +3,7 @@ import { Text, View } from "@/components/Themed";
 import { VStack } from "native-base";
 import EventPage from "@/components/homePageComponent/eventCard";
 import { EventImage } from "@/assets/images";
+import CustomCard from "@/components/homePageComponent/customCard";
 
 export default function TabOneScreen() {
   return (
@@ -20,6 +21,8 @@ export default function TabOneScreen() {
           rate={"3.5"}
           description={"Crowne Plaza Dead Sea Resort & Spa.."}
         />
+
+       
       </VStack>
     </View>
   );

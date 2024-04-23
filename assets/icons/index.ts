@@ -4,6 +4,8 @@ import SavedIcon from "./savedIcon";
 import TicketsIcon from "./ticketsIcon";
 import CalenderIcon from "./calenderIcon";
 import ArrowDownIcon from "./arrowDownIcon";
+import Archive from "./archive";
+
 
 export {
     HomeIcon,
@@ -12,4 +14,5 @@ export {
     ProfileIcon,
     CalenderIcon,
     ArrowDownIcon,
+    Archive,
 }

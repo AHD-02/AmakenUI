@@ -20,8 +20,8 @@ const EventPage = ({
 }: IProps) => {
   return (
     <Pressable onPress={onPress}>
-      <VStack>
-        <HStack width={"100%"}>
+      <VStack paddingBottom={5}>
+        <HStack width={"100%"} >
           <Image source={image} height={160} width={300} borderRadius={10} />
         </HStack>
         <HStack justifyContent={"spa+ce-between"} paddingTop={3} paddingX={1}>
