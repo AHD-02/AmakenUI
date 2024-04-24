@@ -12,7 +12,6 @@ interface IProps {
   onPress: () => void;
   image: any;
   description: string;
-  rate: string;
 }
 
 const CustomCard = ({
@@ -21,7 +20,6 @@ const CustomCard = ({
   description,
   image,
   onPress,
-  rate,
 }: IProps) => {
   return (
     <Pressable onPress={onPress} style={styles.container}>
@@ -53,8 +51,9 @@ const CustomCard = ({
                 fontSize={14}
                 color={"white"}
               >{`${title ?? ""} - ${city ?? ""}`}</Text>
+              <Text></Text>
 
-              <Text
+             <Text
                 fontWeight={500}
                 fontFamily={"Cairo"}
                 fontSize={10}

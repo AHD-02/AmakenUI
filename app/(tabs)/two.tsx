@@ -12,7 +12,6 @@ export default function TabTwoScreen() {
     city={"Dead Sea"}
     image={EventImage}
     onPress={() => {}}
-    rate={"3.5"}
     description={"Crowne Plaza Dead Sea Resort & Spa.."}
   />
   );
