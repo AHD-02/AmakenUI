@@ -5,12 +5,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { userSlice } from './user/slice';
 import { appSlice } from './app/slice';
 import { UserApi } from '../data/user';
+import { EventApi } from '../data/events';
 
 
 const reducers = combineReducers({
     user: userSlice.reducer,
     app: appSlice.reducer,
     [UserApi.reducerPath]: UserApi.reducer,
+    [EventApi.reducerPath]: EventApi.reducer,
 });
 const persistConfig = {
     key: 'root',
@@ -28,11 +30,13 @@ export const store = configureStore({
                 serializableCheck: false,
             }).concat([
                 UserApi.middleware,
+                EventApi.middleware,
             ])
             : getDefaultMiddleware({
                 serializableCheck: false,
             }).concat([
                 UserApi.middleware,
+                EventApi.middleware,
             ]),
 });
 export const persistor = persistStore(store);

@@ -1,35 +1,68 @@
 import { StyleSheet } from "react-native";
-import { Text, View } from "@/components/Themed";
-import { VStack } from "native-base";
+import { View } from "@/components/Themed";
+import { ScrollView, VStack, Text, HStack } from "native-base";
 import EventPage from "@/components/homePageComponent/eventCard";
 import { EventImage } from "@/assets/images";
+import { useSearchEventsQuery } from "../data/events";
+import { SearchEventsResponse } from "../types";
+import DynamicHeader from "@/components/header";
+import { Link } from "expo-router";
+import { colors } from "../theme/Colors";
 
-export default function TabOneScreen() {
+const Home = () => {
+  const { data } = useSearchEventsQuery()
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>
-        Hello Team This Is A Demo Component For The Setup
-      </Text>
+        <DynamicHeader />
+        <View style={{ paddingHorizontal: 20 }}>
 
-      <VStack>
-        <EventPage
-          title={"Burj Al Hamam"}
-          city={"Dead Sea"}
-          image={EventImage}
-          onPress={() => {}}
-          rate={"3.5"}
-          description={"Crowne Plaza Dead Sea Resort & Spa.."}
-        />
-      </VStack>
+          <VStack space={2}>
+            <HStack justifyContent={'space-between'}>
+            <Text>Events for you</Text>
+            <Link href={'/(tabs)/'} style={{alignSelf: 'center', color: colors.primary}}>view all</Link>
+            </HStack>
+            <ScrollView horizontal paddingBottom={2}>
+              {data?.map((item: SearchEventsResponse) =>
+                <EventPage
+                  title={item.name ?? ''}
+                  city={item.location ?? ''} //TODO: ADD CITY
+                  image={item.images[0] ?? EventImage}
+                  onPress={() => { }}
+                  rate={'3.5'}
+                  description={item.description ?? ''} //TODO: add location description
+                />
+              )}
+            </ScrollView>
+          </VStack>
+
+          <VStack space={2}>
+            <Text>Events for you</Text>
+            <ScrollView horizontal paddingBottom={2}>
+              {data?.map((item: SearchEventsResponse) =>
+                <EventPage
+                  title={item.name ?? ''}
+                  city={item.location ?? ''} //TODO: ADD CITY
+                  image={item.images[0] ?? EventImage}
+                  onPress={() => { }}
+                  rate={'3.5'}
+                  description={item.description ?? ''} //TODO: add location description
+                />
+              )}
+            </ScrollView>
+          </VStack>
+
+        </View>
     </View>
   );
 }
 
+export default Home
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 25,
-    gap: 50,
+    gap: 40,
   },
   title: {
     fontSize: 20,
