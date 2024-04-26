@@ -1,13 +1,13 @@
 import { StyleSheet } from "react-native";
 import { View } from "@/components/Themed";
 import { ScrollView, VStack, Text, HStack } from "native-base";
-import EventPage from "@/components/homePageComponent/eventCard";
 import { EventImage } from "@/assets/images";
 import { useSearchEventsQuery } from "../data/events";
 import { SearchEventsResponse } from "../types";
 import DynamicHeader from "@/components/header";
 import { Link } from "expo-router";
 import { colors } from "../theme/Colors";
+import EventPage from "@/components/homePageComponent/eventCard";
 
 const Home = () => {
   const { data } = useSearchEventsQuery()

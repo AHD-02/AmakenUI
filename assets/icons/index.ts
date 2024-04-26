@@ -5,6 +5,8 @@ import TicketsIcon from "./ticketsIcon";
 import CalenderIcon from "./calenderIcon";
 import ArrowDownIcon from "./arrowDownIcon";
 import NotificationIcon from './notificationsIcon'
+import Archive from "./archive";
+
 
 export {
     HomeIcon,
@@ -14,4 +16,5 @@ export {
     CalenderIcon,
     ArrowDownIcon,
     NotificationIcon,
+    Archive,
 }

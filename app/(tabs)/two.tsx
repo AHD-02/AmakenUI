@@ -2,24 +2,18 @@ import { StyleSheet } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import { ButtonComponent, TextInput } from '@/components/sharedComponents';
 import { VStack } from 'native-base';
+import CustomCard from '@/components/homePageComponent/customCard';
+import { EventImage } from '@/assets/images';
 
 export default function TabTwoScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>
-      This Is The Second Tab
-      </Text>
-
-      <VStack>
-        <TextInput
-          onChangeText={() => {}}
-          value=""
-          label="Email"
-          placeholder="email"
-        />
-        <ButtonComponent onPress={() => {}} title="Login" />
-      </VStack>
-    </View>
+    <CustomCard
+    title={"Burj Al Hamam"}
+    city={"Dead Sea"}
+    image={EventImage}
+    onPress={() => {}}
+    description={"Crowne Plaza Dead Sea Resort & Spa.."}
+  />
   );
 }
 
