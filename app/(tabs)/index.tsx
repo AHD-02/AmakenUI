@@ -8,51 +8,57 @@ import DynamicHeader from "@/components/header";
 import { Link } from "expo-router";
 import { colors } from "../theme/Colors";
 import EventPage from "@/components/homePageComponent/eventCard";
+import { useSearchPublicPlacesQuery } from "../data/publicPlace";
+import CustomCard from "@/components/homePageComponent/customCard";
+import { PublicPlaceResponse } from "../types/places";
 
 const Home = () => {
-  const { data } = useSearchEventsQuery()
+  const { data: events } = useSearchEventsQuery()
+  const { data: publicPlaces } = useSearchPublicPlacesQuery()
 
   return (
     <View style={styles.container}>
-        <DynamicHeader />
-        <View style={{ paddingHorizontal: 20 }}>
+      <DynamicHeader />
+      <VStack style={{ paddingHorizontal: 20 }} space={5}>
 
-          <VStack space={2}>
-            <HStack justifyContent={'space-between'}>
+        <VStack space={2}>
+          <HStack justifyContent={'space-between'}>
             <Text>Events for you</Text>
-            <Link href={'/(tabs)/'} style={{alignSelf: 'center', color: colors.primary}}>view all</Link>
-            </HStack>
-            <ScrollView horizontal paddingBottom={2}>
-              {data?.map((item: SearchEventsResponse) =>
-                <EventPage
-                  title={item.name ?? ''}
-                  city={item.location ?? ''} //TODO: ADD CITY
-                  image={item.images[0] ?? EventImage}
-                  onPress={() => { }}
-                  rate={'3.5'}
-                  description={item.description ?? ''} //TODO: add location description
-                />
-              )}
-            </ScrollView>
-          </VStack>
+            <Link href={'/(tabs)/'} style={{ alignSelf: 'center', color: colors.primary }}>view all</Link>
+          </HStack>
+          <ScrollView horizontal paddingBottom={2}>
+            {events?.map((item: SearchEventsResponse) =>
+              <EventPage
+                title={item.name ?? ''}
+                city={item.location ?? ''} //TODO: ADD CITY
+                image={item.images[0] ?? EventImage}
+                onPress={() => { }}
+                rate={'3.5'}
+                description={item.description ?? ''} //TODO: add location description
+              />
+            )}
+          </ScrollView>
+        </VStack>
 
-          <VStack space={2}>
+        <VStack space={2}>
+          <HStack justifyContent={'space-between'}>
             <Text>Events for you</Text>
-            <ScrollView horizontal paddingBottom={2}>
-              {data?.map((item: SearchEventsResponse) =>
-                <EventPage
-                  title={item.name ?? ''}
-                  city={item.location ?? ''} //TODO: ADD CITY
-                  image={item.images[0] ?? EventImage}
-                  onPress={() => { }}
-                  rate={'3.5'}
-                  description={item.description ?? ''} //TODO: add location description
-                />
-              )}
-            </ScrollView>
-          </VStack>
+            <Link href={'/(tabs)/'} style={{ alignSelf: 'center', color: colors.primary }}>view all</Link>
+          </HStack>
+          <HStack justifyContent={'space-between'} flexWrap={'wrap'}>
+            {[1,2].map((item: any) =>
+              <CustomCard
+                title={"Burj Al Hamam"}
+                city={"Dead Sea"}
+                image={EventImage}
+                onPress={() => { }}
+                description={"Crowne Plaza Dead Sea Resort & Spa.."}
+              />
+            )}
+          </HStack>
+        </VStack>
 
-        </View>
+      </VStack>
     </View>
   );
 }

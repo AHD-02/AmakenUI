@@ -1,10 +1,11 @@
 
 
 
+import { colors } from "@/app/theme/Colors";
 import { Archive } from "@/assets/icons";
 import { EventImage } from "@/assets/images";
-import { HStack, Image, Pressable, VStack, Text, View, Box } from "native-base";
-import { ImageBackground ,StyleSheet} from "react-native";
+import { HStack, Image, Pressable, VStack, Text, View } from "native-base";
+import { ImageBackground, StyleSheet, TouchableOpacity } from "react-native";
 
 interface IProps {
   title: string;
@@ -22,69 +23,55 @@ const CustomCard = ({
   onPress,
 }: IProps) => {
   return (
-    <Pressable onPress={onPress} style={styles.container}>
-      <Box style={styles.box}>
-        
-          <ImageBackground 
-           resizeMode="cover"
-            source={image}
-            height={209}
-            width={150}
-            borderRadius={8}
-          >
-            <View style={styles.icon}>
-            <Archive/>
-            </View>
+    <TouchableOpacity>
+      <ImageBackground
+        resizeMode="cover"
+        source={image}
+        borderRadius={8}
+        imageStyle={styles.backgroundImage}
+      >
+        <VStack height={'48'} justifyContent={'space-between'}>
 
-            
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text
-                fontWeight={600}
-                fontFamily={"Cairo"}
-                fontSize={14}
-                color={"white"}
-              >{`${title ?? ""} - ${city ?? ""}`}</Text>
-              <Text></Text>
+          <View alignItems={'flex-end'} margin={2}>
+            <TouchableOpacity style={styles.icon} onPress={() => { }}>
+              <Archive />
+            </TouchableOpacity>
+          </View>
 
-             <Text
-                fontWeight={500}
-                fontFamily={"Cairo"}
-                fontSize={10}
-                color={"#C8C8C8"}
-              >{description}</Text>
-          </ImageBackground>
-      </Box>
-     
-    </Pressable>
+          <View>
+            <Text
+              fontWeight={600}
+              fontFamily={"Cairo"}
+              fontSize={14}
+              color={"white"}
+            >{`${title ?? ""} - ${city ?? ""}`}</Text>
+
+            <Text
+              fontWeight={500}
+              fontFamily={"Cairo"}
+              fontSize={10}
+              color={"#C8C8C8"}
+            >
+              {description}
+            </Text>
+          </View>
+        </VStack>
+      </ImageBackground>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding:10,
-   
+  backgroundImage: {
+    width: 174
   },
-  box:{
-    width:165,
-    height:209,
-    borderRadius:8,
-    margin:10
-  },  
   icon: {
-    alignItems: 'flex-end',
-    paddingTop:10,
-    paddingRight:10,
-    backgroundColor:'#A5583A'
-    
-
+    borderRadius: 50,
+    width: 30,
+    height: 30,
+    backgroundColor: colors.primary,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 
 });

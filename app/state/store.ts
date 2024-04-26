@@ -4,8 +4,7 @@ import {persistReducer, persistStore} from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { userSlice } from './user/slice';
 import { appSlice } from './app/slice';
-import { UserApi } from '../data/user';
-import { EventApi } from '../data/events';
+import { PublicPlace, EventApi, UserApi } from '../data';
 
 
 const reducers = combineReducers({
@@ -13,6 +12,7 @@ const reducers = combineReducers({
     app: appSlice.reducer,
     [UserApi.reducerPath]: UserApi.reducer,
     [EventApi.reducerPath]: EventApi.reducer,
+    [PublicPlace.reducerPath]: PublicPlace.reducer,
 });
 const persistConfig = {
     key: 'root',
@@ -31,12 +31,14 @@ export const store = configureStore({
             }).concat([
                 UserApi.middleware,
                 EventApi.middleware,
+                PublicPlace.middleware,
             ])
             : getDefaultMiddleware({
                 serializableCheck: false,
             }).concat([
                 UserApi.middleware,
                 EventApi.middleware,
+                PublicPlace.middleware,
             ]),
 });
 export const persistor = persistStore(store);
