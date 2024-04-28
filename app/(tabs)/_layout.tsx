@@ -1,8 +1,9 @@
 import React from "react";
 import { Tabs } from "expo-router";
-import { useColorScheme } from "react-native";
+import { useColorScheme, View } from "react-native";
 import Colors from "@/constants/Colors";
 import { HomeIcon, ProfileIcon, SavedIcon, TicketsIcon } from "@/assets/icons";
+import DynamicHeader from "@/components/header";
 
 
 export default function TabLayout() {
@@ -12,7 +13,7 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false
+        headerShown: false,
       }}
     >
       <Tabs.Screen
@@ -23,7 +24,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="saved"
         options={{
           title: "Saved",
           tabBarIcon: ({ color }) => <SavedIcon />,

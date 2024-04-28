@@ -10,7 +10,7 @@ export const PublicPlace = createApi({
     endpoints: builder => ({
         searchPublicPlaces: builder.query<PublicPlaceResponse[], void>({
             query: () => ({
-                url: 'publicPlace/SearchPublicPlaces',
+                url: 'public_Place/SearchPublicPlaces',
                 method: 'GET',
             }),
         }),

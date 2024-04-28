@@ -3,42 +3,43 @@
 
 import { colors } from "@/app/theme/Colors";
 import { Archive } from "@/assets/icons";
-import { EventImage } from "@/assets/images";
-import { HStack, Image, Pressable, VStack, Text, View } from "native-base";
+import { VStack, Text, View } from "native-base";
 import { ImageBackground, StyleSheet, TouchableOpacity } from "react-native";
 
 interface IProps {
   title: string;
   city: string;
-  onPress: () => void;
+  onCardPress?: () => void;
+  onSavedPress?: () => void;
   image: any;
   description: string;
 }
 
-const CustomCard = ({
+const PlaceCard = ({
   title,
   city,
   description,
   image,
-  onPress,
+  onCardPress,
+  onSavedPress,
 }: IProps) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity style={{flex: 1}} onPress={onCardPress}>
       <ImageBackground
         resizeMode="cover"
         source={image}
         borderRadius={8}
         imageStyle={styles.backgroundImage}
       >
-        <VStack height={'48'} justifyContent={'space-between'}>
+        <VStack height={'56'} justifyContent={'space-between'}>
 
           <View alignItems={'flex-end'} margin={2}>
-            <TouchableOpacity style={styles.icon} onPress={() => { }}>
+            <TouchableOpacity style={styles.icon} onPress={onSavedPress}>
               <Archive />
             </TouchableOpacity>
           </View>
 
-          <View>
+          <VStack space={3} mx={2} mb={3}>
             <Text
               fontWeight={600}
               fontFamily={"Cairo"}
@@ -54,7 +55,7 @@ const CustomCard = ({
             >
               {description}
             </Text>
-          </View>
+          </VStack>
         </VStack>
       </ImageBackground>
     </TouchableOpacity>
@@ -63,7 +64,8 @@ const CustomCard = ({
 
 const styles = StyleSheet.create({
   backgroundImage: {
-    width: 174
+    width: '100%',
+    flex: 1,
   },
   icon: {
     borderRadius: 50,
@@ -76,5 +78,5 @@ const styles = StyleSheet.create({
 
 });
 
-export default CustomCard;
+export default PlaceCard;
 

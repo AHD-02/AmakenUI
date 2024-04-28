@@ -1,12 +1,15 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, StyleSheet, ImageBackground, TextInput, TouchableOpacity, Animated, SafeAreaView, ScrollView } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { View, Text, StyleSheet, ImageBackground, TextInput, TouchableOpacity, Animated, ScrollView } from 'react-native';
 import { HeaderBG, LOGO } from '@/assets/images';
-import { Image, Pressable } from 'native-base'
+import { Image } from 'native-base'
 import { NotificationIcon } from '@/assets/icons';
+import { router } from 'expo-router';
 
-const DynamicHeader = () => {
+interface IProps {
+    isBGHidden?: boolean
+}
+
+const DynamicHeader = ({ isBGHidden }: IProps) => {
     const [searchVisible, setSearchVisible] = useState(true);
     const scrollY = useRef(new Animated.Value(0)).current;
 
@@ -15,7 +18,7 @@ const DynamicHeader = () => {
     };
 
     const headerBackgroundOpacity = scrollY.interpolate({
-        inputRange: [0, 100],
+        inputRange: [0, 180],
         outputRange: [1, 0],
         extrapolate: 'clamp',
     });
@@ -27,35 +30,39 @@ const DynamicHeader = () => {
                 scrollEventThrottle={16}
                 onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], { useNativeDriver: false })}
             > */}
-                <ImageBackground
-                    source={HeaderBG}
-                    style={styles.backgroundImage}
-                    imageStyle={styles.backgroundImageStyle}
-                    borderBottomRightRadius={20}
-                    borderBottomLeftRadius={20}
-                >
-                    <View style={styles.overlay} />
+            <ImageBackground
+                source={HeaderBG ?? ''}
+                alt='bg'
+                style={styles.backgroundImage}
+                imageStyle={[styles.backgroundImageStyle, {...(isBGHidden ? {display: 'none'} : {})}]}
+                borderBottomRightRadius={20}
+                borderBottomLeftRadius={20}
+            >
+                <View style={[styles.overlay, 
+                    {backgroundColor: `rgba(165, 88, 58, ${isBGHidden ? 1 : 0.6})`}
+                ]} />
 
-                    <Animated.View style={[styles.header, { opacity: headerBackgroundOpacity }]}>
+                <Animated.View style={[styles.header, { opacity: headerBackgroundOpacity }]}>
+                    <View style={styles.header}>
                         <Text style={styles.text} >Amaken</Text>
-                        <Image source={LOGO} height={'32'} width={'56'} opacity={50} style={styles.logo} />
-                        <TouchableOpacity onPress={() => { }}>
+                        <Image source={LOGO} height={'24'} width={'56'} opacity={50} style={styles.logo} alt='Amaken' />
+                        <TouchableOpacity onPress={() => router.push('/(notifications)')}>
                             <NotificationIcon />
                         </TouchableOpacity>
+                    </View>
+                </Animated.View>
 
-                    </Animated.View>
-
-                    {/* Search input */}
-                    {searchVisible && (
-                        <View style={styles.searchContainer}>
-                            <TextInput
-                                style={styles.searchInput}
-                                placeholder="Search..."
-                                placeholderTextColor="#888"
-                            />
-                        </View>
-                    )}
-                </ImageBackground>
+                {/* Search input */}
+                {searchVisible && (
+                    <View style={styles.searchContainer}>
+                        <TextInput
+                            style={styles.searchInput}
+                            placeholder="Search..."
+                            placeholderTextColor="#888"
+                        />
+                    </View>
+                )}
+            </ImageBackground>
             {/* </ScrollView> */}
         </View>
     );
@@ -63,8 +70,8 @@ const DynamicHeader = () => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        maxHeight: 200,
+        height: 180,
+        position: 'relative',
     },
     backgroundImage: {
         flex: 1,
@@ -73,7 +80,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     backgroundImageStyle: {
-        height: 200,
+        height: '100%',
         width: '100%',
         resizeMode: 'cover',
     },
@@ -84,18 +91,17 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 20,
     },
     logo: {
-        // opacity: '50%',
         resizeMode: "contain",
+        right: 14
     },
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingHorizontal: 20,
-        paddingVertical: 10,
+        padding: 10,
         width: '100%',
-        position: 'absolute',
         zIndex: 1,
+        marginBottom: 8
     },
     text: {
         fontSize: 20,
@@ -104,9 +110,8 @@ const styles = StyleSheet.create({
     },
     searchContainer: {
         position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
+        bottom: 6,
+        width: '100%',
         paddingHorizontal: 20,
         paddingBottom: 10,
         zIndex: 1,
