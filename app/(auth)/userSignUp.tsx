@@ -1,49 +1,40 @@
+import React from "react";
 import {
   ButtonComponent,
   PhoneInput,
   ProfileImageUploader,
   TextInput,
 } from "@/components/sharedComponents";
-import DateTimePicker from "@/components/sharedComponents/dateTimePicker";
-import CountryPicker, { getAllCountries, CountryFilter } from 'react-native-country-picker-modal';
 import {
   KeyboardAvoidingView,
   Text,
   HStack,
   Stack,
   VStack,
-  Pressable,
   ScrollView,
   View,
 } from "native-base";
 import { StyleSheet } from "react-native";
 import useSignUp from "../hooks/useSignUp";
-import React, { useState } from "react";
-import { ArrowDownIcon } from "@/assets/icons";
 import { Link } from "expo-router";
 import { colors } from "../theme/Colors";
 import PasswordInput from "@/components/sharedComponents/PasswordInput";
+import Dropdown from "@/components/sharedComponents/simpleDropdown";
+import { useCountriesQuery } from "../data/lookup";
+import DatePickerComponent from "@/components/sharedComponents/dateTimePicker";
 
 const UserSignUp = () => {
   const { values, setFieldValue, errors, submitForm } = useSignUp();
-  const [modal, setModal] = useState<"country" | "city" | null>(null);
-
-  const renderFilter = () => {
-    return (
-      <CountryFilter
-        style={{ width: '90%' }}
-        placeholder="Filter..."
-        onChangeText={(text) => { }}
-      />
-
-    );
-  };
+  const { data } = useCountriesQuery();
 
   return (
     <KeyboardAvoidingView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View>
-          <ProfileImageUploader image={values.image} setImage={(date) => setFieldValue('image', date)}/>
+          <ProfileImageUploader
+            image={values.image}
+            setImage={(date) => setFieldValue("image", date)}
+          />
         </View>
         <VStack space={"2"}>
           <HStack justifyContent={"space-between"}>
@@ -67,6 +58,13 @@ const UserSignUp = () => {
             </Stack>
           </HStack>
           <Stack>
+            <DatePickerComponent
+              label="Date Of Birth"
+              setValue={(val: string) => setFieldValue("date", val)}
+              value={values?.date?.toString() ?? ""}
+            />
+          </Stack>
+          <Stack>
             <TextInput
               value={values.email}
               label="Email"
@@ -79,52 +77,36 @@ const UserSignUp = () => {
             <PhoneInput
               label="Phone Number"
               showErrorMsg={false}
-              errorMsg={errors.phoneNumber}
-              setMobileNumber={(value: string) =>
-                setFieldValue("phoneNumber", value)
-              }
-              mobileNumber={values.phoneNumber}
+              errorMsg={errors.phone}
+              setMobileNumber={(value: string) => setFieldValue("phone", value)}
+              mobileNumber={values.phone}
               setCountryCode={(value: any) =>
                 setFieldValue("countryCode", value)
               }
               countryCode={values.countryCode}
             />
           </Stack>
+
           <Stack>
-            {/* <DateTimePicker
-                            date={values.date ?? new Date()}
-                            setDate={(date: Date) => setFieldValue('date', date)}
-                            placeHolder='DD/MM/YYYY'
-                            label='Date Of Birth'
-                            errorMsg={errors.date}
-                        /> */}
+            <Dropdown
+              items={data}
+              placeHolder="Select Country"
+              label="Country"
+              setSelectedValue={(value) => setFieldValue("country", value)}
+              selectedValue={values?.country}
+            />
           </Stack>
+
           <Stack>
-            <Pressable onPress={() => setModal("country")}>
-              <TextInput
-                value={values.country}
-                editable={false}
-                onChangeText={(val: string) => setFieldValue("country", val)}
-                placeholder={"country"}
-                label={"Country"}
-                rightIcon={<ArrowDownIcon />}
-                errorMsg={errors.country}
-              />
-            </Pressable>
+            <Dropdown
+              items={data ?? []}
+              placeHolder="Select City"
+              label="City"
+              setSelectedValue={(value) => setFieldValue("city", value)}
+              selectedValue={values?.city}
+            />
           </Stack>
-          <Stack>
-            <Pressable onPress={() => setModal("city")}>
-              <TextInput
-                value={values.city}
-                editable={false}
-                onChangeText={(val: string) => setFieldValue("city", val)}
-                placeholder={"city"}
-                label={"city"}
-                rightIcon={<ArrowDownIcon />}
-                errorMsg={errors.city}
-              />
-            </Pressable>
-          </Stack>
+
           <PasswordInput
             onChangeText={(value) => setFieldValue("password", value)}
             value={values.password}
