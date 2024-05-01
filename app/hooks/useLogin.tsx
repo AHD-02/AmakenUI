@@ -3,19 +3,22 @@ import { useFormik } from 'formik'
 import * as yup from 'yup'
 import { LoginModel } from '../types'
 import { router } from 'expo-router'
-import { useLoginMutation } from '../data/user'
+import { useLazyGetUserQuery, useLoginMutation } from '../data/user'
 import { useAppDispatch } from '../state/store'
 import { setIsLoading } from '../state/app/slice'
-import { setTokens } from '../state/user/slice'
+import { setTokens, setUser } from '../state/user/slice'
 import { SCREENS } from '@/components/screens'
 import Toast from 'react-native-toast-message'
 
 const useLogin = () => {
     const dispatch = useAppDispatch()
     const [login, res] = useLoginMutation()
-    const  {data, error, isLoading, isSuccess, isError} = res
+    const [getUser, userRes] = useLazyGetUserQuery()
+    const {data: userData} = userRes
 
-    const {values, setFieldValue, errors, submitForm} = useFormik({
+    const { data, error, isLoading, isSuccess, isError } = res
+
+    const { values, setFieldValue, errors, submitForm } = useFormik({
         validationSchema: yup.object({
             email: yup.string().email('please enter a valid email address').required('required'),
             password: yup.string().required('required'),
@@ -31,14 +34,15 @@ const useLogin = () => {
         }
     })
 
-    useEffect(() =>{
+    useEffect(() => {
         dispatch(setIsLoading(isLoading ?? false))
-        if(data) {
+        if (data) {
+            console.log(data, 'data')
             dispatch(setTokens({
-                accessToken: data.jwt,
+                accessToken: data.token,
                 refreshToken: data.refreshToken
             }))
-            router.replace(`/${SCREENS.Main}/`)
+            getUser()
         }
         if (error) {
             Toast.show({
@@ -46,11 +50,18 @@ const useLogin = () => {
                 text1: 'error',
                 text2: JSON.stringify((error as any).data ?? '')
             })
-            console.log(res)
         }
-    },[data, error, isLoading])
+    }, [data, error, isLoading])
 
-  return {values, setFieldValue, errors, submitForm, isSuccess, isError};
+    useEffect(() => {
+        if (userData) {
+            dispatch(setUser(userData))
+            router.replace(`/${SCREENS.Main}/`)
+        }
+
+    }, [userData])
+
+    return { values, setFieldValue, errors, submitForm, isSuccess, isError };
 }
 
 export default useLogin

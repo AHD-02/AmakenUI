@@ -5,6 +5,10 @@ import { Colors } from './theme'
 import { useColorScheme } from 'react-native'
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native'
 
+export const unstable_settings = {
+    initialRouteName: "(tabs)/index",
+};
+
 const RootLayoutNav = () => {
     const colorScheme = useColorScheme()
     const nativeBaseTheme = extendTheme({

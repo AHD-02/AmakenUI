@@ -7,3 +7,8 @@ export const useTheme = () => {
     const theme = useTypedSelector(state => state.user.theme);
     return useMemo(() => theme ? theme : colorScheme ?? 'light', [theme]);
 };
+
+export const useUserInfo = () => {
+    const user = useTypedSelector(state => state.user.userModel);
+    return useMemo(() =>user, [user]);
+}

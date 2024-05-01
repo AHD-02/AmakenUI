@@ -14,9 +14,16 @@ export const EventApi = createApi({
                 method: 'GET',
             }),
         }),
+        searchSavedEvents: builder.query<SearchEventsResponse[], void>({
+            query: () => ({
+                url: 'event/searchSavedEvents',
+                method: 'GET',
+            }),
+        }),
     }),
 });
 
 export const {
     useSearchEventsQuery,
+    useSearchSavedEventsQuery,
 } = EventApi;

@@ -1,4 +1,4 @@
-import { Tokens, initialState, loggedOutState } from '@/app/types';
+import { Tokens, UserModel, initialState, loggedOutState } from '@/app/types';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 export const userSlice = createSlice({
@@ -25,6 +25,9 @@ export const userSlice = createSlice({
             state.accessToken = action.payload.accessToken;
             state.refreshToken = action.payload.refreshToken;
         },
+        setUser: (state, action: PayloadAction<UserModel>) => {
+            state.userModel = action.payload;
+        }
     },
 });
 
@@ -32,6 +35,7 @@ export const {
     logout,
     login,
     setTokens,
+    setUser,
 } = userSlice.actions;
 
 export default userSlice.reducer;
