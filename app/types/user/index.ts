@@ -1,14 +1,42 @@
 export type Locale = 'en' | 'ar';
+
+export interface UserModel {
+    email?: string;
+    password?: string;
+    firstName?: string;
+    lastName?: string;
+    dateOfBirth: Date;
+    phone?: string;
+    images?: string[];
+    savedEvents?: string[];
+    country?: string;
+    city?: string;
+    status: string;
+}
+
+const UserInitialValues: UserModel = {
+    email: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+    dateOfBirth: new Date(),
+    phone: "",
+    images: [],
+    savedEvents: [],
+    country: "",
+    city: "",
+    status: ""
+};
+
 export const initialState: UserState = {
     isLoading: false,
     isLoggedIn: false,
     isBlocked: false,
     isGuest: false,
     phoneNumber: '',
-    theme: null
+    theme: null,
+    userModel: UserInitialValues
 };
-
-
 
 export interface UserState {
     isLoading: boolean;
@@ -19,6 +47,7 @@ export interface UserState {
     isGuest: boolean;
     phoneNumber: string;
     theme: 'dark' | 'light' | null;
+    userModel: UserModel
 }
 
 export type Tokens = {
@@ -29,7 +58,7 @@ export type Tokens = {
 };
 
 export type RefreshToken = {
-    jwt: string;
+    token: string;
     refreshToken?: string;
 };
 
@@ -40,6 +69,7 @@ export const loggedOutState: UserState = {
     isGuest: false,
     phoneNumber: '',
     theme: null,
+    userModel: UserInitialValues
 };
 
 export interface LoginModel {

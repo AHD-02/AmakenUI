@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { userSlice } from './user/slice';
 import { appSlice } from './app/slice';
 import { PublicPlace, EventApi, UserApi } from '../data';
+import { LookUpApi } from '../data/lookup';
 
 
 const reducers = combineReducers({
@@ -13,6 +14,7 @@ const reducers = combineReducers({
     [UserApi.reducerPath]: UserApi.reducer,
     [EventApi.reducerPath]: EventApi.reducer,
     [PublicPlace.reducerPath]: PublicPlace.reducer,
+    [LookUpApi.reducerPath]: LookUpApi.reducer,
 });
 const persistConfig = {
     key: 'root',
@@ -32,6 +34,7 @@ export const store = configureStore({
                 UserApi.middleware,
                 EventApi.middleware,
                 PublicPlace.middleware,
+                LookUpApi.middleware
             ])
             : getDefaultMiddleware({
                 serializableCheck: false,
@@ -39,6 +42,7 @@ export const store = configureStore({
                 UserApi.middleware,
                 EventApi.middleware,
                 PublicPlace.middleware,
+                LookUpApi.middleware,
             ]),
 });
 export const persistor = persistStore(store);

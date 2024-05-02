@@ -1,5 +1,4 @@
 import * as ImagePicker from 'expo-image-picker';
-import React from 'react'
 import Toast from 'react-native-toast-message';
 
 const useTakeImage = async () => {

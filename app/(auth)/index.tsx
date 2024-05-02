@@ -1,6 +1,6 @@
 import { SafeAreaView, StyleSheet } from "react-native";
 import { Platform, KeyboardAvoidingView } from "react-native";
-import { Center, Image, VStack, Text, HStack, Pressable } from "native-base";
+import { Center, Image, VStack, Text, HStack, Pressable, View } from "native-base";
 import { ButtonComponent, TextInput } from "@/components/sharedComponents";
 import { LOGO } from "@/assets/images";
 import { colors } from "../theme/Colors";
@@ -14,10 +14,8 @@ const Login = () => {
     const { values, setFieldValue, errors, submitForm } = useLogin();
 
     return (
-        <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        <View
             style={styles.screenContainer}
-            keyboardVerticalOffset={20}
         >
             <SafeAreaView style={styles.body}>
                 <VStack space={16}>
@@ -59,7 +57,7 @@ const Login = () => {
                     <Link push href={`/${SCREENS.Signup}`} style={styles.signupText}>Sign up</Link>
                 </HStack>
             </SafeAreaView>
-        </KeyboardAvoidingView>
+        </View>
     )
 }
 

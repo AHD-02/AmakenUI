@@ -1,108 +1,87 @@
-import React, { useState } from 'react';
-import DatePicker from 'react-native-date-picker';
-import { Box, FormControl, HStack, Input, Pressable, Text } from 'native-base';
-import WarningMessage from '../warningMessage';
-import { CalenderIcon } from '@/assets/icons';
+import React, { useState } from "react";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { Platform } from "react-native";
+import { Box, HStack, Text } from "native-base";
+import WarningMessage from "../warningMessage";
 
-interface PProps {
-    date: Date;
-    setDate: (date: Date) => void;
-    placeHolder: string;
-    isDisabled?: boolean;
-    label: string;
-    errorMsg?: string;
-    Icon?: JSX.Element;
+interface IProps {
+  label: string;
+  value: string;
+  setValue: (arg: string) => void;
+  errorMsg?: string;
 }
 
-const formatDate = (date: Date) => {
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+const DatePickerComponent = ({ label, setValue, value, errorMsg }: IProps) => {
+  const [show, setShow] = useState(false);
+
+  const formatDate = (date: Date) => {
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
     const year = date.getFullYear();
+
     return `${day}/${month}/${year}`;
-}
+  };
 
-const DateTimePicker: React.FC<PProps> = ({
-    date,
-    setDate,
-    isDisabled,
-    placeHolder,
-    label,
-    errorMsg,
-    Icon,
-}) => {
-    let formatedDate: string = formatDate(date);
-    let notSetDate = formatedDate === formatDate(new Date());
+  const onChange = (_: any, selectedDate: any) => {
+    const currentDate = selectedDate || new Date();
+    setShow(Platform.OS === "ios");
+    setValue(currentDate);
+  };
 
-    const [open, setOpen] = useState<boolean>(false)
-    const handleDateChange = (selectedDate: Date) => {
+  const showDatePicker = () => {
+    setShow(true);
+  };
 
-        setDate(selectedDate || date);
-    };
-    const [xx, yy] = useState(new Date())
-    return (
-        <>
-            <Box width={'100%'}>
-                <FormControl isRequired isInvalid={notSetDate}>
-                    {label && (
-                        <HStack>
-                            <Text
-                                color={"#191E3A"}
-                                fontSize={14}
-                                fontWeight={500}
-                                fontFamily={"Cairo"}
-                            >
-                                {label}
-                            </Text>
-                        </HStack>
-                    )}
-                    <Pressable
-                        alignItems="center"
-                        justifyContent="center"
-                        onPress={() => !isDisabled && setOpen(true)}
-                        borderRadius={10}
-                        paddingX={1}
-                        marginY={2}
-                    >
-                        <Input
-                            isDisabled={isDisabled}
-                            isReadOnly={true}
-                            onPressIn={() => !isDisabled && setOpen(true)}
-                            placeholder={placeHolder}
-                            value={formatedDate}
-                            marginBottom={3}
-                            fontWeight="500"
-                            fontSize={12}
-                            color={"#191E3A"}
-                            backgroundColor={"#F3F5F5"}
-                            isFocused={true}
-                            height={55}
-                            width={'100%'}
-                            InputRightElement={<CalenderIcon />}
-                            borderWidth={0}
-                        />
-                    </Pressable>
-                    {Boolean(errorMsg) && (
-                        <WarningMessage
-                            title={errorMsg ?? ""}
-                            stylingBox={{ marginTop: 2, marginBottom: 8 }}
-                        />
-                    )}
-                </FormControl>
-            </Box>
-            <DatePicker
-                modal
-                mode="date"
-                open={open}
-                date={date ?? new Date()}
-                onConfirm={date => {
-                    setOpen(false);
-                    handleDateChange(date)
-                }}
-                onCancel={() => {
-                    setOpen(false);
-                }}
-            />
-        </>
-    );
+  return (
+    <Box paddingX={0}>
+      {label && (
+        <HStack alignItems="center">
+          <Text
+            color={"#191E3A"}
+            fontSize={14}
+            fontWeight={500}
+            fontFamily={"Cairo"}
+          >
+            {label}
+          </Text>
+        </HStack>
+      )}
+      <HStack
+        paddingX={4}
+        width="100%"
+        height={55}
+        marginTop={2}
+        alignItems={"center"}
+        marginBottom={2}
+        borderRadius={10}
+        justifyContent={"flex-start"}
+        backgroundColor={"#F3F5F5"}
+        onTouchStart={showDatePicker}
+      >
+        <Text>{value !== "" ? formatDate(new Date(value)) : "DD/MM/YYYY"}</Text>
+      </HStack>
+      {Boolean(errorMsg) && (
+        <WarningMessage
+          title={errorMsg ?? ""}
+          stylingBox={{ marginTop: 2, marginBottom: 8 }}
+        />
+      )}
+      {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={value === "" ? new Date() : new Date(value)}
+          mode="date"
+          is24Hour={true}
+          display="default"
+          onChange={onChange}
+          style={customStyles}
+        />
+      )}
+    </Box>
+  );
 };
-export default DateTimePicker;
+const customStyles = {
+  backgroundColor: "#A5583A",
+  color: "#FFF",
+};
+export default DatePickerComponent;
