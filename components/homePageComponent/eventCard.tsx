@@ -1,6 +1,6 @@
 import { useIsEventSaved } from "@/app/state/user/hooks";
 import { colors } from "@/app/theme/Colors";
-import { Archive, ArchiveGray,LocationIcon } from "@/assets/icons";
+import { Archive, ArchiveGray,LocationIcon, SavedIcon } from "@/assets/icons";
 import { AntDesign } from "@expo/vector-icons";
 import { ImageBackground, StyleSheet, TouchableOpacity } from "react-native";
 import { HStack, Image, Pressable, VStack, Text, View } from "native-base";
@@ -53,9 +53,10 @@ console.log(isSaved, id)
           justifyContent={"space-between"}
         >
           <View alignItems={"flex-end"} margin={2}>
+            
             <TouchableOpacity style={styles.icon} onPress={()=>{}}>
-              <Archive />
             </TouchableOpacity>
+            
           </View>
         </VStack>
       </ImageBackground>
@@ -85,13 +86,6 @@ console.log(isSaved, id)
           {isSaved ? <Archive /> : <ArchiveGray />}
         </TouchableOpacity>
       </View>
-      <HStack justifyContent={"space-between"} paddingTop={3} paddingX={1}>
-        <Text fontWeight={700}>{`${title ?? ""} - ${city ?? ""}`}</Text>
-        <HStack space={1}>
-          <AntDesign name="star" color={'#F7CB15'} size={18} style={{ alignSelf: 'center' }} />
-          <Text fontWeight={700}>{rate ?? ''}</Text>
-        </HStack>
-      </HStack>
       <HStack
         paddingTop={3}
         paddingBottom={2}
