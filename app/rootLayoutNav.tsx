@@ -25,9 +25,10 @@ const RootLayoutNav = () => {
         <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
             <NativeBaseProvider theme={nativeBaseTheme}>
                 <Stack screenOptions={{ headerShown: false }}>
-                    <Stack.Screen name="(auth)" options={{ headerShown: false }} />
                     <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                    <Stack.Screen name="(auth)" options={{ headerShown: false }} />
                     <Stack.Screen name="(notifications)" options={{ headerShown: false }} />
+                    <Stack.Screen name="(details)" options={{ headerShown: false }} />
                     <Stack.Screen name="modal" options={{ presentation: "modal" }} />
                 </Stack>
             </NativeBaseProvider>

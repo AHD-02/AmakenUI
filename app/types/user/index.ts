@@ -1,31 +1,31 @@
 export type Locale = 'en' | 'ar';
 
 export interface UserModel {
-    Email?: string;
-    Password?: string;
-    FirstName?: string;
-    LastName?: string;
-    DateOfBirth: Date;
-    Phone?: string;
-    Images?: string[];
-    SavedEvents?: string[];
-    Country?: string;
-    City?: string;
-    Status: string;
+    email?: string;
+    password?: string;
+    firstName?: string;
+    lastName?: string;
+    dateOfBirth: Date;
+    phone?: string;
+    images?: string[];
+    savedEvents?: string[];
+    country?: string;
+    city?: string;
+    status: string;
 }
 
 const UserInitialValues: UserModel = {
-    Email: "",
-    Password: "",
-    FirstName: "",
-    LastName: "",
-    DateOfBirth: new Date(),
-    Phone: "",
-    Images: [],
-    SavedEvents: [],
-    Country: "",
-    City: "",
-    Status: "OK"
+    email: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+    dateOfBirth: new Date(),
+    phone: "",
+    images: [],
+    savedEvents: [],
+    country: "",
+    city: "",
+    status: ""
 };
 
 export const initialState: UserState = {

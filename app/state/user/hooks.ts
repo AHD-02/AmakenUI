@@ -10,5 +10,10 @@ export const useTheme = () => {
 
 export const useUserInfo = () => {
     const user = useTypedSelector(state => state.user.userModel);
-    return useMemo(() =>user, [user]);
+    return useMemo(() => user, [user]);
+}
+
+export const useIsEventSaved = (id: string) => {
+    const user = useTypedSelector(state => state.user.userModel);
+    return useMemo(() => user?.savedEvents?.includes(id ?? ''), [user]) ?? false;
 }

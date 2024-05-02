@@ -54,9 +54,10 @@ export default function RootLayout() {
     error: (props: JSX.IntrinsicAttributes & BaseToastProps) => (
       <ErrorToast
         {...props}
-        style={{ borderLeftColor: colors.primary }}
+        style={{ borderLeftColor: colors.errorRed }}
         contentContainerStyle={styles.contentContainer}
         text1Style={styles.text}
+        text2Style={styles.text2}
       />
     )
   };
@@ -77,8 +78,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   text: {
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: '600',
+    fontFamily: 'Urbanist-Regular',
+  },
+  text2: {
+    fontSize: 14,
+    fontWeight: '500',
     fontFamily: 'Urbanist-Regular',
   },
 });

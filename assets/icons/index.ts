@@ -6,7 +6,9 @@ import CalenderIcon from "./calenderIcon";
 import ArrowDownIcon from "./arrowDownIcon";
 import NotificationIcon from './notificationsIcon'
 import Archive from "./archive";
-
+import ArchiveGray from './archiveGray'
+import ArrowLeft from "./arrowLeft";
+import LocationIcon from "./location";
 
 export {
     HomeIcon,
@@ -15,6 +17,9 @@ export {
     ProfileIcon,
     CalenderIcon,
     ArrowDownIcon,
+    ArrowLeft,
     NotificationIcon,
     Archive,
+    ArchiveGray,
+    LocationIcon,
 }
