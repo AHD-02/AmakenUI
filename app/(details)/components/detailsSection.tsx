@@ -1,9 +1,10 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Dimensions } from 'react-native'
 import React from 'react'
 import { SearchEventsResponse } from '@/app/types'
 import { HStack, VStack } from 'native-base'
 import { AntDesign } from '@expo/vector-icons'
 import { LocationIcon } from '@/assets/icons'
+import MapView from 'react-native-maps'
 
 interface IProps {
     data?: SearchEventsResponse
@@ -30,6 +31,12 @@ const DetailsSection = ({ data }: IProps) => {
                 <VStack space={3}>
                     <Text style={styles.descriptionTitle}>Description</Text>
                     <Text style={styles.description}>{data?.description ?? ''}</Text>
+                    <View style={{height: 'auto'}}>
+                        <MapView style={{width: '100%', height: 250}} 
+                            initialRegion={{latitude: 31.946390, longitude: 35.974680,
+                             latitudeDelta: 0.05, longitudeDelta: 0.05}}
+                             />
+                    </View>
                 </VStack>
             </VStack>
         </View>
