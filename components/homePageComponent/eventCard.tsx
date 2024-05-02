@@ -1,9 +1,9 @@
 import { useIsEventSaved } from "@/app/state/user/hooks";
 import { colors } from "@/app/theme/Colors";
-import { Archive, ArchiveGray,LocationIcon } from "@/assets/icons";
+import { Archive, ArchiveGray, LocationIcon } from "@/assets/icons";
 import { AntDesign } from "@expo/vector-icons";
-import { ImageBackground, StyleSheet, TouchableOpacity } from "react-native";
-import { HStack, Image, Pressable, VStack, Text, View } from "native-base";
+import { StyleSheet, TouchableOpacity } from "react-native";
+import { HStack, Image, Pressable, Text, View } from "native-base";
 
 interface IProps {
   title: string;
@@ -32,33 +32,21 @@ const EventPage = ({
 }: IProps) => {
 
   const isSaved = useIsEventSaved(id ?? '')
-console.log(isSaved, id)
+
   return (
     <Pressable onPress={onPress} marginRight={`${bookingComp ? 1 : 4}`}>
-      
-      <ImageBackground
-        resizeMode="cover"
-        source={image}
-        borderTopLeftRadius={10}
-        borderTopRightRadius={10}
-        borderBottomLeftRadius={bookingComp ? 0 : 10}
-        borderBottomRightRadius={bookingComp ? 0 : 10}
-        imageStyle={styles.backgroundImage}
-        height={160}
-        width={300}
-      >
-        <VStack
-          height={"40"}
-          width={`${bookingComp ? 370 : 80}`}
-          justifyContent={"space-between"}
-        >
-          <View alignItems={"flex-end"} margin={2}>
-            <TouchableOpacity style={styles.icon} onPress={()=>{}}>
-              <Archive />
-            </TouchableOpacity>
-          </View>
-        </VStack>
-      </ImageBackground>
+
+        <HStack width={"100%"} >
+          <Image
+            source={image}
+            height={160}
+            width={bookingComp ? 'full' : '300'}
+            resizeMode="cover"
+            borderTopLeftRadius={10}
+            borderTopRightRadius={10}
+            borderBottomLeftRadius={bookingComp ? 0 : 10}
+            borderBottomRightRadius={bookingComp ? 0 : 10} />
+        </HStack>
 
       <HStack
         justifyContent={"space-between"}
@@ -67,9 +55,8 @@ console.log(isSaved, id)
         paddingLeft={`${bookingComp ? 3 : 0}`}
         backgroundColor={`${bookingComp ? "white" : ""}`}
       >
-        <Text fontWeight={700} fontFamily={"Poppins"} fontSize={14}>{`${
-          title ?? ""
-        } - ${city ?? ""}`}</Text>
+        <Text fontWeight={700} fontFamily={"Poppins"} fontSize={14}>{`${title ?? ""
+          } - ${city ?? ""}`}</Text>
         <HStack space={1}>
           <AntDesign
             name="star"
@@ -78,20 +65,13 @@ console.log(isSaved, id)
             style={{ alignSelf: "center" }}
           />
           <Text fontWeight={700}>{rate ?? ""}</Text>
-          </HStack>
         </HStack>
-        <View style={[styles.icon, isSaved ? {backgroundColor: colors.primary} : {}]}>
+      </HStack>
+      <View style={[styles.icon, isSaved ? {backgroundColor: colors.primary} : {}]}>
         <TouchableOpacity onPress={() => { }}>
           {isSaved ? <Archive /> : <ArchiveGray />}
         </TouchableOpacity>
       </View>
-      <HStack justifyContent={"space-between"} paddingTop={3} paddingX={1}>
-        <Text fontWeight={700}>{`${title ?? ""} - ${city ?? ""}`}</Text>
-        <HStack space={1}>
-          <AntDesign name="star" color={'#F7CB15'} size={18} style={{ alignSelf: 'center' }} />
-          <Text fontWeight={700}>{rate ?? ''}</Text>
-        </HStack>
-      </HStack>
       <HStack
         paddingTop={3}
         paddingBottom={2}
@@ -102,7 +82,7 @@ console.log(isSaved, id)
         borderBottomLeftRadius={`${bookingComp ? 10 : 0}`}
         borderBottomRightRadius={`${bookingComp ? 10 : 0}`}
       >
-        <LocationIcon/>
+        <LocationIcon />
         <Text
           color={"#8E8E93"}
           fontFamily={"Poppins"}
@@ -113,7 +93,7 @@ console.log(isSaved, id)
           {description ?? ""}
         </Text>
       </HStack>
-    
+
     </Pressable >
   );
 };
