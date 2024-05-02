@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { View } from "@/components/Themed";
 import { ScrollView, VStack, Text, HStack } from "native-base";
-import { EventImage } from "@/assets/images";
+import { EventImage, Hiking } from "@/assets/images";
 import { useSearchEventsQuery } from "../data/events";
 import { SearchEventsResponse } from "../types";
 import DynamicHeader from "@/components/header";
@@ -35,8 +35,8 @@ const Home = () => {
                   id={item.eventId ?? ''}
                   title={item.name ?? ''}
                   city={item.location ?? ''} //TODO: ADD CITY
-                  image={item.images[0] ?? EventImage}
                   onPress={() => router.push(`/(details)/${item.eventId ?? ''}`)}
+                  image={item.images[0] ?? Hiking}
                   rate={'3.5'}
                   description={item.description ?? ''} //TODO: add location description
                 />

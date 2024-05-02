@@ -8,7 +8,9 @@ import NotificationIcon from './notificationsIcon'
 import Archive from "./archive";
 import ArchiveGray from './archiveGray'
 import ArrowLeft from "./arrowLeft";
-import LocationIcon from "./location";
+import UploadImage from "./uploadImage";
+import LocationIcon from "./locationIcon";
+
 
 export {
     HomeIcon,
@@ -21,5 +23,6 @@ export {
     NotificationIcon,
     Archive,
     ArchiveGray,
+    UploadImage,
     LocationIcon,
 }
