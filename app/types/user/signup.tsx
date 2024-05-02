@@ -6,12 +6,13 @@ export interface SignupModel {
   image: string | null;
   email: string;
   countryCode: string;
-  phoneNumber: string;
+  phone: string;
   date: Date | null;
   country: string;
   city: string;
   password: string;
   confirmPassword: string;
+  status: string;
 }
 
 export const SignUpInitialValues: SignupModel = {
@@ -20,12 +21,13 @@ export const SignUpInitialValues: SignupModel = {
   image: null,
   email: "",
   countryCode: "JO",
-  phoneNumber: "",
+  phone: "",
   date: null,
   country: "",
   city: "",
   password: "",
   confirmPassword: "",
+  status: 'OK'
 };
 
 export const SignUpValidationSchema = yup.object({
@@ -36,13 +38,16 @@ export const SignUpValidationSchema = yup.object({
     .email("invalid email address")
     .required("Please complete this field"),
   countryCode: yup.string().required("Please complete this field"),
-  phoneNumber: yup.string().required("Please complete this field"),
+  phone: yup.string().required("Please complete this field"),
   date: yup.date().nullable().required("Please complete this field"),
   country: yup.string().required("Please complete this field"),
   city: yup.string().required("Please complete this field"),
   password: yup
     .string()
-    .min(8, "Password must be at least 8 characters")
+    .min(
+      8,
+      "Password must be at least 8, with atleast 1 lower case and uppercase characters and includes at least one spcial character"
+    )
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
       "passwordCriteriaNotMet" // TODO: change message
