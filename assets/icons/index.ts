@@ -10,6 +10,7 @@ import ArchiveGray from './archiveGray'
 import ArrowLeft from "./arrowLeft";
 import UploadImage from "./uploadImage";
 import LocationIcon from "./locationIcon";
+import UploadPhotosIcon from "./uploadPhotosIcon";
 
 
 export {
@@ -25,4 +26,5 @@ export {
     ArchiveGray,
     UploadImage,
     LocationIcon,
+    UploadPhotosIcon,
 }
