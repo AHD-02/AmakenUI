@@ -3,16 +3,29 @@ import { Text, View } from "@/components/Themed";
 import { ButtonComponent, TextInput } from "@/components/sharedComponents";
 import { VStack } from "native-base";
 import { router } from "expo-router";
+import { useDispatch } from "react-redux";
+import { setTokens } from "../state/user/slice";
 
 export default function TabFourScreen() {
+  const dispatch = useDispatch();
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>
-        This Is The Fourth Tab
-      </Text>
+      <Text style={styles.title}>This Is The Fourth Tab</Text>
 
       <VStack>
-        <ButtonComponent onPress={() => router.replace('/(auth)')} title="Logout" />
+        <ButtonComponent
+          onPress={() => {
+            dispatch(
+              setTokens({
+                accessToken: "",
+                refreshToken: "",
+              })
+            );
+            router.replace("/(auth)");
+          }}
+          title="Logout"
+        />
       </VStack>
     </View>
   );
