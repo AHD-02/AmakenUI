@@ -12,6 +12,7 @@ import { useSearchPublicPlacesQuery } from "../data/publicPlace";
 import PlaceCard from "@/components/homePageComponent/placeCard";
 import { PublicPlaceResponse } from "../types/places";
 import { Ionicons } from "@expo/vector-icons";
+import IconButtonComponent from "@/components/sharedComponents/iconButton";
 
 const Home = () => {
   const { data: events } = useSearchEventsQuery();
@@ -41,7 +42,7 @@ const Home = () => {
                   title={item.name ?? ""}
                   city={item.location ?? ""} //TODO: ADD CITY
                   onPress={() =>
-                    router.push(`/(details)/${item.eventId ?? ""}`)
+                    router.push(`/(details)/events/${item.eventId ?? ""}`)
                   }
                   image={item.images[0] ?? Hiking}
                   rate={"3.5"}
@@ -73,18 +74,16 @@ const Home = () => {
                   city={item.location ?? ""}
                   image={EventImage} //TODO: item.images[0]
                   description={item.description ?? ""}
+                  onCardPress={() => router.push(`/(details)/place/${item.id}`)}
                 />
               ))}
             </HStack>
           </VStack>
         </VStack>
       </ScrollView>
-      <IconButton
+      <IconButtonComponent
         onPress={() => router.push("/(details)/addPublicPlace")}
         icon={<Ionicons name="add" color={"white"} size={25} />}
-        position={"absolute"}
-        style={styles.addIcon}
-        color={"white"}
       />
     </View>
   );
@@ -105,13 +104,5 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     height: 1,
     width: "80%",
-  },
-  addIcon: {
-    backgroundColor: "#A5583A",
-    borderRadius: 100,
-    width: 60,
-    height: 60,
-    right: 10,
-    bottom: 2,
   },
 });

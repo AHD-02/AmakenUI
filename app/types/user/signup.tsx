@@ -3,11 +3,11 @@ import * as yup from "yup";
 export interface SignupModel {
   firstName: string;
   lastName: string;
-  image: string | null;
+  images: string | null;
   email: string;
   countryCode: string;
   phone: string;
-  date: Date | null;
+  date: Date | null | string;
   country: string;
   city: string;
   password: string;
@@ -18,11 +18,11 @@ export interface SignupModel {
 export const SignUpInitialValues: SignupModel = {
   firstName: "",
   lastName: "",
-  image: null,
+  images: null,
   email: "",
   countryCode: "JO",
   phone: "",
-  date: null,
+  date: "2024-04-30T22:23:00.000Z",
   country: "",
   city: "",
   password: "",

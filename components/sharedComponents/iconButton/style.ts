@@ -1,18 +1,13 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-  button: {
-    width: "100%",
-    borderRadius: 12,
-    height: 50,
-    backgroundColor: "#A5583A"
-  },
-  label: {
-    fontSize: 16,
-    fontFamily: "Cairo",
-    color: "white",
-  },
-  shadow: {
+  addIcon: {
+    backgroundColor: "#A5583A",
+    borderRadius: 100,
+    width: 60,
+    height: 60,
+    right: 10,
+    bottom: 2,
     elevation: 5,
     shadowColor: "#000",
     shadowOffset: {

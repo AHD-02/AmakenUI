@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import { router } from "expo-router";
 import {
@@ -7,9 +7,22 @@ import {
   SignupModel,
 } from "../types/user/signup";
 import { useSignUpMutation } from "../data/user";
+import Toast from "react-native-toast-message";
+import { useDispatch } from "react-redux";
+import { setTokens } from "../state/user/slice";
 
 const useSignUp = () => {
-  const [signUp] = useSignUpMutation();
+  const [signUp, { data, error }] = useSignUpMutation();
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    if (error)
+      Toast.show({
+        type: "error",
+        text1: JSON.stringify((error as any)?.data),
+      });
+  }, [error]);
+
   const { values, setFieldValue, errors, submitForm } = useFormik({
     initialValues: SignUpInitialValues,
     validationSchema: SignUpValidationSchema,
@@ -18,6 +31,12 @@ const useSignUp = () => {
       signUp(values)
         .unwrap()
         .then(() => {
+          dispatch(
+            setTokens({
+              accessToken: data?.token,
+              refreshToken: "refreshToken",
+            })
+          );
           router.replace("/(tabs)");
         });
     },

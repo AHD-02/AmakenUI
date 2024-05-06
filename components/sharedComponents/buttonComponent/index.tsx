@@ -10,7 +10,7 @@ interface IProps {
 const ButtonComponent = ({ title, onPress }: IProps) => {
   return (
     <HStack width="100%" justifyContent={"center"}>
-      <Button onPress={onPress} bgColor={"#A5583A"} style={styles.button}>
+      <Button onPress={onPress} style={[styles.button, styles.shadow]}>
         <Text style={styles.label}>{title}</Text>
       </Button>
     </HStack>

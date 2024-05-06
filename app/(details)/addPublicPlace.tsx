@@ -13,7 +13,7 @@ const AddPublicPlace = () => {
           <View>
             <Dropdown label="Categories" items={[]} placeHolder="Select" />
           </View>
-
+          
           <View>
             <TextInput
               onChangeText={() => {}}

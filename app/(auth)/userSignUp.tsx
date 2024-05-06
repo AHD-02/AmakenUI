@@ -32,8 +32,8 @@ const UserSignUp = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View>
           <ProfileImageUploader
-            image={values.image}
-            setImage={(date) => setFieldValue("image", date)}
+            image={values.images}
+            setImage={(date) => setFieldValue("images", date)}
           />
         </View>
         <VStack space={"2"}>
@@ -57,13 +57,13 @@ const UserSignUp = () => {
               />
             </Stack>
           </HStack>
-          <Stack>
+          {/* <Stack>
             <DatePickerComponent
               label="Date Of Birth"
               setValue={(val: string) => setFieldValue("date", val)}
               value={values?.date?.toString() ?? ""}
             />
-          </Stack>
+          </Stack> */}
           <Stack>
             <TextInput
               value={values.email}
