@@ -13,6 +13,11 @@ export const useUserInfo = () => {
     return useMemo(() => user, [user]);
 }
 
+export const useIsLoggedIn = () => {
+    const token = useTypedSelector(state => state.user.accessToken);
+    return useMemo(() => Boolean(token), [token]);
+}
+
 export const useIsEventSaved = (id: string) => {
     const user = useTypedSelector(state => state.user.userModel);
     return useMemo(() => user?.savedEvents?.includes(id ?? ''), [user]) ?? false;

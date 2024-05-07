@@ -1,13 +1,17 @@
 import React from "react";
 import { Tabs } from "expo-router";
-import { useColorScheme, View } from "react-native";
+import { useColorScheme } from "react-native";
 import Colors from "@/constants/Colors";
 import { HomeIcon, ProfileIcon, SavedIcon, TicketsIcon } from "@/assets/icons";
-import DynamicHeader from "@/components/header";
+import { useIsLoggedIn, useUserInfo } from "../state/user/hooks";
+import { Avatar } from "native-base";
+import { colors } from "../theme/Colors";
 
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const data = useUserInfo()
+  const isLoggedIn = useIsLoggedIn()
 
   return (
     <Tabs
@@ -20,28 +24,34 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "Home",
-          tabBarIcon: ({ color }) => <HomeIcon />,
+          tabBarIcon: ({ color, focused }) => <HomeIcon borderColor={focused ? colors.primary : ''}/>,
+          tabBarActiveTintColor: colors.primary
         }}
       />
       <Tabs.Screen
         name="saved"
         options={{
           title: "Saved",
-          tabBarIcon: ({ color }) => <SavedIcon />,
+          tabBarIcon: ({ color, focused }) => <SavedIcon borderColor={focused ? colors.primary : ''}/>,
+          tabBarActiveTintColor: colors.primary
         }}
       />
       <Tabs.Screen
         name="three"
         options={{
           title: "Booking",
-          tabBarIcon: ({ color }) => <TicketsIcon />,
+          tabBarIcon: ({ color, focused }) => <TicketsIcon borderColor={focused ? colors.primary : ''}/>,
+          tabBarActiveTintColor: colors.primary
         }}
       />
       <Tabs.Screen
         name="four"
         options={{
           title: "Profile",
-          tabBarIcon: ({ color }) => <ProfileIcon />,
+          tabBarIcon: ({ color, focused }) => isLoggedIn ? <Avatar size={"xs"} source={{
+            uri: (Array.isArray(data?.images) && data?.images[0]) ? data?.images[0] : ''
+          }}>{`${data?.firstName?.charAt(0)}${data?.lastName?.charAt(0)}`}</Avatar> : <ProfileIcon borderColor={focused ? colors.primary : ''}/>,
+          tabBarActiveTintColor: colors.primary
         }}
       />
     </Tabs>
