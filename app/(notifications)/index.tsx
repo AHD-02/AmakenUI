@@ -10,15 +10,19 @@ import { router } from 'expo-router'
 const Notifications = () => {
   const { data: events } = useSearchEventsQuery()
   const { data: publicPlaces } = useSearchPublicPlacesQuery()
-  
+  const dummy = [
+    {title: 'publish your event', body: 'sjdkf skdf jskfjd ksdldf klsa', createdOn: '6:04 AM', img: ''},
+    {title: 'publish your event', body: 'sjdkf skdf jskfjd ksdldf klsa', createdOn: '6:04 AM', img: ''},
+    {title: 'publish your event', body: 'sjdkf skdf jskfjd ksdldf klsa', createdOn: '6:04 AM', img: ''},
+    {title: 'publish your event', body: 'sjdkf skdf jskfjd ksdldf klsa', createdOn: '6:04 AM', img: ''},
+  ]
+
   return (
-  
-    <View style={styles.screenContainer} >
-      <NotificationCard />
-      <View style={{borderBottomColor:'#C8C8C8',borderBottomWidth:StyleSheet.hairlineWidth }}/>
-      <NotificationCard />
-      <View style={{borderBottomColor:'#C8C8C8',borderBottomWidth:StyleSheet.hairlineWidth }}/>
-      <NotificationCard />
+    <View style={styles.screenContainer}>
+      {dummy.map((item, index)=> <View>
+        <NotificationCard title={item.title} body={item.body} createdOn={item.createdOn} img={item.img} />
+        {dummy.length -1 != index && <View style={{borderBottomColor:'#C8C8C8',borderBottomWidth:StyleSheet.hairlineWidth }}/>}
+      </View>)}
 
     </View>
        

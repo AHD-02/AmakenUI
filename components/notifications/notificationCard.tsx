@@ -1,23 +1,28 @@
-import { View, Text, StyleSheet, Pressable } from 'react-native'
+import { Text, StyleSheet, Pressable } from 'react-native'
 import React from 'react'
 import { HStack, Image, VStack } from 'native-base'
 import { EventImage } from '@/assets/images'
-import { Line } from 'react-native-svg'
 
+interface IProps {
+    title: string
+    body: string
+    img: string
+    createdOn: string
+}
 
-
-
-const NotificationCard = () => {
+const NotificationCard = ({ title, body, img, createdOn }: IProps) => {
     return (
         <Pressable>
-        <HStack space={2} paddingTop={4} paddingLeft={4} paddingBottom={2}>
-            <Image source={EventImage} width={'24%'} height={'24'} borderRadius={12} />
-            <VStack mt={1}>
-                <Text style={styles.title}>Publish your event</Text>
-                <Text style={styles.description}>details details details details details {"\n"}</Text>
-            </VStack>
-            <Text style={styles.time}>6:14 AM</Text>
-        </HStack>
+            <HStack paddingTop={4} paddingX={4} paddingBottom={2} justifyContent={'space-between'}>
+                <HStack space={2}>
+                    <Image source={EventImage} width={'20'} height={'20'} borderRadius={12} />
+                    <VStack mt={1}>
+                        <Text style={styles.title}>{title ?? ''}</Text>
+                        <Text style={styles.description}>{body ?? ''}</Text>
+                    </VStack>
+                </HStack>
+                <Text style={styles.time}>{createdOn ?? ''}</Text>
+            </HStack>
         </Pressable>
     )
 }
@@ -36,9 +41,9 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: '500',
         color: '#8E8E93',
-        paddingTop:7,
+        paddingTop: 7,
     },
-    time:{
+    time: {
         fontFamily: 'Cairo',
         fontSize: 12,
         fontWeight: '500',
