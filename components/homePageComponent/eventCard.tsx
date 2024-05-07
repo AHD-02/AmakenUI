@@ -4,6 +4,7 @@ import { Archive, ArchiveGray, LocationIcon } from "@/assets/icons";
 import { AntDesign } from "@expo/vector-icons";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { HStack, Image, Pressable, Text, View } from "native-base";
+import { Hiking } from "@/assets/images";
 
 interface IProps {
   title: string;
@@ -38,14 +39,16 @@ const EventPage = ({
 
         <HStack width={"100%"} >
           <Image
-            source={image}
+            source={image ?? Hiking}
             height={160}
             width={bookingComp ? 'full' : '300'}
             resizeMode="cover"
             borderTopLeftRadius={10}
             borderTopRightRadius={10}
             borderBottomLeftRadius={bookingComp ? 0 : 10}
-            borderBottomRightRadius={bookingComp ? 0 : 10} />
+            borderBottomRightRadius={bookingComp ? 0 : 10} 
+            alt={'image'}
+          />
         </HStack>
 
       <HStack
@@ -114,7 +117,5 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 })
-
-
 
 export default EventPage;
