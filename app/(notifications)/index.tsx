@@ -1,9 +1,11 @@
-import { View, Text ,StyleSheet, Platform } from 'react-native'
+import { View, Text ,StyleSheet, Platform, TouchableOpacity } from 'react-native'
 import React from 'react'
 import NotificationCard from '@/components/notifications/notificationCard'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useSearchEventsQuery } from '../data/events'
 import { useSearchPublicPlacesQuery } from '../data/publicPlace'
+import { ArrowLeft } from '@/assets/icons'
+import { router } from 'expo-router'
 
 const Notifications = () => {
   const { data: events } = useSearchEventsQuery()
@@ -29,6 +31,14 @@ const styles = StyleSheet.create({
       height: '100%',
       backgroundColor: 'white'
   },
+  bottonContainer: {
+    backgroundColor: 'white',
+    borderRadius: 50,
+    width: 34,
+    height: 34,
+    alignItems: 'center',
+    justifyContent: 'center'
+},
  
 });
 
