@@ -44,6 +44,7 @@ const ProfileImageUploader = ({ image = null, setImage }: IProps) => {
             width={120}
             my={"6"}
             borderRadius={"full"}
+            alt="image"
           />
         </Center>
       </Pressable>

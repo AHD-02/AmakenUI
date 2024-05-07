@@ -33,7 +33,7 @@ const Saved = () => {
                 city={item.location ?? ''}
                 image={EventImage} //TODO: item.images[0] 
                 description={item.description ?? ''}
-                onCardPress={() => router.push(`/(details)/${item.eventId ?? ''}`)}
+                onCardPress={() => router.push(`/(details)/events/${item.eventId ?? ''}`)}
               />
             </View>
           )}

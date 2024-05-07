@@ -50,7 +50,7 @@ export const SignUpValidationSchema = yup.object({
     )
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
-      "passwordCriteriaNotMet" // TODO: change message
+      "Password must be at least 8, with atleast 1 lower case and uppercase characters and includes at least one spcial character"
     )
     .required("Please complete this field"),
   confirmPassword: yup

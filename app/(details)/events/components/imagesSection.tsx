@@ -1,7 +1,7 @@
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { Image, Text } from 'native-base'
-import { EventImage } from '@/assets/images'
+import { EventImage, Hiking } from '@/assets/images'
 import { Archive, ArchiveGray, ArrowLeft } from '@/assets/icons'
 import { router } from 'expo-router'
 import { SearchEventsResponse } from '@/app/types'
@@ -30,7 +30,7 @@ const ImagesSection = ({ data }: IProps) => {
                 </View>
             </View>
             <View>
-                <Image source={EventImage} width={'full'} height={'full'} alt={'image'} resizeMode='cover' />
+                <Image source={Hiking} width={'full'} height={'full'} alt={'image'} resizeMode='cover' />
             </View>
         </View>
     )
