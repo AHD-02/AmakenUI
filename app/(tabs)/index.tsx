@@ -52,6 +52,7 @@ const Home = () => {
             </ScrollView>
           </VStack>
 
+
           <VStack space={2}>
             <HStack justifyContent={"space-between"}>
               <Text>Places for you</Text>
