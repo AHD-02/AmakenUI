@@ -74,7 +74,7 @@ const Home = () => {
                   city={item.location ?? ""}
                   image={EventImage} //TODO: item.images[0]
                   description={item.description ?? ""}
-                  onCardPress={() => router.push(`/(details)/place/${item.id}`)}
+                  onCardPress={() => router.push(`/(details)/place/${item.publicPlaceId}`)}
                 />
               ))}
             </HStack>

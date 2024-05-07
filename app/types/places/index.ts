@@ -1,5 +1,4 @@
 export interface PublicPlaceResponse {
-  id: number;
   publicPlaceId?: string;
   description?: string;
   images: string[];
