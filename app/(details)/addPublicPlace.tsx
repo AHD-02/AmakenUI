@@ -3,6 +3,8 @@ import UploadPhotos from "./components/uploadPhotos";
 import Dropdown from "@/components/sharedComponents/simpleDropdown";
 import { ButtonComponent, TextInput } from "@/components/sharedComponents";
 import { StyleSheet } from "react-native";
+import { Hiking } from "@/assets/images";
+import UpPhoto from "@/components/sharedComponents/upPhoto/upPhoto";
 
 const AddPublicPlace = () => {
   return (
@@ -13,7 +15,7 @@ const AddPublicPlace = () => {
           <View>
             <Dropdown label="Categories" items={[]} placeHolder="Select" />
           </View>
-          
+
           <View>
             <TextInput
               onChangeText={() => {}}
