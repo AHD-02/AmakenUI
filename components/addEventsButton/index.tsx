@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, View} from 'react-native';
+import { Pressable, StyleSheet, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import Animated, {
   Easing,
@@ -11,15 +11,17 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { colors } from '@/app/theme/Colors';
+import { router } from 'expo-router';
 
 const AddEventsButton = () => {
   const firstValue = useSharedValue(30);
   const secondValue = useSharedValue(30);
-  const thirdValue = useSharedValue(30);
+  // const thirdValue = useSharedValue(30);
   const firstWidth = useSharedValue(60);
   const secondWidth = useSharedValue(60);
-  const thirdWidth = useSharedValue(60);
+  // const thirdWidth = useSharedValue(60);
   const isOpen = useSharedValue(false);
   const opacity = useSharedValue(0);
   const progress = useDerivedValue(() =>
@@ -32,29 +34,29 @@ const AddEventsButton = () => {
       duration: 500,
     };
     if (isOpen.value) {
-      firstWidth.value = withTiming(60, {duration: 100}, finish => {
+      firstWidth.value = withTiming(60, { duration: 100 }, finish => {
         if (finish) {
           firstValue.value = withTiming(30, config);
         }
       });
-      secondWidth.value = withTiming(60, {duration: 100}, finish => {
+      secondWidth.value = withTiming(60, { duration: 100 }, finish => {
         if (finish) {
           secondValue.value = withDelay(50, withTiming(30, config));
         }
       });
-      thirdWidth.value = withTiming(60, {duration: 100}, finish => {
-        if (finish) {
-          thirdValue.value = withDelay(100, withTiming(30, config));
-        }
-      });
-      opacity.value = withTiming(0, {duration: 100});
+      // thirdWidth.value = withTiming(60, {duration: 100}, finish => {
+      //   if (finish) {
+      //     thirdValue.value = withDelay(100, withTiming(30, config));
+      //   }
+      // });
+      opacity.value = withTiming(0, { duration: 100 });
     } else {
       firstValue.value = withDelay(200, withSpring(130));
       secondValue.value = withDelay(100, withSpring(210));
-      thirdValue.value = withSpring(290);
+      // thirdValue.value = withSpring(290);
       firstWidth.value = withDelay(1200, withSpring(200));
       secondWidth.value = withDelay(1100, withSpring(200));
-      thirdWidth.value = withDelay(1000, withSpring(200));
+      // thirdWidth.value = withDelay(1000, withSpring(200));
       opacity.value = withDelay(1200, withSpring(1));
     }
     isOpen.value = !isOpen.value;
@@ -76,11 +78,11 @@ const AddEventsButton = () => {
       width: secondWidth.value,
     };
   });
-  const thirdWidthStyle = useAnimatedStyle(() => {
-    return {
-      width: thirdWidth.value,
-    };
-  });
+  // const thirdWidthStyle = useAnimatedStyle(() => {
+  //   return {
+  //     width: thirdWidth.value,
+  //   };
+  // });
 
   const firstIcon = useAnimatedStyle(() => {
     const scale = interpolate(
@@ -92,7 +94,7 @@ const AddEventsButton = () => {
 
     return {
       bottom: firstValue.value,
-      transform: [{scale: scale}],
+      transform: [{ scale: scale }],
     };
   });
 
@@ -106,61 +108,64 @@ const AddEventsButton = () => {
 
     return {
       bottom: secondValue.value,
-      transform: [{scale: scale}],
+      transform: [{ scale: scale }],
     };
   });
 
-  const thirdIcon = useAnimatedStyle(() => {
-    const scale = interpolate(
-      thirdValue.value,
-      [30, 290],
-      [0, 1],
-      Extrapolation.CLAMP,
-    );
+  // const thirdIcon = useAnimatedStyle(() => {
+  //   const scale = interpolate(
+  //     thirdValue.value,
+  //     [30, 290],
+  //     [0, 1],
+  //     Extrapolation.CLAMP,
+  //   );
 
-    return {
-      bottom: thirdValue.value,
-      transform: [{scale: scale}],
-    };
-  });
+  //   return {
+  //     bottom: thirdValue.value,
+  //     transform: [{scale: scale}],
+  //   };
+  // });
 
   const plusIcon = useAnimatedStyle(() => {
     return {
-      transform: [{rotate: `${progress.value * 45}deg`}],
+      transform: [{ rotate: `${progress.value * 45}deg` }],
     };
   });
 
   return (
     <View style={styles.container}>
-      <Animated.View
+      {/* <Animated.View
         style={[styles.contentContainer, thirdIcon, thirdWidthStyle]}>
         <View style={styles.iconContainer}>
-          <AntDesign name='user' size={26}/>
+          <Ionicons name="add" color={"white"} size={25} />
           
         </View>
         <Animated.Text style={[styles.text, opacityText]}>
           Edit File
         </Animated.Text>
-      </Animated.View>
+      </Animated.View> */}
       <Animated.View
         style={[styles.contentContainer, secondIcon, secondWidthStyle]}>
         <View style={styles.iconContainer}>
-          <AntDesign name='user' size={26}/>
-          
+          <MaterialIcons name='public' size={25} color={'white'} />
         </View>
-        <Animated.Text style={[styles.text, opacityText]}>
-          New File
-        </Animated.Text>
+        <TouchableOpacity onPress={() => router.push("/(details)/addPublicPlace")}>
+          <Animated.Text style={[styles.text, opacityText]}>
+            Add Place
+          </Animated.Text>
+        </TouchableOpacity>
       </Animated.View>
       <Animated.View
-        style={[styles.contentContainer, firstIcon, firstWidthStyle]}>
+        style={[styles.contentContainer, firstIcon, firstWidthStyle]}
+        >
         <View style={styles.iconContainer}>
-          <AntDesign name='user' size={26}/>
-          
+          <MaterialIcons name='event' size={26} color={'white'} />
         </View>
+        <TouchableOpacity onPress={() => router.push("/(details)/addPublicPlace")}>
         <Animated.Text style={[styles.text, opacityText]}>
-          New Folder
+          Add Event
         </Animated.Text>
+        </TouchableOpacity>
       </Animated.View>
       <Pressable
         style={styles.contentContainer}
@@ -168,8 +173,8 @@ const AddEventsButton = () => {
           handlePress();
         }}>
         <Animated.View style={[styles.iconContainer, plusIcon]}>
-          <AntDesign name='user' size={26}/>
-          
+          <Ionicons name="add" color={"white"} size={25} />
+
         </Animated.View>
       </Pressable>
     </View>
@@ -183,7 +188,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   contentContainer: {
-    backgroundColor: '#0F56B3',
+    backgroundColor: colors.primary,
     position: 'absolute',
     bottom: 30,
     right: 30,
