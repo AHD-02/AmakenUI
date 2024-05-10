@@ -10,16 +10,8 @@ import { useEffect } from 'react';
 import Toast from 'react-native-toast-message';
 
 const Saved = () => {
-  const { data, error } = useSearchSavedEventsQuery()
+  const { data } = useSearchSavedEventsQuery()
 
-  useEffect(() => {
-    if (error)
-      Toast.show({
-        type: 'error',
-        text1: 'Error',
-        text2: (error as any).status == '401' ? 'Please SignIn to see your saved' : JSON.stringify((error as any).data ?? '')
-      })
-  }, [error])
   return (
     <View style={{ flex: 1 }}>
       <DynamicHeader isBGHidden />

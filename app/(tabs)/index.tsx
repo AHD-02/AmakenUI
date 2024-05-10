@@ -13,6 +13,7 @@ import PlaceCard from "@/components/homePageComponent/placeCard";
 import { PublicPlaceResponse } from "../types/places";
 import { Ionicons } from "@expo/vector-icons";
 import IconButtonComponent from "@/components/sharedComponents/iconButton";
+import AddEventsButton from "@/components/addEventsButton";
 
 const Home = () => {
   const { data: events } = useSearchEventsQuery();
@@ -84,10 +85,11 @@ const Home = () => {
           </VStack>
         </VStack>
       </ScrollView>
-      <IconButtonComponent
+      <AddEventsButton />
+      {/* <IconButtonComponent
         onPress={() => router.push("/(details)/addPublicPlace")}
         icon={<Ionicons name="add" color={"white"} size={25} />}
-      />
+      /> */}
     </View>
   );
 };

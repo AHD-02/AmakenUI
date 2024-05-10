@@ -24,7 +24,7 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "Home",
-          tabBarIcon: ({ color, focused }) => <HomeIcon borderColor={focused ? colors.primary : undefined}/>,
+          tabBarIcon: ({ color, focused }) => <HomeIcon borderColor={focused ? colors.primary : undefined} />,
           tabBarActiveTintColor: colors.primary
         }}
       />
@@ -32,7 +32,7 @@ export default function TabLayout() {
         name="saved"
         options={{
           title: "Saved",
-          tabBarIcon: ({ color, focused }) => <SavedIcon borderColor={focused ? colors.primary : undefined}/>,
+          tabBarIcon: ({ color, focused }) => <SavedIcon borderColor={focused ? colors.primary : undefined} />,
           tabBarActiveTintColor: colors.primary
         }}
       />
@@ -40,7 +40,7 @@ export default function TabLayout() {
         name="booking"
         options={{
           title: "Booking",
-          tabBarIcon: ({ color, focused }) => <TicketsIcon borderColor={focused ? colors.primary : undefined}/>,
+          tabBarIcon: ({ color, focused }) => <TicketsIcon borderColor={focused ? colors.primary : undefined} />,
           tabBarActiveTintColor: colors.primary
         }}
       />
@@ -48,9 +48,12 @@ export default function TabLayout() {
         name="four"
         options={{
           title: "Profile",
-          tabBarIcon: ({ color, focused }) => isLoggedIn ? <Avatar size={"xs"} source={{
-            uri: (Array.isArray(data?.images) && data?.images[0]) ? data?.images[0] : undefined
-          }}>{`${data?.firstName?.charAt(0)}${data?.lastName?.charAt(0)}`}</Avatar> : <ProfileIcon borderColor={focused ? colors.primary : ''}/>,
+          tabBarIcon: ({ color, focused }) => isLoggedIn ?
+            <Avatar width={25} height={25} source={{
+              uri: (Array.isArray(data?.images) && data?.images[0]) ? data?.images[0] : undefined
+            }}>{`${data?.firstName?.charAt(0)}${data?.lastName?.charAt(0)}`}
+            </Avatar>
+            : <ProfileIcon borderColor={focused ? colors.primary : undefined} />,
           tabBarActiveTintColor: colors.primary
         }}
       />

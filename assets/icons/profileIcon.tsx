@@ -3,9 +3,9 @@ import Svg, { Path } from "react-native-svg";
 const ProfileIcon = ({ borderColor }: { borderColor?: string }) => {
   return (
     <Svg
-      width="24"
+      width="25"
       height="25"
-      viewBox="0 0 24 25"
+      viewBox="0 0 25 25"
       fill="none"
       //@ts-ignore
       xmlns="http://www.w3.org/2000/svg"
