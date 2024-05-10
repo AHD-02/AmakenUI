@@ -73,7 +73,7 @@ const Home = () => {
                   key={`${item?.publicPlaceId}-${item.userEmail}`}
                   title={item.name ?? ""}
                   city={item.location ?? ""}
-                  image={EventImage} //TODO: item.images[0]
+                  image={item.images[0] ?? ''}
                   description={item.description ?? ""}
                   onCardPress={() =>
                     router.push(`/(details)/place/${item.publicPlaceId}`)

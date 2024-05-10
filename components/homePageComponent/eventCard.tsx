@@ -40,7 +40,7 @@ const EventPage = ({
 
         <HStack width={"100%"} >
           <Image
-            src={image ?? ""}
+            source={{uri: image ?? undefined}}
             height={160}
             width={isBookingComponent ? 'full' : '300'}
             resizeMode="cover"

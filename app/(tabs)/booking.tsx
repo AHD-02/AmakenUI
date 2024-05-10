@@ -28,7 +28,7 @@ const Booking = () => {
                   isBookingComponent
                   title={item.name ?? ''}
                   city={item.location ?? ''} //TODO: ADD CITY
-                  image={item.images[0] ?? Hiking}
+                  image={item.images[0] ?? ''}
                   onPress={() => {}}
                   rate={'5.5'}
                   description={item.description ?? ''} //TODO: add location description

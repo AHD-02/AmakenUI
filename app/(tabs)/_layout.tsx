@@ -37,7 +37,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="three"
+        name="booking"
         options={{
           title: "Booking",
           tabBarIcon: ({ color, focused }) => <TicketsIcon borderColor={focused ? colors.primary : undefined}/>,

@@ -27,9 +27,10 @@ const PlaceCard = ({
     <TouchableOpacity style={{flex: 1}} onPress={onCardPress}>
       <ImageBackground
         resizeMode="cover"
-        source={image}
+        source={{uri: image ?? undefined}}
         borderRadius={8}
         imageStyle={styles.backgroundImage}
+        alt="image"
       >
         <VStack height={'56'} justifyContent={'space-between'}>
 

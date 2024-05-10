@@ -31,7 +31,7 @@ const Saved = () => {
               <PlaceCard
                 title={item.name ?? ""}
                 city={item.location ?? ''}
-                image={EventImage} //TODO: item.images[0] 
+                image={item.images[0]}
                 description={item.description ?? ''}
                 onCardPress={() => router.push(`/(details)/events/${item.eventId ?? ''}`)}
               />
