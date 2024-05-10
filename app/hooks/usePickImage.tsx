@@ -13,7 +13,6 @@ const usePickImage = async () => {
             });
             return { image: null }
         }
-
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,

@@ -5,8 +5,6 @@ import { VStack } from "native-base";
 import { router } from "expo-router";
 import { useDispatch } from "react-redux";
 import { setTokens } from "../state/user/slice";
-import UploadPhoto from "@/components/sharedComponents/upPhoto/upPhoto";
-import { EventImage, Hiking } from "@/assets/images";
 
 export default function TabFourScreen() {
   const dispatch = useDispatch();
@@ -14,12 +12,6 @@ export default function TabFourScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>This Is The Fourth Tab</Text>
-
-      <UploadPhoto 
-      imageUrl= {Hiking}
-      onDelete={()=>{}}
-      />
-
       <VStack>
         <ButtonComponent
           onPress={() => {

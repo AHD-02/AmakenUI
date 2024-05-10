@@ -29,6 +29,13 @@ export const UserApi = createApi({
         method: "GET",
       }),
     }),
+    imageUpload: builder.mutation<Array<string>, Array<string>>({
+      query: (body) => ({
+        url: "image/UploadImage",
+        method: "POST",
+        body
+      })
+    })
   }),
 });
 
@@ -37,4 +44,5 @@ export const {
   useSignUpMutation,
   useGetUserQuery,
   useLazyGetUserQuery,
+  useImageUploadMutation,
 } = UserApi;

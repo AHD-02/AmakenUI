@@ -12,11 +12,11 @@ interface IProps {
   onPress: () => void;
   onCardPress?: () => void;
   onSavedPress?: () => void;
-  image: any;
+  image: string;
   description: string;
   rate: string;
   id?: string
-  bookingComp?: boolean;
+  isBookingComponent?: boolean;
 }
 
 const EventPage = ({
@@ -29,24 +29,25 @@ const EventPage = ({
   onSavedPress,
   rate,
   id,
-  bookingComp,
+  isBookingComponent,
 }: IProps) => {
 
   const isSaved = useIsEventSaved(id ?? '')
 
+  console.log({image})
   return (
-    <Pressable onPress={onPress} marginRight={`${bookingComp ? 1 : 4}`}>
+    <Pressable onPress={onPress} marginRight={`${isBookingComponent ? 1 : 4}`}>
 
         <HStack width={"100%"} >
           <Image
-            source={image ?? Hiking}
+            src={image ?? ""}
             height={160}
-            width={bookingComp ? 'full' : '300'}
+            width={isBookingComponent ? 'full' : '300'}
             resizeMode="cover"
             borderTopLeftRadius={10}
             borderTopRightRadius={10}
-            borderBottomLeftRadius={bookingComp ? 0 : 10}
-            borderBottomRightRadius={bookingComp ? 0 : 10} 
+            borderBottomLeftRadius={isBookingComponent ? 0 : 10}
+            borderBottomRightRadius={isBookingComponent ? 0 : 10} 
             alt={'image'}
           />
         </HStack>
@@ -55,8 +56,8 @@ const EventPage = ({
         justifyContent={"space-between"}
         paddingTop={3}
         paddingX={1}
-        paddingLeft={`${bookingComp ? 3 : 0}`}
-        backgroundColor={`${bookingComp ? "white" : ""}`}
+        paddingLeft={`${isBookingComponent ? 3 : 0}`}
+        backgroundColor={`${isBookingComponent ? "white" : ""}`}
       >
         <Text fontWeight={700} fontFamily={"Poppins"} fontSize={14}>{`${title ?? ""
           } - ${city ?? ""}`}</Text>
@@ -79,11 +80,11 @@ const EventPage = ({
         paddingTop={3}
         paddingBottom={2}
         paddingX={1}
-        paddingLeft={`${bookingComp ? 3 : 0}`}
-        marginBottom={`${bookingComp ? 3 : 0}`}
-        backgroundColor={`${bookingComp ? "white" : ""}`}
-        borderBottomLeftRadius={`${bookingComp ? 10 : 0}`}
-        borderBottomRightRadius={`${bookingComp ? 10 : 0}`}
+        paddingLeft={`${isBookingComponent ? 3 : 0}`}
+        marginBottom={`${isBookingComponent ? 3 : 0}`}
+        backgroundColor={`${isBookingComponent ? "white" : ""}`}
+        borderBottomLeftRadius={`${isBookingComponent ? 10 : 0}`}
+        borderBottomRightRadius={`${isBookingComponent ? 10 : 0}`}
       >
         <LocationIcon />
         <Text

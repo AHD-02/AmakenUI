@@ -1,6 +1,6 @@
 import { RecycleIcon } from "@/assets/icons";
 import { StyleSheet, TouchableOpacity } from "react-native";
-import { Image, Pressable, View } from "native-base";
+import { Image, View } from "native-base";
 import { Hiking } from "@/assets/images";
 
 interface IProps {
