@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { View } from "@/components/Themed";
-import { ScrollView, VStack, Text, HStack, IconButton } from "native-base";
-import { EventImage, Hiking } from "@/assets/images";
+import { ScrollView, VStack, Text, HStack } from "native-base";
+import { EventImage } from "@/assets/images";
 import { useSearchEventsQuery } from "../data/events";
 import { SearchEventsResponse } from "../types";
 import DynamicHeader from "@/components/header";
@@ -45,14 +45,13 @@ const Home = () => {
                   onPress={() =>
                     router.push(`/(details)/events/${item.eventId ?? ""}`)
                   }
-                  image={item.images[0] ?? Hiking}
+                  image={item.images[0] ?? ""}
                   rate={"3.5"}
                   description={item.description ?? ""} //TODO: add location description
                 />
               ))}
             </ScrollView>
           </VStack>
-
 
           <VStack space={2}>
             <HStack justifyContent={"space-between"}>
@@ -72,11 +71,14 @@ const Home = () => {
             >
               {publicPlaces?.map((item: PublicPlaceResponse) => (
                 <PlaceCard
+                  key={`${item?.publicPlaceId}-${item.userEmail}`}
                   title={item.name ?? ""}
                   city={item.location ?? ""}
                   image={EventImage} //TODO: item.images[0]
                   description={item.description ?? ""}
-                  onCardPress={() => router.push(`/(details)/place/${item.publicPlaceId}`)}
+                  onCardPress={() =>
+                    router.push(`/(details)/place/${item.publicPlaceId}`)
+                  }
                 />
               ))}
             </HStack>

@@ -12,7 +12,6 @@ export default function TabFourScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>This Is The Fourth Tab</Text>
-
       <VStack>
         <ButtonComponent
           onPress={() => {

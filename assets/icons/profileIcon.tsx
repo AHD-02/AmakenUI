@@ -1,6 +1,6 @@
 import Svg, { Path } from "react-native-svg";
 
-const ProfileIcon = ({borderColor}: {borderColor?: string}) => {
+const ProfileIcon = ({ borderColor }: { borderColor?: string }) => {
   return (
     <Svg
       width="25"

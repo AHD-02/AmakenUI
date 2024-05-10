@@ -11,6 +11,8 @@ import ArrowLeft from "./arrowLeft";
 import UploadImage from "./uploadImage";
 import LocationIcon from "./locationIcon";
 import UploadPhotosIcon from "./uploadPhotosIcon";
+import DeleteIcon from "./deleteIcon";
+import RecycleIcon from "./recycleIcon";
 
 
 export {
@@ -27,4 +29,7 @@ export {
     UploadImage,
     LocationIcon,
     UploadPhotosIcon,
+    DeleteIcon,
+    RecycleIcon,
+    
 }
