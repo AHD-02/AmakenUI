@@ -1,6 +1,6 @@
 import Svg, { Path } from "react-native-svg";
 
-const ProfileIcon = ({borderColor}: {borderColor?: string}) => {
+const ProfileIcon = ({ borderColor }: { borderColor?: string }) => {
   return (
     <Svg
       width="24"
@@ -19,7 +19,7 @@ const ProfileIcon = ({borderColor}: {borderColor?: string}) => {
       />
       <Path
         d="M7.15997 15.06C4.73997 16.68 4.73997 19.32 7.15997 20.93C9.90997 22.77 14.42 22.77 17.17 20.93C19.59 19.31 19.59 16.67 17.17 15.06C14.43 13.23 9.91997 13.23 7.15997 15.06Z"
-        stroke="#DCDCDC"
+        stroke={borderColor ?? "#DCDCDC"}
         stroke-width="1.5"
         stroke-linecap="round"
         stroke-linejoin="round"
