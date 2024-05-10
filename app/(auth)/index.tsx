@@ -11,7 +11,7 @@ import PasswordInput from "@/components/sharedComponents/PasswordInput";
 
 
 const Login = () => {
-    const { values, setFieldValue, errors, submitForm } = useLogin();
+    const { values, setFieldValue, errors, submitForm, hiddenLogin } = useLogin();
 
     return (
         <View
@@ -19,7 +19,7 @@ const Login = () => {
         >
             <SafeAreaView style={styles.body}>
                 <VStack space={16}>
-                    <Pressable onPress={() => router.replace(`/${SCREENS.Main}`)}>
+                    <Pressable onPress={hiddenLogin}>
                         <Center>
                             <Image source={LOGO} height={160} width={180} />
                         </Center>

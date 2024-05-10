@@ -64,7 +64,11 @@ const useLogin = () => {
     }
   }, [userData]);
 
-  return { values, setFieldValue, errors, submitForm, isSuccess, isError };
+  const hiddenLogin = async () => {
+    await login({email: 'bashar@mail.com', password: 'password'})
+  }
+
+  return { values, setFieldValue, errors, submitForm, isSuccess, isError, hiddenLogin };
 };
 
 export default useLogin;
