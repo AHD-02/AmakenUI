@@ -17,8 +17,8 @@ const Profile = () => {
     // }
     return (
         <VStack space={2}>
-            {/* <ProfileHeader />
-            <Tabs value={tabValue} setValue={(val: number) => setTabValue(val)} /> 
+            <ProfileHeader />
+            {/*<Tabs value={tabValue} setValue={(val: number) => setTabValue(val)} /> 
             {X} */}
         </VStack>
     )

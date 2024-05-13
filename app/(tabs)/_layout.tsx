@@ -45,7 +45,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="four"
+        name="(profile)"
         options={{
           title: "Profile",
           tabBarIcon: ({ color, focused }) => isLoggedIn ?

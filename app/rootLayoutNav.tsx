@@ -28,6 +28,7 @@ const RootLayoutNav = () => {
                 <Stack.Screen name="(auth)" options={{ headerShown: false }} />
                 <Stack.Screen name="(notifications)" options={{ headerShown: false }} />
                 <Stack.Screen name="(details)" options={{ headerShown: false }} />
+                <Stack.Screen name="(profile)" options={{ headerShown: false }} />
                 <Stack.Screen name="modal" options={{ presentation: "modal" }} />
             </Stack>
         </NativeBaseProvider>

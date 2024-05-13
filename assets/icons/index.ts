@@ -13,7 +13,8 @@ import LocationIcon from "./locationIcon";
 import UploadPhotosIcon from "./uploadPhotosIcon";
 import DeleteIcon from "./deleteIcon";
 import RecycleIcon from "./recycleIcon";
-
+import LogoutIcon from "./logout";
+import EditProfileIcon from "./editProfileIcon";
 
 export {
     HomeIcon,
@@ -31,5 +32,6 @@ export {
     UploadPhotosIcon,
     DeleteIcon,
     RecycleIcon,
-    
+    LogoutIcon,
+    EditProfileIcon,
 }
