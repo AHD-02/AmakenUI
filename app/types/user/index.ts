@@ -14,7 +14,7 @@ export interface UserModel {
     status: string;
 }
 
-const UserInitialValues: UserModel = {
+export const UserInitialValues: UserModel = {
     email: "",
     password: "",
     firstName: "",
