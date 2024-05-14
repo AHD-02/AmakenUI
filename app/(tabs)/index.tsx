@@ -86,10 +86,6 @@ const Home = () => {
         </VStack>
       </ScrollView>
       <AddEventsButton />
-      {/* <IconButtonComponent
-        onPress={() => router.push("/(details)/addPublicPlace")}
-        icon={<Ionicons name="add" color={"white"} size={25} />}
-      /> */}
     </View>
   );
 };

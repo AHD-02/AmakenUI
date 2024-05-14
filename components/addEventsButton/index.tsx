@@ -161,7 +161,7 @@ const AddEventsButton = () => {
         <View style={styles.iconContainer}>
           <MaterialIcons name='event' size={26} color={'white'} />
         </View>
-        <TouchableOpacity onPress={() => router.push("/(details)/addPublicPlace")}>
+        <TouchableOpacity onPress={() => router.push("/(details)/addEvent")}>
         <Animated.Text style={[styles.text, opacityText]}>
           Add Event
         </Animated.Text>

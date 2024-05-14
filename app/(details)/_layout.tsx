@@ -25,6 +25,23 @@ const NotificationsLayout = () => {
           ),
         }}
       />
+      <Stack.Screen
+        name="addEvent"
+        options={{
+          headerShown: true,
+          headerBackTitle: "ArrowLeft",
+          headerTitle: "Create New Event",
+          headerTitleAlign: "center",
+          headerTitleStyle: { fontSize: 16 },
+          headerStyle: { backgroundColor: "white" },
+          headerShadowVisible: false,
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => router.back()}>
+              <ArrowLeft />
+            </TouchableOpacity>
+          ),
+        }}
+      />
     </Stack>
   );
 };
