@@ -4,6 +4,7 @@ import { HStack, Image, VStack } from 'native-base'
 import { EditProfileIcon, LogoutIcon } from '@/assets/icons'
 import { colors } from '@/app/theme/Colors'
 import { useUserInfo } from '@/app/state/user/hooks'
+import { router } from 'expo-router'
 
 const ProfileHeader = () => {
   const userData = useUserInfo()
@@ -29,7 +30,7 @@ const ProfileHeader = () => {
             {`${userData?.firstName ?? ''} ${userData?.lastName ?? ''}`}
         </Text>
       </VStack>
-      <TouchableOpacity style={styles.editButton}>
+      <TouchableOpacity onPress={() => router.push('/(profile)/editProfile')} style={styles.editButton}>
         <EditProfileIcon />
       </TouchableOpacity>
     </HStack>

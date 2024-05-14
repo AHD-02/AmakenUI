@@ -1,7 +1,8 @@
 import { View, Text } from 'react-native'
 import React, { useState } from 'react'
 import ProfileHeader from '@/components/profile/profileHeader'
-import { VStack } from 'native-base'
+import { ScrollView, VStack } from 'native-base'
+import TabsPublicPlace from '@/components/editProfile/tabsPublicPlace'
 
 const Profile = () => {
     const [tabValue, setTabValue] = useState<number>(0)
@@ -17,9 +18,12 @@ const Profile = () => {
     // }
     return (
         <VStack space={2}>
+            <ScrollView>
             <ProfileHeader />
             {/*<Tabs value={tabValue} setValue={(val: number) => setTabValue(val)} /> 
             {X} */}
+            <TabsPublicPlace/>
+            </ScrollView>
         </VStack>
     )
 }

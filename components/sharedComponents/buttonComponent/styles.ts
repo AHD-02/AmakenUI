@@ -5,7 +5,6 @@ const styles = StyleSheet.create({
     width: "100%",
     borderRadius: 12,
     height: 50,
-    backgroundColor: "#A5583A"
   },
   label: {
     fontSize: 16,
