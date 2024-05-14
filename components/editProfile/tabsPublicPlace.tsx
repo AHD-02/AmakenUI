@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, ScrollView } from "react-native";
-import TabsEvent, { TabsButtonsType } from "./tabsEvent";
+import TabsEvent from "./tabsEvent";
 import { PublicPlaceResponse, SearchEventsResponse } from "@/app/types";
 import EventCard from "../homePageComponent/eventCard";
 import { useSearchEventsQuery } from "@/app/data/events";
@@ -19,18 +19,15 @@ const TabsPublicPlace = () => {
   const { data: events } = useSearchEventsQuery();
   const { data: publicPlaces } = useSearchPublicPlacesQuery();
 
-  const buttons: TabsButtonsType[] = [
-    { title: "Public Place" },
-    { title: "Events" },
-  ];
+  
 
   return (
     <View>
-      <TabsEvent
+      {/* <TabsEvent
         buttons={buttons}
         selectedTab={selectedTab}
         setSelectedTab={setSelectedTab}
-      />
+      /> */}
       <View style={{ marginTop: 20, alignItems: "center" }}>
         {selectedTab === CustomTab.PublicPlace ? (
           <View>

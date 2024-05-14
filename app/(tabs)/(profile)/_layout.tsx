@@ -3,7 +3,6 @@ import { Stack } from 'expo-router'
 import { ArrowLeft } from '@/assets/icons'
 import { TouchableOpacity } from 'react-native'
 import { router } from 'expo-router'
-import { SCREENS } from '@/components/screens'
 
 export const unstable_settings = {
     initialRouteName: 'index',

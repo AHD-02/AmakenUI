@@ -1,98 +1,38 @@
-import { View, Text, Pressable, LayoutChangeEvent,  } from "react-native";
-import React, { useState } from "react";
-import Animated,{ runOnJS, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import React from "react";
+import { View, useWindowDimensions, } from "react-native";
+import { SceneMap, TabView } from "react-native-tab-view";
 
-export type TabsButtonsType = {
-  title: string;
-};
 type TabsButtonsProps = {
-  buttons: TabsButtonsType[];
-  selectedTab: number;
-  setSelectedTab: (index: number) => void;
+  index: number;
+  setIndex: (index: number) => void;
+  sceneMap: {
+    [key: string]: React.ComponentType<unknown>;
+  }
 };
 
-const TabsEvent = ({
-  buttons,
-  selectedTab,
-  setSelectedTab,
-}: TabsButtonsProps) => {
-  const [dimensions, setDimensions] = useState({ height: 60, width: 350 });
-  const buttonWidth = dimensions.width / buttons.length;
+const TabsComponent = ({ index, setIndex, sceneMap }: TabsButtonsProps) => {
+  const layout = useWindowDimensions();
+  const renderScene = SceneMap(sceneMap)
+  const routes = Object.keys(sceneMap)?.map((item: string) => ({ key: item, title: item }))
 
-  const tabPositionX=useSharedValue(0);
-
-  const onTabberLayout=(e:LayoutChangeEvent)=>{
-    setDimensions({
-      height: e.nativeEvent.layout.height,
-      width: e.nativeEvent.layout.width,
-    });
-  };
-  const handlePress=(index:number)=>{
-    setSelectedTab(index);
-  }
-  const onTabPress=(index:number)=>{
-    tabPositionX.value=withTiming(buttonWidth *index,{},()=>{
-      runOnJS(handlePress)(index)
-    })
-  }
-  const animatedStyle =useAnimatedStyle(()=>{
-    return{
-      transform: [{translateX:tabPositionX.value}]
-    }
-  })
- 
-  
-
- 
   return (
     <View
-    accessibilityRole="tabbar"
       style={{
-        margin:9,
-        padding:8,
+        margin: 9,
+        padding: 8,
         backgroundColor: "#A5583A1A",
         borderRadius: 10,
         justifyContent: "center",
       }}
     >
-      <Animated.View
-        style={[{
-          position: "absolute",
-          backgroundColor: "#A5583A",
-          borderRadius: 10,
-          marginHorizontal: 5,
-          height: dimensions.height - 5,
-          width: buttonWidth -8,
-        },
-        animatedStyle,
-      ]}
-      ></Animated.View>
-
-      <View onLayout={onTabberLayout} style={{ flexDirection: "row" }}>
-        {buttons.map((button, index) => {
-          const color = selectedTab === index ? "white" : "#8E8E93";
-          return (
-            <Pressable
-              key={index}
-              style={{ flex: 1, paddingVertical: 20 }}
-              onPress={() => onTabPress(index)}
-            >
-              <Text
-                style={{
-                  color: color,
-                  alignSelf: "center",
-                  fontWeight: "500",
-                  fontSize: 19,
-                }}
-              >
-                {button.title}
-              </Text>
-            </Pressable>
-          );
-        })}
-      </View>
+      <TabView
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        initialLayout={{ width: layout.width }}
+      />
     </View>
   );
 };
 
-export default TabsEvent;
+export default TabsComponent;

@@ -26,10 +26,9 @@ import { colors } from "@/app/theme/Colors";
 import { useUserInfo } from "@/app/state/user/hooks";
 
 const EditProfile = () => {
-  const { values, setFieldValue, errors, submitForm } = useSignUp();
-  const { data } = useCountriesQuery();
   const userData = useUserInfo()
-
+  const { values, setFieldValue, errors, submitForm } = useSignUp({userData});
+  const { data } = useCountriesQuery();
 
   return (
     <KeyboardAvoidingView style={styles.container}>

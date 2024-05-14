@@ -10,8 +10,9 @@ import { useSignUpMutation } from "../data/user";
 import Toast from "react-native-toast-message";
 import { useDispatch } from "react-redux";
 import { setTokens } from "../state/user/slice";
+import { UserModel } from "../types";
 
-const useSignUp = () => {
+const useSignUp = ({userData}: {userData?: UserModel}) => {
   const [signUp, { data, error }] = useSignUpMutation();
   const dispatch = useDispatch();
   
@@ -22,9 +23,9 @@ const useSignUp = () => {
         text1: JSON.stringify((error as any)?.data),
       });
   }, [error]);
-
   const { values, setFieldValue, errors, submitForm } = useFormik({
-    initialValues: SignUpInitialValues,
+    //@ts-ignore
+    initialValues: SignUpInitialValues(userData),
     validationSchema: SignUpValidationSchema,
     validateOnChange: false,
     onSubmit: (values: SignupModel) => {

@@ -1,4 +1,5 @@
 import * as yup from "yup";
+import { UserModel } from ".";
 
 export interface SignupModel {
   firstName: string;
@@ -15,20 +16,20 @@ export interface SignupModel {
   status: string;
 }
 
-export const SignUpInitialValues: SignupModel = {
-  firstName: "",
-  lastName: "",
-  images: null,
-  email: "",
+export const SignUpInitialValues = (userData?: UserModel) => ({
+  firstName: userData?.firstName ?? "",
+  lastName: userData?.lastName ?? "",
+  images: userData?.images ?? null,
+  email: userData?.email ?? "",
   countryCode: "JO",
-  phone: "",
-  date: "2024-04-30T22:23:00.000Z",
-  country: "",
-  city: "",
+  phone: userData?.phone ?? "",
+  date: userData?.dateOfBirth ?? "2024-04-30T22:23:00.000Z",
+  country: userData?.country ?? "",
+  city: userData?.city ?? "",
   password: "",
   confirmPassword: "",
-  status: 'OK'
-};
+  status: 'OK',
+});
 
 export const SignUpValidationSchema = yup.object({
   firstName: yup.string().required("Please complete this field"),
