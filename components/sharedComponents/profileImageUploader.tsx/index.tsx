@@ -15,7 +15,7 @@ const ProfileImageUploader = ({ image = null, setImage }: IProps) => {
   const { upload, images, isLoading} = useUploadImage();
 
   const handleTakeImage = async () => {
-    const { image } = await useTakeImage();
+    const image = await useTakeImage();
     if (image) {
       upload([image])
         .unwrap()
@@ -29,7 +29,7 @@ const ProfileImageUploader = ({ image = null, setImage }: IProps) => {
   };
 
   const handlePickImage = async () => {
-    const {image} = await usePickImage();
+    const image = await usePickImage();
     if (image) {
       upload([image])
         .unwrap()

@@ -9,6 +9,7 @@ import { EventsInitialValues, EventsValidationSchema, PublicPlaceResponse, Searc
 import DatePickerComponent from "@/components/sharedComponents/dateTimePicker";
 import { useCreateEventMutation } from "../data/events";
 import { useFormik } from "formik";
+import { usePickImage, useUploadImage } from "../hooks";
 
 const AddEvent = () => {
     const [createEvent] = useCreateEventMutation()
@@ -20,6 +21,21 @@ const AddEvent = () => {
 
         }
     })
+    const { upload, images, isLoading } = useUploadImage();
+
+    const handleUploadImage = async () => {
+      const image = await usePickImage();
+      if (image) {
+        upload([image])
+          .unwrap()
+          .then(() => {
+            if (Array.isArray(images)) {
+              setFieldValue("images", [...(values.images || []), images?.[0]]);
+            }
+          });
+      }
+    };
+
     const { data: publicPlaces } = useSearchPublicPlacesQuery()
     const publicPlacesItems = useMemo(() => publicPlaces?.map((item: PublicPlaceResponse) => (
         { label: item.name ?? '', value: item.publicPlaceId ?? '' }
@@ -29,7 +45,7 @@ const AddEvent = () => {
         <KeyboardAvoidingView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <VStack flex={1} paddingY={3} space={"2"}>
-                    <UploadPhotos />
+                    <UploadPhotos onPress={handleUploadImage} />
                     <View>
                         <Dropdown label="Public Place" items={publicPlacesItems} placeHolder="select" />
                     </View>
