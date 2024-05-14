@@ -29,13 +29,13 @@ export const UserApi = createApi({
         method: "GET",
       }),
     }),
-    imageUpload: builder.mutation<Array<string>, Array<string>>({
+    imageUpload: builder.mutation<Array<string>, Array<{ base: string }>>({
       query: (body) => ({
         url: "image/UploadImage",
         method: "POST",
-        body
-      })
-    })
+        body,
+      }),
+    }),
   }),
 });
 

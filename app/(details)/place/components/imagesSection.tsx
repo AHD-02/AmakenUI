@@ -11,7 +11,7 @@ interface IProps {
 }
 
 const ImagesSection = ({ data }: IProps) => {
-
+    
     return (
         <View style={styles.container}> 
             <View style={styles.header}>
@@ -28,7 +28,7 @@ const ImagesSection = ({ data }: IProps) => {
                 </View>
             </View>
             <View>
-                <Image source={EventImage} width={'full'} height={'full'} alt={'image'} resizeMode='cover' />
+                <Image src={data?.images?.[0] ?? ""} width={'full'} height={'full'} alt={'image'} resizeMode='cover' />
             </View>
         </View>
     )

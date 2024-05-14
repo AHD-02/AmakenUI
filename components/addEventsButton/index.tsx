@@ -1,5 +1,5 @@
-import { Pressable, StyleSheet, TouchableOpacity, View } from 'react-native';
-import React from 'react';
+import { Pressable, StyleSheet, TouchableOpacity, View } from "react-native";
+import React from "react";
 import Animated, {
   Easing,
   Extrapolation,
@@ -10,10 +10,10 @@ import Animated, {
   withDelay,
   withSpring,
   withTiming,
-} from 'react-native-reanimated';
-import { AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons';
-import { colors } from '@/app/theme/Colors';
-import { router } from 'expo-router';
+} from "react-native-reanimated";
+import { AntDesign, Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { colors } from "@/app/theme/Colors";
+import { router } from "expo-router";
 
 const AddEventsButton = () => {
   const firstValue = useSharedValue(30);
@@ -25,7 +25,7 @@ const AddEventsButton = () => {
   const isOpen = useSharedValue(false);
   const opacity = useSharedValue(0);
   const progress = useDerivedValue(() =>
-    isOpen.value ? withTiming(1) : withTiming(0),
+    isOpen.value ? withTiming(1) : withTiming(0)
   );
 
   const handlePress = () => {
@@ -34,12 +34,12 @@ const AddEventsButton = () => {
       duration: 500,
     };
     if (isOpen.value) {
-      firstWidth.value = withTiming(60, { duration: 100 }, finish => {
+      firstWidth.value = withTiming(60, { duration: 100 }, (finish) => {
         if (finish) {
           firstValue.value = withTiming(30, config);
         }
       });
-      secondWidth.value = withTiming(60, { duration: 100 }, finish => {
+      secondWidth.value = withTiming(60, { duration: 100 }, (finish) => {
         if (finish) {
           secondValue.value = withDelay(50, withTiming(30, config));
         }
@@ -89,7 +89,7 @@ const AddEventsButton = () => {
       firstValue.value,
       [30, 130],
       [0, 1],
-      Extrapolation.CLAMP,
+      Extrapolation.CLAMP
     );
 
     return {
@@ -103,7 +103,7 @@ const AddEventsButton = () => {
       secondValue.value,
       [30, 210],
       [0, 1],
-      Extrapolation.CLAMP,
+      Extrapolation.CLAMP
     );
 
     return {
@@ -144,37 +144,45 @@ const AddEventsButton = () => {
           Edit File
         </Animated.Text>
       </Animated.View> */}
-      <Animated.View
-        style={[styles.contentContainer, secondIcon, secondWidthStyle]}>
-        <View style={styles.iconContainer}>
-          <MaterialIcons name='public' size={25} color={'white'} />
-        </View>
-        <TouchableOpacity onPress={() => router.push("/(details)/addPublicPlace")}>
+      <TouchableOpacity
+        onPress={() => router.push("/(details)/addPublicPlace")}
+      >
+        <Animated.View
+          style={[styles.contentContainer, secondIcon, secondWidthStyle]}
+        >
+          <View style={styles.iconContainer}>
+            <MaterialIcons name="public" size={25} color={"white"} />
+          </View>
+
           <Animated.Text style={[styles.text, opacityText]}>
             Add Place
           </Animated.Text>
-        </TouchableOpacity>
-      </Animated.View>
-      <Animated.View
-        style={[styles.contentContainer, firstIcon, firstWidthStyle]}
+        </Animated.View>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={() => router.push("/(details)/addPublicPlace")}
+      >
+        <Animated.View
+          style={[styles.contentContainer, firstIcon, firstWidthStyle]}
         >
-        <View style={styles.iconContainer}>
-          <MaterialIcons name='event' size={26} color={'white'} />
-        </View>
-        <TouchableOpacity onPress={() => router.push("/(details)/addEvent")}>
-        <Animated.Text style={[styles.text, opacityText]}>
-          Add Event
-        </Animated.Text>
-        </TouchableOpacity>
-      </Animated.View>
+          <View style={styles.iconContainer}>
+            <MaterialIcons name="event" size={26} color={"white"} />
+          </View>
+          <Animated.Text style={[styles.text, opacityText]}>
+            Add Event
+          </Animated.Text>
+        </Animated.View>
+      </TouchableOpacity>
+
       <Pressable
         style={styles.contentContainer}
         onPress={() => {
           handlePress();
-        }}>
+        }}
+      >
         <Animated.View style={[styles.iconContainer, plusIcon]}>
           <Ionicons name="add" color={"white"} size={25} />
-
         </Animated.View>
       </Pressable>
     </View>
@@ -189,22 +197,22 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     backgroundColor: colors.primary,
-    position: 'absolute',
+    position: "absolute",
     bottom: 30,
     right: 30,
     borderRadius: 50,
-    flexDirection: 'row',
-    alignItems: 'center',
-    overflow: 'hidden',
+    flexDirection: "row",
+    alignItems: "center",
+    overflow: "hidden",
   },
   iconContainer: {
     width: 60,
     height: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   text: {
-    color: 'white',
+    color: "white",
     fontSize: 18,
   },
 });
