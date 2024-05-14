@@ -24,7 +24,7 @@ import { useCountriesQuery } from "../data/lookup";
 import DatePickerComponent from "@/components/sharedComponents/dateTimePicker";
 
 const UserSignUp = () => {
-  const { values, setFieldValue, errors, submitForm } = useSignUp();
+  const { values, setFieldValue, errors, submitForm } = useSignUp({});
   const { data } = useCountriesQuery();
 
   return (

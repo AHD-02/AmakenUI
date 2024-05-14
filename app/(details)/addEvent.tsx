@@ -1,10 +1,29 @@
-import { View, VStack, KeyboardAvoidingView, ScrollView } from "native-base";
+import { View, VStack, KeyboardAvoidingView, ScrollView, HStack } from "native-base";
 import UploadPhotos from "./components/uploadPhotos";
 import Dropdown from "@/components/sharedComponents/simpleDropdown";
 import { ButtonComponent, TextInput } from "@/components/sharedComponents";
 import { StyleSheet } from "react-native";
+import { useMemo } from "react";
+import { useSearchPublicPlacesQuery } from "../data/publicPlace";
+import { EventsInitialValues, EventsValidationSchema, PublicPlaceResponse, SearchEventsResponse } from "../types";
+import DatePickerComponent from "@/components/sharedComponents/dateTimePicker";
+import { useCreateEventMutation } from "../data/events";
+import { useFormik } from "formik";
 
 const AddEvent = () => {
+    const [createEvent] = useCreateEventMutation()
+    const { values, setFieldValue, handleSubmit, errors } = useFormik({
+        initialValues: EventsInitialValues,
+        validationSchema: EventsValidationSchema,
+        validateOnChange: false,
+        onSubmit: (values: SearchEventsResponse) => {
+
+        }
+    })
+    const { data: publicPlaces } = useSearchPublicPlacesQuery()
+    const publicPlacesItems = useMemo(() => publicPlaces?.map((item: PublicPlaceResponse) => (
+        { label: item.name ?? '', value: item.publicPlaceId ?? '' }
+    )) ?? [], [publicPlaces])
 
     return (
         <KeyboardAvoidingView style={styles.container}>
@@ -12,34 +31,60 @@ const AddEvent = () => {
                 <VStack flex={1} paddingY={3} space={"2"}>
                     <UploadPhotos />
                     <View>
-                        <Dropdown label="Categories" items={[]} placeHolder="Select" />
+                        <Dropdown label="Public Place" items={publicPlacesItems} placeHolder="select" />
                     </View>
 
                     <View>
                         <TextInput
-                            onChangeText={() => { }}
-                            value=""
-                            label="Place Name"
-                            placeholder="Name"
+                            onChangeText={(val: string) => setFieldValue('name', val)}
+                            value={values.name ?? ''}
+                            label="Event Name"
+                            placeholder="name"
+                            errorMsg={errors.name}
+                        />
+                    </View>
+
+                    <HStack justifyContent={'space-between'}>
+                        <View width={'46%'}>
+                            <DatePickerComponent
+                                value={values.eventStart?.toString() ?? ''}
+                                setValue={(val) => setFieldValue('eventStart', new Date(val ?? ''))}
+                                label="Date"
+                            />
+                        </View>
+                        <View width={'46%'}>
+                            <DatePickerComponent
+                                value={''}
+                                setValue={(val) => setFieldValue('endDate', val)}
+                                label="Time"
+                                placeholder="00:00"
+                            />
+                        </View>
+                    </HStack>
+                    <View>
+                        <TextInput
+                            onChangeText={(val: string) => setFieldValue('fees', +val ?? 0)}
+                            value={values.fees?.toString() ?? 0}
+                            label="Fees"
+                            placeholder="0 JOD"
+                            keyboardType="numeric"
+                            errorMsg={errors.fees}
                         />
                     </View>
 
                     <View>
                         <TextInput
-                            onChangeText={() => { }}
-                            value=""
-                            label="Location"
-                            placeholder="location"
+                            onChangeText={(val: string) => setFieldValue('description', val)}
+                            value={values.description ?? ''}
+                            label="Decription"
+                            placeholder="description"
+                            errorMsg={errors.description}
                         />
-                    </View>
-
-                    <View>
-                        <Dropdown label="Availability" items={[]} placeHolder="Select" />
                     </View>
                 </VStack>
 
                 <View alignItems={"flex-end"} marginTop={140}>
-                    <ButtonComponent title="Create Place" onPress={() => { }} />
+                    <ButtonComponent title="Create Place" onPress={handleSubmit} />
                 </View>
             </ScrollView>
         </KeyboardAvoidingView>

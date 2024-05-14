@@ -9,9 +9,11 @@ interface IProps {
   value: string;
   setValue: (arg: string) => void;
   errorMsg?: string;
+  mode?: 'date' | 'time' | 'datetime'
+  placeholder?: string
 }
 
-const DatePickerComponent = ({ label, setValue, value, errorMsg }: IProps) => {
+const DatePickerComponent = ({ label, setValue, value, errorMsg, mode, placeholder }: IProps) => {
   const [show, setShow] = useState(false);
 
   const formatDate = (date: Date) => {
@@ -58,7 +60,7 @@ const DatePickerComponent = ({ label, setValue, value, errorMsg }: IProps) => {
         backgroundColor={"#F3F5F5"}
         onTouchStart={showDatePicker}
       >
-        <Text>{value !== "" ? formatDate(new Date(value)) : "DD/MM/YYYY"}</Text>
+        <Text style={!value ? {fontWeight: 400, fontSize: 16, color: '#C8C8C8'} : {}}>{value !== "" ? formatDate(new Date(value)) : placeholder ?? "DD/MM/YYYY"}</Text>
       </HStack>
       {Boolean(errorMsg) && (
         <WarningMessage
@@ -70,8 +72,8 @@ const DatePickerComponent = ({ label, setValue, value, errorMsg }: IProps) => {
         <DateTimePicker
           testID="dateTimePicker"
           value={value === "" ? new Date() : new Date(value)}
-          mode="date"
-          is24Hour={true}
+          mode={mode ?? 'date'}
+          // is24Hour={true}
           display="default"
           onChange={onChange}
           style={customStyles}
