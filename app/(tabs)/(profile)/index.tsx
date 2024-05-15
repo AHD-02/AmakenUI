@@ -2,10 +2,11 @@ import { View, Text } from 'react-native'
 import React, { useState } from 'react'
 import ProfileHeader from '@/components/profile/profileHeader'
 import { ScrollView, VStack } from 'native-base'
-import TabsPublicPlace from '@/components/editProfile/tabsPublicPlace'
-import TabsComponent from '@/components/editProfile/tabsEvent'
 import Events from '@/components/profile/events'
 import PublicPlaces from '@/components/profile/publicPlaces'
+import TabsComponent from '@/components/tabsComponent'
+import { ButtonComponent } from '@/components/sharedComponents'
+import { router } from 'expo-router'
 
 const Profile = () => {
     const [tabValue, setTabValue] = useState<number>(0)
@@ -18,12 +19,15 @@ const Profile = () => {
         <VStack space={2}>
             <ScrollView>
                 <ProfileHeader />
-                <TabsComponent
+                <ButtonComponent 
+                    title='login'
+                    onPress={() => router.replace('(auth)/')}
+                />
+                {/* <TabsComponent
                     index={tabValue}
                     setIndex={setTabValue}
                     sceneMap={sceneMap}
-                />
-                <TabsPublicPlace />
+                /> */}
             </ScrollView>
         </VStack>
     )

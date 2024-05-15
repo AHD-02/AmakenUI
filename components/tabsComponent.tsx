@@ -8,7 +8,7 @@ type TabsButtonsProps = {
   sceneMap: {
     [key: string]: React.ComponentType<unknown>;
   }
-};
+};  
 
 const TabsComponent = ({ index, setIndex, sceneMap }: TabsButtonsProps) => {
   const layout = useWindowDimensions();
