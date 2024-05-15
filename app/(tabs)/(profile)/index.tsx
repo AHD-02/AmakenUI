@@ -23,11 +23,11 @@ const Profile = () => {
                     title='login'
                     onPress={() => router.replace('(auth)/')}
                 />
-                <TabsComponent
+                {/* <TabsComponent
                     index={tabValue}
                     setIndex={setTabValue}
                     sceneMap={sceneMap}
-                />
+                /> */}
             </ScrollView>
         </VStack>
     )
