@@ -1,7 +1,11 @@
 import { View, VStack, KeyboardAvoidingView, ScrollView } from "native-base";
 import UploadPhotos from "./components/uploadPhotos";
 import Dropdown from "@/components/sharedComponents/simpleDropdown";
-import { ButtonComponent, TextInput } from "@/components/sharedComponents";
+import {
+  ButtonComponent,
+  TextAreaInput,
+  TextInput,
+} from "@/components/sharedComponents";
 import { StyleSheet } from "react-native";
 import { usePublicPlaceCategoriesQuery } from "../data/lookup";
 import { useFormik } from "formik";
@@ -60,7 +64,7 @@ const AddPublicPlace = () => {
               ))}
             </ScrollView>
           )}
-          
+
           <View>
             <TextInput
               label="Place Name"
@@ -77,6 +81,15 @@ const AddPublicPlace = () => {
               items={data ?? []}
               selectedValue={values?.categoryId?.toString() ?? ""}
               setSelectedValue={(value) => setFieldValue("categoryId", value)}
+            />
+          </View>
+
+          <View>
+            <TextAreaInput
+              label="Description"
+              placeholder="description"
+              onChangeText={(value) => setFieldValue("description", value)}
+              value={values?.description}
             />
           </View>
         </VStack>

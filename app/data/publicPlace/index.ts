@@ -1,6 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import customFetchBase from "../middleware";
 import { PublicPlaceResponse } from "@/app/types/places";
+import { PublicPlaceCreateType } from "@/app/types/publicPlaceType";
 
 export const PublicPlace = createApi({
   baseQuery: customFetchBase,
@@ -10,7 +11,7 @@ export const PublicPlace = createApi({
   endpoints: (builder) => ({
     searchPublicPlaces: builder.query<PublicPlaceResponse[], void>({
       query: () => ({
-        url: "public_Place/SearchPublicPlaces",
+        url: "public_Place/Search",
         method: "GET",
       }),
     }),
@@ -20,7 +21,26 @@ export const PublicPlace = createApi({
         method: "GET",
       }),
     }),
+    createPublicPlace: builder.mutation<void, PublicPlaceCreateType>({
+      query: (body) => ({
+        url: `public_Place/create`,
+        method: "POST",
+        body,
+      }),
+    }),
+    checkName: builder.query<boolean, {name: string}>({
+      query: (params) => ({
+        url: `public_Place/isNameUnique`,
+        method: "GET",
+        params
+      }),
+    }),
   }),
 });
 
-export const { useSearchPublicPlacesQuery, useGetPublicPlaceQuery } = PublicPlace;
+export const {
+  useSearchPublicPlacesQuery,
+  useGetPublicPlaceQuery,
+  useCreatePublicPlaceMutation,
+  useLazyCheckNameQuery,
+} = PublicPlace;
