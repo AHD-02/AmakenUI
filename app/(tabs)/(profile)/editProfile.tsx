@@ -24,6 +24,7 @@ import useSignUp from "@/app/hooks/useSignUp";
 import { useCountriesQuery } from "@/app/data/lookup";
 import { colors } from "@/app/theme/Colors";
 import { useUserInfo } from "@/app/state/user/hooks";
+import { Ionicons } from "@expo/vector-icons";
 
 const EditProfile = () => {
   const userData = useUserInfo()
@@ -44,6 +45,8 @@ const EditProfile = () => {
             borderRadius={50}
             alignItems={'center'}
           />
+             <Ionicons name="camera" color={"white"} size={50} />
+
         </View>
         <VStack space={"2"}>
           <HStack justifyContent={"space-between"}>

@@ -1,6 +1,8 @@
 import React from "react";
 import { View, useWindowDimensions, } from "react-native";
 import { SceneMap, TabView } from "react-native-tab-view";
+import Events from "./profile/events";
+import PublicPlaces from "./profile/publicPlaces";
 
 type TabsButtonsProps = {
   index: number;
@@ -10,11 +12,14 @@ type TabsButtonsProps = {
   }
 };  
 
-const TabsComponent = ({ index, setIndex, sceneMap }: TabsButtonsProps) => {
+const TabsComponent = ({ index, setIndex }: TabsButtonsProps) => {
   const layout = useWindowDimensions();
-  const renderScene = SceneMap(sceneMap)
-  const routes = Object.keys(sceneMap)?.map((item: string) => ({ key: item, title: item }))
-
+  const sceneMaps = {
+    events: Events,
+    publicPlaces: PublicPlaces,
+  }
+  const routes = Object.keys(sceneMaps)?.map((item: string) => ({ key: item, title: item }))
+  const renderScene = SceneMap(sceneMaps)
   return (
     <View
       style={{

@@ -7,14 +7,17 @@ export const EventApi = createApi({
     baseQuery: customFetchBase,
     refetchOnMountOrArgChange: true,
     refetchOnReconnect: true,
+    tagTypes: ['event'],
     endpoints: builder => ({
         searchEvents: builder.query<SearchEventsResponse[], void>({
+            providesTags: ['event'],
             query: () => ({
                 url: 'event/SearchEvents',
                 method: 'GET',
             }),
         }),
         searchSavedEvents: builder.query<SearchEventsResponse[], void>({
+            providesTags: ['event'],
             query: () => ({
                 url: 'event/searchSavedEvents',
                 method: 'GET',
@@ -27,10 +30,28 @@ export const EventApi = createApi({
             }),
         }),
         createEvent: builder.mutation<void, SearchEventsResponse>({
+            invalidatesTags: ['event'],
             query: body => ({
                 url: 'event/createEvent',
                 method: 'POST',
                 body: body
+            })
+        }),
+        saveEvent: builder.mutation<void, string>({
+            invalidatesTags: ['event'],
+            query: id => ({
+                // url: `event/${id ?? ''}/save`,
+                url: `event/save/${id ?? ''}`,
+                method: 'POST',
+                body: {}
+            })
+        }),
+        unSaveEvent: builder.mutation<void, string>({
+            invalidatesTags: ['event'],
+            query: id => ({
+                url: `event/unSave/${id ?? ''}`,
+                method: 'POST',
+                body: {}
             })
         })
     }),
@@ -41,4 +62,6 @@ export const {
     useSearchSavedEventsQuery,
     useGetEventQuery,
     useCreateEventMutation,
+    useSaveEventMutation,
+    useUnSaveEventMutation,
 } = EventApi;

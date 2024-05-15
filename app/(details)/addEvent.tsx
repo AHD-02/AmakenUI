@@ -100,7 +100,7 @@ const AddEvent = () => {
                 </VStack>
 
                 <View alignItems={"flex-end"} marginTop={140}>
-                    <ButtonComponent title="Create Place" onPress={handleSubmit} />
+                    <ButtonComponent title="Create Event" onPress={handleSubmit} />
                 </View>
             </ScrollView>
         </KeyboardAvoidingView>

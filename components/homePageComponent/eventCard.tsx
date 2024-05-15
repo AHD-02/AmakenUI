@@ -4,6 +4,7 @@ import { Archive, ArchiveGray, LocationIcon } from "@/assets/icons";
 import { AntDesign } from "@expo/vector-icons";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { HStack, Image, Pressable, Text, View } from "native-base";
+import { useSaveEventMutation, useUnSaveEventMutation } from "@/app/data/events";
 
 interface IProps {
   title: string;
@@ -30,10 +31,11 @@ const EventPage = ({
   id,
   isBookingComponent,
 }: IProps) => {
+  const [saveEvent, res] = useSaveEventMutation()
+  const [unSaveEvent, unSaveRes] = useUnSaveEventMutation()
 
   const isSaved = useIsEventSaved(id ?? '')
-
-
+  console.log(res, 'ressssssssssssssssss')
   return (
     <Pressable onPress={onPress} marginRight={`${isBookingComponent ? 1 : 4}`}>
 
@@ -71,7 +73,7 @@ const EventPage = ({
         </HStack>
       </HStack>
       <View style={[styles.icon, isSaved ? {backgroundColor: colors.primary} : {}]}>
-        <TouchableOpacity onPress={() => { }}>
+        <TouchableOpacity onPress={() => isSaved ? unSaveEvent(id ?? '') : saveEvent(id ?? '')}>
           {isSaved ? <Archive /> : <ArchiveGray />}
         </TouchableOpacity>
       </View>
