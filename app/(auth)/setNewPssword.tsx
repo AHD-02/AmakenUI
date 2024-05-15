@@ -12,7 +12,7 @@ import useSignUp from "../hooks/useSignUp";
 
 
 const setNewPassword = () => {
-    const {values, setFieldValue, errors, submitForm} = useSignUp();
+    const {values, setFieldValue, errors, submitForm} = useSignUp({});
 
     return (
         <KeyboardAvoidingView

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Center, HStack, Image, Pressable, Text, View } from "native-base";
 import { Camera } from "@/assets/images";
 import ModalComponent from "../modal";
-import { AntDesign, EvilIcons } from "@expo/vector-icons";
-import { usePickImage, useTakeImage } from "@/app/hooks";
+import { AntDesign, EvilIcons, Ionicons } from "@expo/vector-icons";
+import { usePickImage, useTakeImage, useUploadImage } from "@/app/hooks";
 
 interface IProps {
   image?: any;
@@ -12,19 +12,32 @@ interface IProps {
 
 const ProfileImageUploader = ({ image = null, setImage }: IProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { upload, images, isLoading} = useUploadImage();
 
   const handleTakeImage = async () => {
-    const { image } = await useTakeImage();
+    const image = await useTakeImage();
     if (image) {
-      setImage(image);
+      upload([image])
+        .unwrap()
+        .then(() => {
+          if (images) {
+            setImage(images);
+          }
+        });
       setIsOpen(false);
     }
   };
 
   const handlePickImage = async () => {
-    const { image } = await usePickImage();
+    const image = await usePickImage();
     if (image) {
-      setImage(image);
+      upload([image])
+        .unwrap()
+        .then(() => {
+          if (images) {
+            setImage(images);
+          }
+        });
       setIsOpen(false);
     }
   };
@@ -38,14 +51,32 @@ const ProfileImageUploader = ({ image = null, setImage }: IProps) => {
     <View>
       <Pressable onPress={() => setIsOpen(true)}>
         <Center>
-          <Image
-            {...(image ? { source: { uri: image } } : { source: Camera })}
-            height={120}
-            width={120}
-            my={"6"}
-            borderRadius={"full"}
-            alt="image"
-          />
+          {Array.isArray(images) ? (
+            <View
+              style={{
+                backgroundColor: "#F3F5F5",
+                height: 120,
+                width: 120,
+                borderRadius: 100,
+                justifyContent: "center",
+                alignItems: "center",
+                flex: 1,
+                marginBottom: 10,
+                marginTop: 10,
+              }}
+            >
+              <Ionicons name="camera" color={"white"} size={50} />
+            </View>
+          ) : (
+            <Image
+              src={images?.[0] ?? ""}
+              height={120}
+              width={120}
+              my={"6"}
+              borderRadius={"full"}
+              alt="image"
+            />
+          )}
         </Center>
       </Pressable>
 

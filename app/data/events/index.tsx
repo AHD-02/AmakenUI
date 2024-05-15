@@ -1,4 +1,4 @@
-import {createApi} from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
 import customFetchBase from '../middleware';
 import { SearchEventsResponse } from '@/app/types';
 
@@ -26,6 +26,13 @@ export const EventApi = createApi({
                 method: 'GET',
             }),
         }),
+        createEvent: builder.mutation<void, SearchEventsResponse>({
+            query: body => ({
+                url: 'event/createEvent',
+                method: 'POST',
+                body: body
+            })
+        })
     }),
 });
 
@@ -33,4 +40,5 @@ export const {
     useSearchEventsQuery,
     useSearchSavedEventsQuery,
     useGetEventQuery,
+    useCreateEventMutation,
 } = EventApi;

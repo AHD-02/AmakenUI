@@ -4,7 +4,6 @@ import { Archive, ArchiveGray, LocationIcon } from "@/assets/icons";
 import { AntDesign } from "@expo/vector-icons";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { HStack, Image, Pressable, Text, View } from "native-base";
-import { Hiking } from "@/assets/images";
 
 interface IProps {
   title: string;
@@ -34,13 +33,13 @@ const EventPage = ({
 
   const isSaved = useIsEventSaved(id ?? '')
 
-  console.log({image})
+
   return (
     <Pressable onPress={onPress} marginRight={`${isBookingComponent ? 1 : 4}`}>
 
         <HStack width={"100%"} >
           <Image
-            source={{uri: image ?? undefined}}
+            src={image ?? ""}
             height={160}
             width={isBookingComponent ? 'full' : '300'}
             resizeMode="cover"
