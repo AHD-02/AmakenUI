@@ -9,7 +9,7 @@ interface IProps {
   value: string;
   setValue: (arg: string) => void;
   errorMsg?: string;
-  mode?: 'date' | 'time' | 'datetime'
+  mode?: 'date' | 'time'
   placeholder?: string
 }
 
@@ -17,10 +17,11 @@ const DatePickerComponent = ({ label, setValue, value, errorMsg, mode, placehold
   const [show, setShow] = useState(false);
 
   const formatDate = (date: Date) => {
+    if (mode == 'time')
+      return `${date.getHours() ?? '00'}:${date.getMinutes() ?? '00'} ${(date.getHours() >= 12) ? 'PM' : 'AM'}`
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
-
     return `${day}/${month}/${year}`;
   };
 
@@ -60,7 +61,7 @@ const DatePickerComponent = ({ label, setValue, value, errorMsg, mode, placehold
         backgroundColor={"#F3F5F5"}
         onTouchStart={showDatePicker}
       >
-        <Text style={!value ? {fontWeight: 400, fontSize: 16, color: '#C8C8C8'} : {}}>{value !== "" ? formatDate(new Date(value)) : placeholder ?? "DD/MM/YYYY"}</Text>
+        <Text style={!value ? { fontWeight: 400, fontSize: 16, color: '#C8C8C8' } : {}}>{value !== "" ? formatDate(new Date(value)) : placeholder ?? "DD/MM/YYYY"}</Text>
       </HStack>
       {Boolean(errorMsg) && (
         <WarningMessage

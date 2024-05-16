@@ -28,12 +28,14 @@ import { useFormik } from "formik";
 import { usePickImage, useUploadImage } from "../hooks";
 
 const AddEvent = () => {
-    const [createEvent] = useCreateEventMutation();
+    const [createEvent, res] = useCreateEventMutation();
     const { values, setFieldValue, handleSubmit, errors } = useFormik({
         initialValues: EventsInitialValues,
         validationSchema: EventsValidationSchema,
         validateOnChange: false,
-        onSubmit: (values: SearchEventsResponse) => { },
+        onSubmit: (values: SearchEventsResponse) => {
+            createEvent(values)
+        },
     });
     const { upload, images, isLoading } = useUploadImage();
 
@@ -68,7 +70,7 @@ const AddEvent = () => {
         date: new Date(),
         time: new Date()
     })
-    const handleStartDate = () => {
+    const handleStartDate = () => { // TODO: FIX THE LOGIC
         setFieldValue('eventStart', new Date(
             startDate.date.getFullYear(),
             startDate.date.getMonth(),
@@ -77,8 +79,8 @@ const AddEvent = () => {
             startDate.time.getMinutes()
         ))
     }
-    const handleEndDate = () => {
-        setFieldValue('eventStart', new Date(
+    const handleEndDate = () => { // TODO: FIX THE LOGIC
+        setFieldValue('eventEnd', new Date(
             endDate.date.getFullYear(),
             endDate.date.getMonth(),
             endDate.date.getDate(),
@@ -86,7 +88,8 @@ const AddEvent = () => {
             endDate.time.getMinutes()
         ))
     }
-    console.log('startDate', startDate)
+    console.log('startDate', res)
+    console.log('errors', values)
     return (
         <KeyboardAvoidingView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -113,6 +116,7 @@ const AddEvent = () => {
                             label="Public Place"
                             items={publicPlacesItems}
                             placeHolder="select"
+                            setSelectedValue={(val) => setFieldValue('location', val)}
                         />
                     </View>
 
@@ -129,7 +133,7 @@ const AddEvent = () => {
                     <HStack justifyContent={'space-between'}>
                         <View width={'46%'}>
                             <DatePickerComponent
-                                value={values.eventStart?.toString() ?? ''}
+                                value={values.eventStart ? startDate.date?.toString() ?? '' : ''}
                                 setValue={(val) => {
                                     setStartDate(prev => ({ ...prev, date: new Date(val) }))
                                     handleStartDate()
@@ -139,7 +143,7 @@ const AddEvent = () => {
                         </View>
                         <View width={'46%'}>
                             <DatePickerComponent
-                                value={startDate.time?.toString()}
+                                value={values.eventStart ? startDate.time?.toString() : ''}
                                 setValue={(val) => setStartDate(prev => ({ ...prev, time: new Date(val) }))}
                                 label="Start Time"
                                 placeholder="00:00"
@@ -150,7 +154,7 @@ const AddEvent = () => {
                     <HStack justifyContent={'space-between'}>
                         <View width={'46%'}>
                             <DatePickerComponent
-                                value={endDate.date.toString() ?? ''}
+                                value={values.eventEnd ? endDate.date.toString() ?? '' : ''}
                                 setValue={(val) => {
                                     setEndDate(prev => ({ ...prev, date: new Date(val) }))
                                     handleEndDate()
@@ -160,7 +164,7 @@ const AddEvent = () => {
                         </View>
                         <View width={'46%'}>
                             <DatePickerComponent
-                                value={endDate.time?.toString()}
+                                value={values.eventEnd ? endDate.time?.toString() : ''}
                                 setValue={(val) => {
                                     setEndDate(prev => ({ ...prev, time: new Date(val) }))
                                     handleEndDate()
