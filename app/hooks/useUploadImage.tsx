@@ -11,7 +11,8 @@ const useUploadImage = () => {
         type: "error",
         text1: JSON.stringify((res.error as any)?.data),
       });
-  }, [res.error]);
+
+  }, [res]);
 
   return {
     images: res.data ?? [],

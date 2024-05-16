@@ -11,6 +11,7 @@ const useTakeImage = async () => {
       });
       return {
         base: "",
+        fileExtention: ""
       };
     }
 
@@ -25,6 +26,7 @@ const useTakeImage = async () => {
     if (!result.canceled) {
       return {
         base: result.assets[0]?.base64 ?? "",
+        fileExtention: `.${result.assets[0]?.uri.split(".").pop()}` ?? "",
       };
     }
   } catch (error) {
@@ -33,6 +35,7 @@ const useTakeImage = async () => {
 
   return {
     base: "",
+    fileExtention: "",
   };
 };
 

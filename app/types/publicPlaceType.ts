@@ -14,9 +14,9 @@ export const publicPlaceInitialValues = (values?: PublicPlaceCreateType) => {
   return {
     name: values?.name ?? "",
     description: values?.description ?? "",
-    longitude: values?.longitude ?? null,
-    latitude: values?.latitude ?? null,
-    categoryId: values?.categoryId ?? null,
+    longitude: values?.longitude ?? 31.965975,
+    latitude: values?.latitude ?? 35.898692,
+    categoryId: values?.categoryId ?? 0,
     categoryName: values?.categoryName ?? "",
     images: values?.images?? [],
   };

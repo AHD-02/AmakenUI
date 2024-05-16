@@ -19,13 +19,14 @@ const Home = () => {
   const { data: events } = useSearchEventsQuery();
   const { data: publicPlaces } = useSearchPublicPlacesQuery();
 
+  
   return (
     <View style={styles.container}>
       <DynamicHeader />
 
       <ScrollView>
         <VStack style={{ paddingHorizontal: 20 }} space={5}>
-          <VStack space={2} mt={4}>
+          {Array.isArray(events) && events.length > 0 && <VStack space={2} mt={4}>
             <HStack justifyContent={"space-between"}>
               <Text>Events for you</Text>
               <Link
@@ -47,13 +48,13 @@ const Home = () => {
                   }
                   image={item.images[0] ?? ""}
                   rate={"3.5"}
-                  description={item.description ?? ""} //TODO: add location description
+                  description={item.description ?? ""}
                 />
               ))}
             </ScrollView>
-          </VStack>
+          </VStack>}
 
-          <VStack space={2}>
+          {Array.isArray(publicPlaces) && publicPlaces.length > 0 && <VStack space={2}>
             <HStack justifyContent={"space-between"}>
               <Text>Places for you</Text>
               <Link
@@ -82,7 +83,7 @@ const Home = () => {
                 />
               ))}
             </HStack>
-          </VStack>
+          </VStack>}
         </VStack>
       </ScrollView>
 

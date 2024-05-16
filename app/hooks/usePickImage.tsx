@@ -1,5 +1,5 @@
-import * as ImagePicker from "expo-image-picker";
 import React from "react";
+import * as ImagePicker from "expo-image-picker";
 import Toast from "react-native-toast-message";
 
 const usePickImage = async () => {
@@ -12,7 +12,7 @@ const usePickImage = async () => {
       });
       return {
         base: "",
-        name: "",
+        fileExtention: "",
       };
     }
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -26,7 +26,7 @@ const usePickImage = async () => {
     if (!result.canceled) {
       return {
         base: result.assets[0]?.base64 ?? "",
-        name: result.assets[0]?.fileName ?? "",
+        fileExtention: `.${result.assets[0]?.uri.split(".").pop()}` ?? "",
       };
     }
   } catch (error) {
@@ -35,7 +35,7 @@ const usePickImage = async () => {
 
   return {
     base: "",
-    name: "",
+    fileExtention: "",
   };
 };
 

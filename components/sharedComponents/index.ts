@@ -4,6 +4,8 @@ import TextInput from "./textInput";
 import ProfileImageUploader from "./profileImageUploader.tsx";
 import ModalComponent from "./modal";
 import TextAreaInput from "./textArea";
+import ImageContainer from "./imageContainer";
+import WarningMessage from "./warningMessage";
 
 export {
     TextInput,
@@ -12,4 +14,6 @@ export {
     ProfileImageUploader,
     ModalComponent as Modal,
     TextAreaInput,
+    WarningMessage,
+    ImageContainer
 }

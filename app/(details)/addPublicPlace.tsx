@@ -16,18 +16,41 @@ import {
 import WarningMessage from "@/components/sharedComponents/warningMessage";
 import ImageContainer from "@/components/sharedComponents/imageContainer";
 import { useTakeImage, useUploadImage } from "../hooks";
+import { useCreatePublicPlaceMutation } from "../data/publicPlace";
+import { useEffect } from "react";
+import Toast from "react-native-toast-message";
+import { router } from "expo-router";
 
 const AddPublicPlace = () => {
   const { data } = usePublicPlaceCategoriesQuery();
+  const [createPlace, res] = useCreatePublicPlaceMutation();
 
   const { values, setFieldValue, errors, submitForm } = useFormik({
     initialValues: publicPlaceInitialValues(),
     validationSchema: publicPlaceValidationSchema,
     validateOnChange: false,
     onSubmit: (values) => {
-      console.log(values);
+      createPlace(values);
     },
   });
+
+  useEffect(() => {
+    if (res?.error) {
+      Toast.show({
+        type: "error",
+        text1: JSON.stringify((res?.error as any)?.data),
+      });
+    }
+
+    if (res.isSuccess) {
+      Toast.show({
+        type: "sucess",
+        text1: "Place have been created successfully",
+      });
+
+      router.replace("/(tabs)");
+    }
+  }, [res]);
 
   const { upload, images, isLoading } = useUploadImage();
 
@@ -57,7 +80,7 @@ const AddPublicPlace = () => {
             />
           )}
 
-          {Array.isArray(values?.images) && (
+          {Array.isArray(values?.images) && !isLoading && (
             <ScrollView horizontal paddingBottom={2}>
               {values.images.map((img) => (
                 <ImageContainer key={img ?? ""} imageUrl={`https://${img}`} />
@@ -80,7 +103,9 @@ const AddPublicPlace = () => {
               placeHolder="Select"
               items={data ?? []}
               selectedValue={values?.categoryId?.toString() ?? ""}
-              setSelectedValue={(value) => setFieldValue("categoryId", value)}
+              setSelectedValue={(value) =>
+                setFieldValue("categoryId", Number(value))
+              }
             />
           </View>
 
