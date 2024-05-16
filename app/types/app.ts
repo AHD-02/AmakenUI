@@ -10,3 +10,5 @@ export type LookUpModel = {
     value: string;
     label: string;
 }
+
+export const primaryColor = "#A5583A";
