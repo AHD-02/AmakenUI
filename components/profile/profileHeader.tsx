@@ -3,18 +3,14 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
-  SafeAreaView,
 } from "react-native";
 import React, { useState } from "react";
 import {
-  Button,
   Modal,
   Avatar,
   Center,
-  FormControl,
   HStack,
   Image,
-  Input,
   VStack,
 } from "native-base";
 import { EditProfileIcon, LogoutIcon, ModalIconLogout } from "@/assets/icons";
@@ -27,6 +23,7 @@ import { UserInitialValues } from "@/app/types";
 import { reloadAsync } from "expo-updates";
 import { FontAwesome } from "@expo/vector-icons";
 import { ButtonComponent } from "../sharedComponents";
+import { imageUrlResolver } from "@/app/utils/imageUtils";
 
 const ProfileHeader = () => {
   const isLoggedIn = useIsLoggedIn();
@@ -74,19 +71,13 @@ const ProfileHeader = () => {
             </Modal.Content>
           </Modal>
         </Center>
-
-
-
-   
       </TouchableOpacity>
       <VStack space={2}>
         {isLoggedIn ? (
           <VStack>
             <View style={styles.profileImage}>
               <Image
-                source={{
-                  uri: userData?.images?.[0],
-                }}
+                src={imageUrlResolver(userData?.images?.[0] ?? "")}
                 alt="User Image"
                 width={"full"}
                 height={"full"}

@@ -1,7 +1,6 @@
 import { StyleSheet } from "react-native";
 import { View } from "@/components/Themed";
 import { ScrollView, VStack, Text, HStack } from "native-base";
-import { EventImage } from "@/assets/images";
 import { useSearchEventsQuery } from "../data/events";
 import { SearchEventsResponse } from "../types";
 import DynamicHeader from "@/components/header";
@@ -11,14 +10,11 @@ import EventPage from "@/components/homePageComponent/eventCard";
 import { useSearchPublicPlacesQuery } from "../data/publicPlace";
 import PlaceCard from "@/components/homePageComponent/placeCard";
 import { PublicPlaceResponse } from "../types/places";
-import { Ionicons } from "@expo/vector-icons";
-import IconButtonComponent from "@/components/sharedComponents/iconButton";
 import AddEventsButton from "@/components/addEventsButton";
 
 const Home = () => {
   const { data: events } = useSearchEventsQuery();
   const { data: publicPlaces } = useSearchPublicPlacesQuery();
-
   
   return (
     <View style={styles.container}>

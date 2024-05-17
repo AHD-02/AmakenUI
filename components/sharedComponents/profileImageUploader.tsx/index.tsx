@@ -1,29 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Center, HStack, Image, Pressable, Text, View } from "native-base";
 import { Camera } from "@/assets/images";
 import ModalComponent from "../modal";
 import { AntDesign, EvilIcons, Ionicons } from "@expo/vector-icons";
 import { usePickImage, useTakeImage, useUploadImage } from "@/app/hooks";
+import { imageUrlResolver } from "@/app/utils/imageUtils";
 
 interface IProps {
-  image?: any;
+  image?: string;
   setImage: (image: any) => void;
 }
 
-const ProfileImageUploader = ({ image = null, setImage }: IProps) => {
+const ProfileImageUploader = ({ image, setImage }: IProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { upload, images, isLoading} = useUploadImage();
+
+  useEffect(() => {
+    if (Array.isArray(images) && images.length > 0) {
+      setImage(images);
+    }
+  }, [images]);
 
   const handleTakeImage = async () => {
     const image = await useTakeImage();
     if (image) {
       upload([image])
-        .unwrap()
-        .then(() => {
-          if (images) {
-            setImage(images);
-          }
-        });
       setIsOpen(false);
     }
   };
@@ -32,12 +33,6 @@ const ProfileImageUploader = ({ image = null, setImage }: IProps) => {
     const image = await usePickImage();
     if (image) {
       upload([image])
-        .unwrap()
-        .then(() => {
-          if (images) {
-            setImage(images);
-          }
-        });
       setIsOpen(false);
     }
   };
@@ -51,7 +46,7 @@ const ProfileImageUploader = ({ image = null, setImage }: IProps) => {
     <View>
       <Pressable onPress={() => setIsOpen(true)}>
         <Center>
-          {Array.isArray(images) ? (
+          {!Boolean(image) ? (
             <View
               style={{
                 backgroundColor: "#F3F5F5",
@@ -69,7 +64,7 @@ const ProfileImageUploader = ({ image = null, setImage }: IProps) => {
             </View>
           ) : (
             <Image
-              src={images?.[0] ?? ""}
+              src={imageUrlResolver(image ?? "") ?? ""}
               height={120}
               width={120}
               my={"6"}

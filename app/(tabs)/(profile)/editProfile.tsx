@@ -2,12 +2,10 @@ import React from "react";
 import {
   ButtonComponent,
   PhoneInput,
-  ProfileImageUploader,
   TextInput,
 } from "@/components/sharedComponents";
 import {
   KeyboardAvoidingView,
-  Text,
   HStack,
   Stack,
   VStack,
@@ -16,15 +14,13 @@ import {
   Image,
 } from "native-base";
 import { StyleSheet } from "react-native";
-import { Link } from "expo-router";
-import PasswordInput from "@/components/sharedComponents/PasswordInput";
 import Dropdown from "@/components/sharedComponents/simpleDropdown";
-import DatePickerComponent from "@/components/sharedComponents/dateTimePicker";
 import useSignUp from "@/app/hooks/useSignUp";
 import { useCountriesQuery } from "@/app/data/lookup";
 import { colors } from "@/app/theme/Colors";
 import { useUserInfo } from "@/app/state/user/hooks";
 import { Ionicons } from "@expo/vector-icons";
+import { imageUrlResolver } from "@/app/utils/imageUtils";
 
 const EditProfile = () => {
   const userData = useUserInfo()
@@ -37,7 +33,7 @@ const EditProfile = () => {
         <View justifyContent={'center'} flexDirection={'column'}>
         <Image
             source={{
-              uri: userData?.images?.[0]
+              uri: imageUrlResolver(userData?.images?.[0] ?? "")
             }}
             alt='User Image'
             width={'100'}

@@ -14,7 +14,7 @@ import {
     WarningMessage,
 } from "@/components/sharedComponents";
 import { StyleSheet } from "react-native";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSearchPublicPlacesQuery } from "../data/publicPlace";
 import {
     EventsInitialValues,
@@ -26,6 +26,7 @@ import DatePickerComponent from "@/components/sharedComponents/dateTimePicker";
 import { useCreateEventMutation } from "../data/events";
 import { useFormik } from "formik";
 import { usePickImage, useUploadImage } from "../hooks";
+import { imageUrlResolver } from "../utils/imageUtils";
 
 const AddEvent = () => {
     const [createEvent, res] = useCreateEventMutation();
@@ -38,17 +39,17 @@ const AddEvent = () => {
         },
     });
     const { upload, images, isLoading } = useUploadImage();
+    
+    useEffect(() => {
+        if (Array.isArray(images) && images.length > 0) {
+          setFieldValue("images", [...(values.images || []), images?.[0]]);
+        }
+    }, [images]);
 
     const handleUploadImage = async () => {
         const image = await usePickImage();
         if (image) {
             upload([image])
-                .unwrap()
-                .then(() => {
-                    if (Array.isArray(images)) {
-                        setFieldValue("images", [...(values.images || []), images?.[0]]);
-                    }
-                });
         }
     };
 
@@ -103,10 +104,10 @@ const AddEvent = () => {
                         />
                     )}
 
-                    {Array.isArray(values?.images) && !isLoading && (
+                    {Array.isArray(values?.images) && (
                         <ScrollView horizontal paddingBottom={2}>
                             {values.images.map((img) => (
-                                <ImageContainer key={img ?? ""} imageUrl={`https://${img}`} />
+                                <ImageContainer key={img ?? ""} imageUrl={imageUrlResolver(img ?? "")} />
                             ))}
                         </ScrollView>
                     )}

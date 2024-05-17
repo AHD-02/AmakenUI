@@ -35,8 +35,7 @@ const EventPage = ({
   const [unSaveEvent, unSaveRes] = useUnSaveEventMutation()
 
   const isSaved = useIsEventSaved(id ?? '')
-  // console.log(res, 'ressssssssssssssssss', id)
-  console.log(image,"helloooooo a7777777")
+
   return (
     <Pressable onPress={onPress} marginRight={`${isBookingComponent ? 1 : 4}`}>
 

@@ -4,7 +4,7 @@ import { UserModel } from ".";
 export interface SignupModel {
   firstName: string;
   lastName: string;
-  images: string | null;
+  images: string[];
   email: string;
   countryCode: string;
   phone: string;
@@ -19,7 +19,7 @@ export interface SignupModel {
 export const SignUpInitialValues = (userData?: UserModel) => ({
   firstName: userData?.firstName ?? "",
   lastName: userData?.lastName ?? "",
-  images: userData?.images ?? null,
+  images: userData?.images ?? [],
   email: userData?.email ?? "",
   countryCode: "JO",
   phone: userData?.phone ?? "",

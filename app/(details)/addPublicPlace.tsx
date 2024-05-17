@@ -20,6 +20,7 @@ import { useCreatePublicPlaceMutation } from "../data/publicPlace";
 import { useEffect } from "react";
 import Toast from "react-native-toast-message";
 import { router } from "expo-router";
+import { imageUrlResolver } from "../utils/imageUtils";
 
 const AddPublicPlace = () => {
   const { data } = usePublicPlaceCategoriesQuery();
@@ -34,6 +35,7 @@ const AddPublicPlace = () => {
     },
   });
 
+  
   useEffect(() => {
     if (res?.error) {
       Toast.show({
@@ -54,16 +56,16 @@ const AddPublicPlace = () => {
 
   const { upload, images, isLoading } = useUploadImage();
 
+  useEffect(() => {
+    if (Array.isArray(images) && images.length > 0) {
+      setFieldValue("images", [...(values.images || []), images?.[0]]);
+    }
+  }, [images]);
+
   const handleTakeImage = async () => {
     const image = await useTakeImage();
     if (image) {
-      upload([image])
-        .unwrap()
-        .then(() => {
-          if (Array.isArray(images)) {
-            setFieldValue("images", [...(values.images || []), images?.[0]]);
-          }
-        });
+      upload([image]);
     }
   };
 
@@ -80,10 +82,10 @@ const AddPublicPlace = () => {
             />
           )}
 
-          {Array.isArray(values?.images) && !isLoading && (
+          {Array.isArray(values?.images) && (
             <ScrollView horizontal paddingBottom={2}>
               {values.images.map((img) => (
-                <ImageContainer key={img ?? ""} imageUrl={`https://${img}`} />
+                <ImageContainer key={img ?? ""} imageUrl={imageUrlResolver(img ?? "")} />
               ))}
             </ScrollView>
           )}
@@ -104,7 +106,7 @@ const AddPublicPlace = () => {
               items={data ?? []}
               selectedValue={values?.categoryId?.toString() ?? ""}
               setSelectedValue={(value) =>
-                setFieldValue("categoryId", Number(value))
+                setFieldValue("categoryId", value)
               }
             />
           </View>

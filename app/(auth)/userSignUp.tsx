@@ -32,8 +32,8 @@ const UserSignUp = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View>
           <ProfileImageUploader
-            image={values.images}
-            setImage={(date) => setFieldValue("images", date)}
+            image={values.images?.[0] ?? ""}
+            setImage={(image) => setFieldValue("images", image)}
           />
         </View>
         <VStack space={"2"}>
