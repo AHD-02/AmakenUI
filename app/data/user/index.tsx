@@ -23,6 +23,13 @@ export const UserApi = createApi({
         body,
       }),
     }),
+    updateUser: builder.mutation<void, SignupModel>({
+      query: (body) => ({
+        url: "user/update",
+        method: "POST",
+        body,
+      }),
+    }),
     getUser: builder.query<UserModel, void>({
       query: () => ({
         url: "user/me",
@@ -45,4 +52,5 @@ export const {
   useGetUserQuery,
   useLazyGetUserQuery,
   useImageUploadMutation,
+  useUpdateUserMutation,
 } = UserApi;

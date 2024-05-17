@@ -3,7 +3,7 @@ module.exports = function (api) {
   return {
     presets: ['babel-preset-expo'],
     plugins: [
-      "react-native-reanimated/plugin" // KEEP IT THE LAST ELEMENT مع تحيات بشار الزق
+      "react-native-reanimated/plugin" // KEEP IT THE LAST ELEMENT GO AND FUCK YOURSELF مع تحيات بشار الزق
     ]
   };
 };

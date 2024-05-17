@@ -15,6 +15,8 @@ import DeleteIcon from "./deleteIcon";
 import RecycleIcon from "./recycleIcon";
 import LogoutIcon from "./logout";
 import EditProfileIcon from "./editProfileIcon";
+import ModalIconLogout from "./modalIconLogout";
+
 
 export {
     HomeIcon,
@@ -34,4 +36,5 @@ export {
     RecycleIcon,
     LogoutIcon,
     EditProfileIcon,
+    ModalIconLogout
 }
