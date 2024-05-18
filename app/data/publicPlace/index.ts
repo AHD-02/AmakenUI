@@ -8,8 +8,10 @@ export const PublicPlace = createApi({
   reducerPath: "PublicPlace",
   refetchOnMountOrArgChange: true,
   refetchOnReconnect: true,
+  tagTypes: ["addPlace"],
   endpoints: (builder) => ({
     searchPublicPlaces: builder.query<PublicPlaceResponse[], void>({
+      providesTags: ["addPlace"],
       query: () => ({
         url: "public_Place/Search",
         method: "GET",
@@ -22,6 +24,7 @@ export const PublicPlace = createApi({
       }),
     }),
     createPublicPlace: builder.mutation<void, PublicPlaceCreateType>({
+      invalidatesTags: ["addPlace"],
       query: (body) => ({
         url: `public_Place/create`,
         method: "POST",

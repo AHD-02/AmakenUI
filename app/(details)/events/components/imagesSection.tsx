@@ -6,6 +6,7 @@ import { router } from "expo-router";
 import { SearchEventsResponse } from "@/app/types";
 import { useIsEventSaved } from "@/app/state/user/hooks";
 import { colors } from "@/app/theme/Colors";
+import { imageUrlResolver } from "@/app/utils/imageUtils";
 
 interface IProps {
   data?: SearchEventsResponse;
@@ -35,7 +36,7 @@ const ImagesSection = ({ data }: IProps) => {
       </View>
       <View>
         <Image
-          src={data?.images?.[0] ?? ""}
+          src={imageUrlResolver(data?.images?.[0] ?? "")}
           width={"full"}
           height={"full"}
           alt={"image"}

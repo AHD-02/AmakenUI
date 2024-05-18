@@ -15,7 +15,7 @@ interface IProps {
   image: string;
   description: string;
   rate: string;
-  id?: string
+  id?: string;
   isBookingComponent?: boolean;
 }
 
@@ -31,75 +31,75 @@ const EventPage = ({
   id,
   isBookingComponent,
 }: IProps) => {
-  const [saveEvent, res] = useSaveEventMutation()
-  const [unSaveEvent, unSaveRes] = useUnSaveEventMutation()
-
-  const isSaved = useIsEventSaved(id ?? '')
+  const [saveEvent] = useSaveEventMutation();
+  const [unSaveEvent] = useUnSaveEventMutation();
+  const isSaved = useIsEventSaved(id ?? '');
 
   return (
-    <Pressable onPress={onPress} marginRight={`${isBookingComponent ? 1 : 4}`}>
-
-        <HStack width={"100%"} >
-          <Image
-            source={{uri:image}}
-            height={160}
-            width={isBookingComponent ? 'full' : '300'}
-            resizeMode="cover"
-            borderTopLeftRadius={10}
-            borderTopRightRadius={10}
-            borderBottomLeftRadius={isBookingComponent ? 0 : 10}
-            borderBottomRightRadius={isBookingComponent ? 0 : 10} 
-            alt={'image'}
-          />
-        </HStack>
+    <Pressable onPress={onPress} marginRight={isBookingComponent ? 1 : 4}>
+      <HStack width="100%">
+        <Image
+          source={{ uri: image }}
+          height={160}
+          width={isBookingComponent ? 'full' : 300}
+          resizeMode="cover"
+          borderTopLeftRadius={10}
+          borderTopRightRadius={10}
+          borderBottomLeftRadius={isBookingComponent ? 0 : 10}
+          borderBottomRightRadius={isBookingComponent ? 0 : 10}
+          alt="event image"
+        />
+      </HStack>
 
       <HStack
-        justifyContent={"space-between"}
+        justifyContent="space-between"
         paddingTop={3}
         paddingX={1}
-        paddingLeft={`${isBookingComponent ? 3 : 0}`}
-        backgroundColor={`${isBookingComponent ? "white" : ""}`}
+        paddingLeft={isBookingComponent ? 3 : 0}
+        backgroundColor={isBookingComponent ? "white" : ""}
       >
-        <Text fontWeight={700} fontFamily={"Poppins"} fontSize={14}>{`${title ?? ""
-          } - ${city ?? ""}`}</Text>
+        <Text fontWeight={700} fontFamily="Poppins" fontSize={14}>
+          {`${title} - ${city}`}
+        </Text>
         <HStack space={1}>
           <AntDesign
             name="star"
-            color={"#F7CB15"}
+            color="#F7CB15"
             size={18}
             style={{ alignSelf: "center" }}
           />
-          <Text fontWeight={700}>{rate ?? ""}</Text>
+          <Text fontWeight={700}>{rate}</Text>
         </HStack>
       </HStack>
-      <View style={[styles.icon, isSaved ? {backgroundColor: colors.primary} : {}]}>
+
+      <View style={[styles.icon, isSaved ? { backgroundColor: colors.primary } : {}]}>
         <TouchableOpacity onPress={() => isSaved ? unSaveEvent(id ?? '') : saveEvent(id ?? '')}>
           {isSaved ? <Archive /> : <ArchiveGray />}
         </TouchableOpacity>
       </View>
+
       <HStack
         paddingTop={3}
         paddingBottom={2}
         paddingX={1}
-        paddingLeft={`${isBookingComponent ? 3 : 0}`}
-        marginBottom={`${isBookingComponent ? 3 : 0}`}
-        backgroundColor={`${isBookingComponent ? "white" : ""}`}
-        borderBottomLeftRadius={`${isBookingComponent ? 10 : 0}`}
-        borderBottomRightRadius={`${isBookingComponent ? 10 : 0}`}
+        paddingLeft={isBookingComponent ? 3 : 0}
+        marginBottom={isBookingComponent ? 3 : 0}
+        backgroundColor={isBookingComponent ? "white" : ""}
+        borderBottomLeftRadius={isBookingComponent ? 10 : 0}
+        borderBottomRightRadius={isBookingComponent ? 10 : 0}
       >
         <LocationIcon />
         <Text
-          color={"#8E8E93"}
-          fontFamily={"Poppins"}
+          color="#8E8E93"
+          fontFamily="Poppins"
           fontSize={12}
           fontWeight={600}
           paddingLeft={3}
         >
-          {description ?? ""}
+          {description}
         </Text>
       </HStack>
-
-    </Pressable >
+    </Pressable>
   );
 };
 
@@ -112,12 +112,12 @@ const styles = StyleSheet.create({
     width: 30,
     borderRadius: 20,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   backgroundImage: {
     width: "100%",
     flex: 1,
   },
-})
+});
 
 export default EventPage;

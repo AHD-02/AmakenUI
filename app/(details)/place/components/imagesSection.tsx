@@ -5,6 +5,7 @@ import { EventImage } from '@/assets/images'
 import { Archive, ArchiveGray, ArrowLeft } from '@/assets/icons'
 import { router } from 'expo-router'
 import { PublicPlaceResponse } from '@/app/types'
+import { imageUrlResolver } from '@/app/utils/imageUtils'
 
 interface IProps {
     data?: PublicPlaceResponse
@@ -28,7 +29,7 @@ const ImagesSection = ({ data }: IProps) => {
                 </View>
             </View>
             <View>
-                <Image src={data?.images?.[0] ?? ""} width={'full'} height={'full'} alt={'image'} resizeMode='cover' />
+                <Image src={imageUrlResolver(data?.images?.[0] ?? "")} width={'full'} height={'full'} alt={'image'} resizeMode='cover' />
             </View>
         </View>
     )

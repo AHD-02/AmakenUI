@@ -25,13 +25,13 @@ import { imageUrlResolver } from "../utils/imageUtils";
 const AddPublicPlace = () => {
   const { data } = usePublicPlaceCategoriesQuery();
   const [createPlace, res] = useCreatePublicPlaceMutation();
-
+  
   const { values, setFieldValue, errors, submitForm } = useFormik({
     initialValues: publicPlaceInitialValues(),
     validationSchema: publicPlaceValidationSchema,
     validateOnChange: false,
     onSubmit: (values) => {
-      createPlace(values);
+      createPlace(values)
     },
   });
 
@@ -50,7 +50,7 @@ const AddPublicPlace = () => {
         text1: "Place have been created successfully",
       });
 
-      router.replace("/(tabs)");
+      router.push("/(tabs)/index");
     }
   }, [res]);
 

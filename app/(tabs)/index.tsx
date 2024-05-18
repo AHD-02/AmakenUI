@@ -11,75 +11,71 @@ import { useSearchPublicPlacesQuery } from "../data/publicPlace";
 import PlaceCard from "@/components/homePageComponent/placeCard";
 import { PublicPlaceResponse } from "../types/places";
 import AddEventsButton from "@/components/addEventsButton";
+import { imageUrlResolver } from "../utils/imageUtils";
 
 const Home = () => {
   const { data: events } = useSearchEventsQuery();
   const { data: publicPlaces } = useSearchPublicPlacesQuery();
-  
+
   return (
     <View style={styles.container}>
       <DynamicHeader />
 
       <ScrollView>
         <VStack style={{ paddingHorizontal: 20 }} space={5}>
-          {Array.isArray(events) && events.length > 0 && <VStack space={2} mt={4}>
-            <HStack justifyContent={"space-between"}>
-              <Text>Events for you</Text>
-              <Link
-                href={"/(tabs)/"}
-                style={{ alignSelf: "center", color: colors.primary }}
-              >
-                view all
-              </Link>
-            </HStack>
-            <ScrollView horizontal paddingBottom={2}>
-              {events?.map((item: SearchEventsResponse, index: number) => (
-                <EventPage
-                  key={`${item.eventId}-${index}`}
-                  id={item.eventId ?? ""}
-                  title={item.name ?? ""}
-                  city={item.location ?? ""} //TODO: ADD CITY
-                  onPress={() =>
-                    router.push(`/(details)/events/${item.eventId ?? ""}`)
-                  }
-                  image={item.images[0] ?? ""}
-                  rate={"3.5"}
-                  description={item.description ?? ""}
-                />
-              ))}
-            </ScrollView>
-          </VStack>}
+          {Array.isArray(events) && events.length > 0 && (
+            <VStack space={2} mt={4}>
+              <HStack justifyContent={"space-between"}>
+                <Text>Events for you</Text>
+                <Link
+                  href={"/(tabs)/"}
+                  style={{ alignSelf: "center", color: colors.primary }}
+                >
+                  view all
+                </Link>
+              </HStack>
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.horizontalScroll}>
+                {events.map((item: SearchEventsResponse, index: number) => (
+                  <EventPage
+                    key={`${item.eventId}-${index}`}
+                    id={item.eventId ?? ""}
+                    title={item.name ?? ""}
+                    city={item.location ?? ""}
+                    onPress={() => router.push(`/(details)/events/${item.eventId ?? ""}`)}
+                    image={imageUrlResolver(item.images[0] ?? "")}
+                    rate={"3.5"}
+                    description={item.description ?? ""}
+                  />
+                ))}
+              </ScrollView>
+            </VStack>
+          )}
 
-          {Array.isArray(publicPlaces) && publicPlaces.length > 0 && <VStack space={2}>
-            <HStack justifyContent={"space-between"}>
-              <Text>Places for you</Text>
-              <Link
-                href={"/(tabs)/"}
-                style={{ alignSelf: "center", color: colors.primary }}
-              >
-                view all
-              </Link>
-            </HStack>
-
-            <HStack
-              justifyContent={"space-between"}
-              space={3}
-              flexWrap={"wrap"}
-            >
-              {publicPlaces?.map((item: PublicPlaceResponse) => (
-                <PlaceCard
-                  key={`${item?.publicPlaceId}-${item.userEmail}`}
-                  title={item.name ?? ""}
-                  city={item.location ?? ""}
-                  image={item.images[0] ?? ""}
-                  description={item.description ?? ""}
-                  onCardPress={() =>
-                    router.push(`/(details)/place/${item.publicPlaceId}`)
-                  }
-                />
-              ))}
-            </HStack>
-          </VStack>}
+          {Array.isArray(publicPlaces) && publicPlaces.length > 0 && (
+            <VStack space={2}>
+              <HStack justifyContent={"space-between"}>
+                <Text>Places for you</Text>
+                <Link
+                  href={"/(tabs)/"}
+                  style={{ alignSelf: "center", color: colors.primary }}
+                >
+                  view all
+                </Link>
+              </HStack>
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.horizontalScroll}>
+                {publicPlaces.map((item: PublicPlaceResponse) => (
+                  <PlaceCard
+                    key={`${item?.publicPlaceId}-${item.userEmail}`}
+                    title={item.name ?? ""}
+                    city={item.location ?? ""}
+                    image={imageUrlResolver(item.images[0] ?? "")}
+                    description={item.description ?? ""}
+                    onCardPress={() => router.push(`/(details)/place/${item.publicPlaceId}`)}
+                  />
+                ))}
+              </ScrollView>
+            </VStack>
+          )}
         </VStack>
       </ScrollView>
 
@@ -95,13 +91,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
   },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
+  horizontalScroll: {
+    paddingVertical: 10,
   },
 });

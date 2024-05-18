@@ -1,6 +1,3 @@
-
-
-
 import { colors } from "@/app/theme/Colors";
 import { Archive } from "@/assets/icons";
 import { VStack, Text, View } from "native-base";
@@ -24,17 +21,16 @@ const PlaceCard = ({
   onSavedPress,
 }: IProps) => {
   return (
-    <TouchableOpacity style={{flex: 1}} onPress={onCardPress}>
+    <TouchableOpacity style={styles.cardContainer} onPress={onCardPress}>
       <ImageBackground
         resizeMode="cover"
-        source={{uri: image ?? undefined}}
+        source={{ uri: image ?? undefined }}
         borderRadius={8}
         imageStyle={styles.backgroundImage}
-        alt="image"
+        style={styles.imageBackground}
       >
-        <VStack height={'56'} justifyContent={'space-between'}>
-
-          <View alignItems={'flex-end'} margin={2}>
+        <VStack height="56" justifyContent="space-between">
+          <View alignItems="flex-end" margin={2}>
             <TouchableOpacity style={styles.icon} onPress={onSavedPress}>
               <Archive />
             </TouchableOpacity>
@@ -43,16 +39,16 @@ const PlaceCard = ({
           <VStack space={3} mx={2} mb={3}>
             <Text
               fontWeight={600}
-              fontFamily={"Cairo"}
+              fontFamily="Cairo"
               fontSize={14}
-              color={"white"}
-            >{`${title ?? ""} - ${city ?? ""}`}</Text>
+              color="white"
+            >{`${title} - ${city}`}</Text>
 
             <Text
               fontWeight={500}
-              fontFamily={"Cairo"}
+              fontFamily="Cairo"
               fontSize={10}
-              color={"#C8C8C8"}
+              color="#C8C8C8"
             >
               {description}
             </Text>
@@ -64,9 +60,18 @@ const PlaceCard = ({
 };
 
 const styles = StyleSheet.create({
+  cardContainer: {
+    width: 150,
+    marginRight: 10,
+  },
   backgroundImage: {
     width: '100%',
     flex: 1,
+  },
+  imageBackground: {
+    height: 200,
+    borderRadius: 8,
+    overflow: 'hidden',
   },
   icon: {
     borderRadius: 50,
@@ -74,10 +79,8 @@ const styles = StyleSheet.create({
     height: 30,
     backgroundColor: colors.primary,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
-
 });
 
 export default PlaceCard;
-
