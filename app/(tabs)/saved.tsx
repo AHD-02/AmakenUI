@@ -8,13 +8,18 @@ import { SearchEventsResponse } from '../types';
 import { router } from 'expo-router';
 import { useEffect } from 'react';
 import Toast from 'react-native-toast-message';
+import { useIsLoggedIn } from '../state/user/hooks';
+import GuestScreen from '@/components/sharedComponents/guestUserSscreen/guestScreen';
 
 const Saved = () => {
-  const { data } = useSearchSavedEventsQuery()
+  const { data } = useSearchSavedEventsQuery();
+  const isLoggedIn = useIsLoggedIn();
+
 
   return (
     <View style={{ flex: 1 }}>
       <DynamicHeader isBGHidden />
+      {isLoggedIn?(
 
       <ScrollView pt={6} mx={4}>
         <HStack justifyContent={'space-between'} flexWrap={'wrap'} width={'100%'}>
@@ -31,6 +36,12 @@ const Saved = () => {
           )}
         </HStack>
       </ScrollView>
+      ):(
+        <GuestScreen
+        title="Searching for your Bookinngs?"
+        description="Login to find them all"
+        />
+      )}
     </View>
   );
 }

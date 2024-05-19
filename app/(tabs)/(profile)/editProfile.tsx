@@ -12,8 +12,9 @@ import {
   ScrollView,
   View,
   Image,
+  Center,
 } from "native-base";
-import { StyleSheet } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import Dropdown from "@/components/sharedComponents/simpleDropdown";
 import useSignUp from "@/app/hooks/useSignUp";
 import { useCountriesQuery } from "@/app/data/lookup";
@@ -21,6 +22,7 @@ import { colors } from "@/app/theme/Colors";
 import { useUserInfo } from "@/app/state/user/hooks";
 import { Ionicons } from "@expo/vector-icons";
 import { imageUrlResolver } from "@/app/utils/imageUtils";
+import { CameraIcon } from "@/assets/icons";
 
 const EditProfile = () => {
   const userData = useUserInfo()
@@ -31,6 +33,7 @@ const EditProfile = () => {
     <KeyboardAvoidingView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View justifyContent={'center'} flexDirection={'column'}>
+          <Center padding={8}>
         <Image
             source={{
               uri: imageUrlResolver(userData?.images?.[0] ?? "")
@@ -41,8 +44,12 @@ const EditProfile = () => {
             borderRadius={50}
             alignItems={'center'}
           />
-             <Ionicons name="camera" color={"white"} size={50} />
-
+       <View style={styles.icon}>
+        <TouchableOpacity onPress={() => {}}>
+            <CameraIcon/>
+        </TouchableOpacity>
+      </View>
+             </Center>
         </View>
         <VStack space={"2"}>
           <HStack justifyContent={"space-between"}>
@@ -140,6 +147,16 @@ const styles = StyleSheet.create({
         fontWeight: "500",
         alignSelf: "center",
         color: colors.primary,
+      },
+      icon: {
+        position: 'absolute',
+        right: 187,
+        top: 47,
+        height: 0,
+        width: 0,
+        borderRadius: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
       },
 })
 export default EditProfile;

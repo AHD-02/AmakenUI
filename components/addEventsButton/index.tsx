@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, TouchableOpacity, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import Animated, {
   Easing,
   Extrapolation,
@@ -14,8 +14,15 @@ import Animated, {
 import { AntDesign, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { colors } from "@/app/theme/Colors";
 import { router } from "expo-router";
+import { useIsLoggedIn } from "@/app/state/user/hooks";
+import { Center, Modal, Image, Text } from "native-base";
+import { LOGO } from "@/assets/images";
+import { ButtonComponent } from "../sharedComponents";
+import GuestModal from "../sharedComponents/modal/guestModal";
 
 const AddEventsButton = () => {
+  const isLoggedIn = useIsLoggedIn();
+  const [showModal, setShowModal] = useState(false);
   const firstValue = useSharedValue(30);
   const secondValue = useSharedValue(30);
   // const thirdValue = useSharedValue(30);
@@ -144,36 +151,78 @@ const AddEventsButton = () => {
           Edit File
         </Animated.Text>
       </Animated.View> */}
-      <TouchableOpacity
-        onPress={() => router.push("/(details)/addPublicPlace")}
-      >
-        <Animated.View
-          style={[styles.contentContainer, secondIcon, secondWidthStyle]}
-        >
-          <View style={styles.iconContainer}>
-            <MaterialIcons name="public" size={25} color={"white"} />
-          </View>
 
-          <Animated.Text style={[styles.text, opacityText]}>
-            Add Place
-          </Animated.Text>
-        </Animated.View>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        onPress={() => router.push("/(details)/addEvent")}
-      >
-        <Animated.View
-          style={[styles.contentContainer, firstIcon, firstWidthStyle]}
+      {isLoggedIn ? (
+        <TouchableOpacity
+          onPress={() => router.push("/(details)/addPublicPlace")}
         >
-          <View style={styles.iconContainer}>
-            <MaterialIcons name="event" size={26} color={"white"} />
-          </View>
-          <Animated.Text style={[styles.text, opacityText]}>
-            Add Event
-          </Animated.Text>
-        </Animated.View>
-      </TouchableOpacity>
+          <Animated.View
+            style={[styles.contentContainer, secondIcon, secondWidthStyle]}
+          >
+            <View style={styles.iconContainer}>
+              <MaterialIcons name="public" size={25} color={"white"} />
+            </View>
+            <Animated.Text style={[styles.text, opacityText]}>
+              Add Place
+            </Animated.Text>
+          </Animated.View>
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity onPress={() => setShowModal(true)}>
+          <Animated.View
+            style={[styles.contentContainer, secondIcon, secondWidthStyle]}
+          >
+            <View style={styles.iconContainer}>
+              <MaterialIcons name="public" size={25} color={"white"} />
+            </View>
+
+            <GuestModal
+              isOpen={showModal}
+              onClose={() => setShowModal(false)}
+              header="you have to be login to amaken to procceed with this action"
+            />
+
+            <Animated.Text style={[styles.text, opacityText]}>
+              Add Place
+            </Animated.Text>
+          </Animated.View>
+        </TouchableOpacity>
+      )}
+
+      {isLoggedIn ? (
+        <TouchableOpacity onPress={() => router.push("/(details)/addEvent")}>
+          <Animated.View
+            style={[styles.contentContainer, firstIcon, firstWidthStyle]}
+          >
+            <View style={styles.iconContainer}>
+              <MaterialIcons name="event" size={26} color={"white"} />
+            </View>
+            <Animated.Text style={[styles.text, opacityText]}>
+              Add Event
+            </Animated.Text>
+          </Animated.View>
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity onPress={() => setShowModal(true)}>
+          <Animated.View
+            style={[styles.contentContainer, firstIcon, firstWidthStyle]}
+          >
+            <View style={styles.iconContainer}>
+              <MaterialIcons name="event" size={26} color={"white"} />
+            </View>
+
+            <GuestModal
+              isOpen={showModal}
+              onClose={() => setShowModal(false)}
+              header="you have to be login to amaken to procceed with this action."
+            />
+
+            <Animated.Text style={[styles.text, opacityText]}>
+              Add Event
+            </Animated.Text>
+          </Animated.View>
+        </TouchableOpacity>
+      )}
 
       <Pressable
         style={styles.contentContainer}

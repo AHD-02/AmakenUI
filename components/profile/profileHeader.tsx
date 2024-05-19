@@ -7,7 +7,6 @@ import {
 import React, { useState } from "react";
 import {
   Modal,
-  Avatar,
   Center,
   HStack,
   Image,
@@ -19,9 +18,7 @@ import { useIsLoggedIn, useUserInfo } from "@/app/state/user/hooks";
 import { router } from "expo-router";
 import { useDispatch } from "react-redux";
 import { setTokens, setUser } from "@/app/state/user/slice";
-import { UserInitialValues } from "@/app/types";
 import { reloadAsync } from "expo-updates";
-import { FontAwesome } from "@expo/vector-icons";
 import { ButtonComponent } from "../sharedComponents";
 import { imageUrlResolver } from "@/app/utils/imageUtils";
 

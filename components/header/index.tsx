@@ -4,6 +4,8 @@ import { HeaderBG, LOGO } from '@/assets/images';
 import { Image } from 'native-base'
 import { NotificationIcon } from '@/assets/icons';
 import { router } from 'expo-router';
+import { useIsLoggedIn } from '@/app/state/user/hooks';
+import ActionSheetScreen from '../sharedComponents/guestUserSscreen/actionsheet';
 
 interface IProps {
     isBGHidden?: boolean
@@ -11,7 +13,10 @@ interface IProps {
 
 const DynamicHeader = ({ isBGHidden }: IProps) => {
     const [searchVisible, setSearchVisible] = useState(true);
+    const [showAction, setShowAction] = useState(false);
     const scrollY = useRef(new Animated.Value(0)).current;
+    const isLoggedIn = useIsLoggedIn();
+
 
     const toggleSearch = () => {
         setSearchVisible(!searchVisible);
@@ -46,9 +51,24 @@ const DynamicHeader = ({ isBGHidden }: IProps) => {
                     <View style={styles.header}>
                         <Text style={styles.text} >Amaken</Text>
                         <Image source={LOGO} height={'24'} width={'56'} opacity={50} style={styles.logo} alt='Amaken' />
-                        <TouchableOpacity onPress={() => router.push('/(notifications)')}>
+                        
+                      {isLoggedIn ?(
+
+                      <TouchableOpacity onPress={() => router.push('/(notifications)')}>
                             <NotificationIcon />
                         </TouchableOpacity>
+                      ):(
+                        <TouchableOpacity onPress={() =>setShowAction(true)}>
+                        <ActionSheetScreen
+                        title='Sign In'
+                        description='Discover events, meet new people and make memories'
+                        isOpen={showAction}
+                        onOpen={()=>setShowAction(true)}
+                        onClose={()=>setShowAction(false)}
+                        />
+                    </TouchableOpacity>
+                      )}  
+
                     </View>
                 </Animated.View>
 

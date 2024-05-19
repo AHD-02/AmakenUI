@@ -1,6 +1,14 @@
-import { StyleSheet } from "react-native";
+import { Pressable, StyleSheet, TouchableOpacity } from "react-native";
 import { View } from "@/components/Themed";
-import { ScrollView, VStack, Text, HStack } from "native-base";
+import {
+  Modal,
+  ScrollView,
+  VStack,
+  Text,
+  HStack,
+  Center,
+  Image,
+} from "native-base";
 import { useSearchEventsQuery } from "../data/events";
 import { SearchEventsResponse } from "../types";
 import DynamicHeader from "@/components/header";
@@ -34,14 +42,20 @@ const Home = () => {
                   view all
                 </Link>
               </HStack>
-              <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.horizontalScroll}>
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                style={styles.horizontalScroll}
+              >
                 {events.map((item: SearchEventsResponse, index: number) => (
                   <EventPage
                     key={`${item.eventId}-${index}`}
                     id={item.eventId ?? ""}
                     title={item.name ?? ""}
                     city={item.location ?? ""}
-                    onPress={() => router.push(`/(details)/events/${item.eventId ?? ""}`)}
+                    onPress={() =>
+                      router.push(`/(details)/events/${item.eventId ?? ""}`)
+                    }
                     image={imageUrlResolver(item.images[0] ?? "")}
                     rate={"3.5"}
                     description={item.description ?? ""}
@@ -62,7 +76,11 @@ const Home = () => {
                   view all
                 </Link>
               </HStack>
-              <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.horizontalScroll}>
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                style={styles.horizontalScroll}
+              >
                 {publicPlaces.map((item: PublicPlaceResponse) => (
                   <PlaceCard
                     key={`${item?.publicPlaceId}-${item.userEmail}`}
@@ -70,7 +88,9 @@ const Home = () => {
                     city={item.location ?? ""}
                     image={imageUrlResolver(item.images[0] ?? "")}
                     description={item.description ?? ""}
-                    onCardPress={() => router.push(`/(details)/place/${item.publicPlaceId}`)}
+                    onCardPress={() =>
+                      router.push(`/(details)/place/${item.publicPlaceId}`)
+                    }
                   />
                 ))}
               </ScrollView>
@@ -78,7 +98,6 @@ const Home = () => {
           )}
         </VStack>
       </ScrollView>
-
       <AddEventsButton />
     </View>
   );
