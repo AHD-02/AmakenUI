@@ -50,7 +50,7 @@ const ProfileHeader = () => {
             <Modal.Content maxWidth="400px">
               <Modal.Body justifyContent={'center'}>
                 <Center> 
-                <TouchableOpacity  onPress={() => router.push("/(auth)")}>
+                <TouchableOpacity  onPress={() => {router.push("/(auth)"),setShowModal(false)}}>
                 <ModalIconLogout/>
                 </TouchableOpacity>
                 </Center>
@@ -58,12 +58,14 @@ const ProfileHeader = () => {
                   <Text style={{fontWeight:'500',fontSize:20,paddingTop:15,paddingBottom:10}}>Already Leaving</Text>
                 </Center>
                 <Center>
-                  <ButtonComponent  title="Yes,LogOut" onPress={()=> router.push("/(auth)")} isLogout />
+                  <ButtonComponent  title="Yes,Logout" onPress={() => {router.push("/(auth)"),setShowModal(false)}} isLogout />
                 </Center>
                 <Center>
+                  <TouchableOpacity onPress={()=> setShowModal(false)}>
                   <Text style={{fontSize:18,fontWeight:'500',color:'#8E8E93',paddingTop:20}}>
                   No, I am stying
                   </Text>
+                  </TouchableOpacity>
                 </Center>
 
               </Modal.Body>
@@ -73,7 +75,6 @@ const ProfileHeader = () => {
         </Center>
       </TouchableOpacity>
       <VStack space={2}>
-        {isLoggedIn ? (
           <VStack>
             <View style={styles.profileImage}>
               <Image
@@ -88,30 +89,7 @@ const ProfileHeader = () => {
               {`${userData?.firstName ?? ""} ${userData?.lastName ?? ""}`}
             </Text>
           </VStack>
-        ) : (
-          <VStack>
-            <View style={styles.profileImage}>
-              <Avatar
-                bg="#FFEBCD"
-                size="xl"
-                alignSelf={"center"}
-                width={"full"}
-                height={"full"}
-                source={{
-                  uri: "https://bit.ly/broken-link",
-                }}
-              >
-                <FontAwesome
-                  name="user"
-                  color={"#A5583A"}
-                  size={50}
-                  style={{ alignSelf: "center" }}
-                />
-              </Avatar>
-            </View>
-            <Text style={styles.userName}>Hi, Guest User</Text>
-          </VStack>
-        )}
+      
       </VStack>
       <TouchableOpacity
         onPress={() => router.push("/(profile)/editProfile")}

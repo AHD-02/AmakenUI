@@ -19,7 +19,18 @@ const AuthLayout = () => {
                         <ArrowLeft />
                     </TouchableOpacity>
                 ),   }} />
-        <Stack.Screen name={SCREENS.ForgotPassword} options={{ title: 'Forgot Password' }} />
+        <Stack.Screen name={SCREENS.ForgotPassword} options={{   headerShown: true,
+                headerBackTitle: 'ArrowLeft',
+                headerTitle: 'Forgot Password',
+                headerTitleAlign: 'center',
+                headerTitleStyle:{fontSize:16},
+                headerStyle:{backgroundColor:'white'},
+                headerShadowVisible:false   ,
+                headerLeft: () => (
+                    <TouchableOpacity onPress={() => router.back()}>
+                        <ArrowLeft />
+                    </TouchableOpacity>
+                ),   }} />
         <Stack.Screen name={SCREENS.SetNewPassword} options={{ title: 'SetNewPssword' }} />
         <Stack.Screen name={SCREENS.OTP} options={{ title: 'OTP' }} />
       </Stack>
