@@ -37,7 +37,8 @@ const ProfileHeader = () => {
         accessToken: "",
       })
     );
-    dispatch(setUser(UserInitialValues));
+    router.push("/(auth)");
+    setShowModal(false);
     reloadAsync();
   };
   return (
@@ -50,7 +51,7 @@ const ProfileHeader = () => {
             <Modal.Content maxWidth="400px">
               <Modal.Body justifyContent={'center'}>
                 <Center> 
-                <TouchableOpacity  onPress={() => {router.push("/(auth)"),setShowModal(false)}}>
+                <TouchableOpacity  onPress={handleLogout}>
                 <ModalIconLogout/>
                 </TouchableOpacity>
                 </Center>
@@ -58,7 +59,7 @@ const ProfileHeader = () => {
                   <Text style={{fontWeight:'500',fontSize:20,paddingTop:15,paddingBottom:10}}>Already Leaving</Text>
                 </Center>
                 <Center>
-                  <ButtonComponent  title="Yes,Logout" onPress={() => {router.push("/(auth)"),setShowModal(false)}} isLogout />
+                  <ButtonComponent  title="Yes, Logout" onPress={handleLogout} isLogout />
                 </Center>
                 <Center>
                   <TouchableOpacity onPress={()=> setShowModal(false)}>
