@@ -1,17 +1,6 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import React, { useState } from "react";
-import {
-  Modal,
-  Center,
-  HStack,
-  Image,
-  VStack,
-} from "native-base";
+import { Modal, Center, HStack, Image, VStack } from "native-base";
 import { EditProfileIcon, LogoutIcon, ModalIconLogout } from "@/assets/icons";
 import { colors } from "@/app/theme/Colors";
 import { useIsLoggedIn, useUserInfo } from "@/app/state/user/hooks";
@@ -34,60 +23,74 @@ const ProfileHeader = () => {
         accessToken: undefined,
       })
     );
-    
+
     setShowModal(false);
     router.push("/(auth)");
   };
   return (
     <HStack justifyContent={"space-between"} marginX={4} marginY={"20"}>
-      <TouchableOpacity style={styles.logoutButton} onPress={() => setShowModal(true)}>
-
+      <TouchableOpacity
+        style={styles.logoutButton}
+        onPress={() => setShowModal(true)}
+      >
         <Center>
-        <LogoutIcon />
+          <LogoutIcon />
           <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
             <Modal.Content maxWidth="400px">
-              <Modal.Body justifyContent={'center'}>
-                <Center> 
-                <TouchableOpacity  onPress={handleLogout}>
-                <ModalIconLogout/>
-                </TouchableOpacity>
-                </Center>
+              <Modal.Body justifyContent={"center"}>
                 <Center>
-                  <Text style={{fontWeight:'500',fontSize:20,paddingTop:15,paddingBottom:10}}>Already Leaving</Text>
-                </Center>
-                <Center>
-                  <ButtonComponent  title="Yes, Logout" onPress={handleLogout} isLogout />
-                </Center>
-                <Center>
-                  <TouchableOpacity onPress={()=> setShowModal(false)}>
-                  <Text style={{fontSize:18,fontWeight:'500',color:'#8E8E93',paddingTop:20}}>
-                  No, I am stying
+                  <Text
+                    style={{
+                      fontWeight: "500",
+                      fontSize: 20,
+                      paddingTop: 15,
+                      paddingBottom: 10,
+                    }}
+                  >
+                    Are you sure you want to leave ?
                   </Text>
+                </Center>
+                <Center>
+                  <ButtonComponent
+                    title="Yes, Logout"
+                    onPress={handleLogout}
+                    isLogout
+                  />
+                </Center>
+                <Center>
+                  <TouchableOpacity onPress={() => setShowModal(false)}>
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        fontWeight: "500",
+                        color: "#8E8E93",
+                        paddingTop: 30,
+                      }}
+                    >
+                      No, I am stying
+                    </Text>
                   </TouchableOpacity>
                 </Center>
-
               </Modal.Body>
-              
             </Modal.Content>
           </Modal>
         </Center>
       </TouchableOpacity>
       <VStack space={2}>
-          <VStack>
-            <View style={styles.profileImage}>
-              <Image
-                src={imageUrlResolver(userData?.images?.[0] ?? "")}
-                alt="User Image"
-                width={"full"}
-                height={"full"}
-                borderRadius={50}
-              />
-            </View>
-            <Text style={styles.userName}>
-              {`${userData?.firstName ?? ""} ${userData?.lastName ?? ""}`}
-            </Text>
-          </VStack>
-      
+        <VStack>
+          <View style={styles.profileImage}>
+            <Image
+              src={imageUrlResolver(userData?.images?.[0] ?? "")}
+              alt="User Image"
+              width={"full"}
+              height={"full"}
+              borderRadius={50}
+            />
+          </View>
+          <Text style={styles.userName}>
+            {`${userData?.firstName ?? ""} ${userData?.lastName ?? ""}`}
+          </Text>
+        </VStack>
       </VStack>
       <TouchableOpacity
         onPress={() => router.push("/(profile)/editProfile")}
