@@ -2,6 +2,7 @@ import { View, VStack, KeyboardAvoidingView, ScrollView } from "native-base";
 import UploadPhotos from "./components/uploadPhotos";
 import Dropdown from "@/components/sharedComponents/simpleDropdown";
 import {
+  AssignOnMap,
   ButtonComponent,
   TextAreaInput,
   TextInput,
@@ -98,6 +99,8 @@ const AddPublicPlace = () => {
               value={values?.name}
             />
           </View>
+          
+          <AssignOnMap />
 
           <View>
             <Dropdown

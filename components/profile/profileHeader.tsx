@@ -31,12 +31,12 @@ const ProfileHeader = () => {
   const handleLogout = () => {
     dispatch(
       setTokens({
-        accessToken: "",
+        accessToken: undefined,
       })
     );
-    router.push("/(auth)");
+    
     setShowModal(false);
-    reloadAsync();
+    router.push("/(auth)");
   };
   return (
     <HStack justifyContent={"space-between"} marginX={4} marginY={"20"}>

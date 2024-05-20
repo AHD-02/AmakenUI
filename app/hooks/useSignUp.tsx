@@ -6,40 +6,53 @@ import {
   SignUpValidationSchema,
   SignupModel,
 } from "../types/user/signup";
-import { useSignUpMutation } from "../data/user";
+import { useLazyGetUserQuery, useSignUpMutation } from "../data/user";
 import Toast from "react-native-toast-message";
 import { useDispatch } from "react-redux";
-import { setTokens } from "../state/user/slice";
-import { UserModel } from "../types";
+import { setTokens, setUser } from "../state/user/slice";
+import { SCREENS } from "@/components/screens";
+import { setIsLoading } from "../state/app/slice";
 
-const useSignUp = ({userData}: {userData?: UserModel}) => {
+const useSignUp = () => {
   const [signUp, { data, error }] = useSignUpMutation();
   const dispatch = useDispatch();
-  
+  const [getUser, userRes] = useLazyGetUserQuery();
+  const { data: userData, isLoading } = userRes;
+
   useEffect(() => {
-    if (error)
+    dispatch(setIsLoading(isLoading ?? false));
+    if (data) {
+      dispatch(
+        setTokens({
+          accessToken: data.token,
+        })
+      );
+      getUser();
+    }
+
+    if (error) {
       Toast.show({
         type: "error",
-        text1: JSON.stringify((error as any)?.data),
+        text1: "error",
+        text2: JSON.stringify((error as any).data ?? ""),
       });
-  }, [error]);
+    }
+  }, [data, error, isLoading]);
+
+  useEffect(() => {
+    if (userData) {
+      dispatch(setUser(userData));
+      router.replace(`/${SCREENS.Main}/`);
+    }
+  }, [userData]);
+
   const { values, setFieldValue, errors, submitForm } = useFormik({
     //@ts-ignore
     initialValues: SignUpInitialValues(userData),
     validationSchema: SignUpValidationSchema,
     validateOnChange: false,
-    onSubmit: (values: SignupModel) => {
-      signUp(values)
-        .unwrap()
-        .then(() => {
-          dispatch(
-            setTokens({
-              accessToken: data?.token,
-              refreshToken: "refreshToken",
-            })
-          );
-          router.replace("/(tabs)");
-        });
+    onSubmit: async (values: SignupModel) => {
+      await signUp(values)
     },
   });
   return { values, setFieldValue, errors, submitForm };

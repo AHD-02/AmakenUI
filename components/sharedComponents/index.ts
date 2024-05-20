@@ -6,6 +6,7 @@ import ModalComponent from "./modal";
 import TextAreaInput from "./textArea";
 import ImageContainer from "./imageContainer";
 import WarningMessage from "./warningMessage";
+import AssignOnMap from "./assignOnMap";
 
 export {
     TextInput,
@@ -15,5 +16,6 @@ export {
     ModalComponent as Modal,
     TextAreaInput,
     WarningMessage,
-    ImageContainer
+    ImageContainer,
+    AssignOnMap,
 }

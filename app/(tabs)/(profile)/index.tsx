@@ -1,12 +1,9 @@
 import {
   View,
   Text,
-  SafeAreaView,
-  TouchableOpacity,
-  Pressable,
 } from "react-native";
-import React, { useState } from "react";
-import { Center, HStack, ScrollView, VStack ,Image, Stack} from "native-base";
+import React from "react";
+import { ScrollView, VStack ,Image, Stack} from "native-base";
 import Events from "@/components/profile/events";
 import PublicPlaces from "@/components/profile/publicPlaces";
 import { useIsLoggedIn } from "@/app/state/user/hooks";
@@ -21,14 +18,6 @@ interface TabsType {
 
 const Profile = () => {
   const isLoggedIn = useIsLoggedIn();
-  const sceneMap = {
-    events: Events,
-    publicPlaces: PublicPlaces,
-  };
-  const tabs: TabsType[] = [
-    { title: "events", component: <Events /> },
-    { title: "place", component: <PublicPlaces /> },
-  ];
 
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>

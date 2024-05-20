@@ -14,6 +14,12 @@ export const LookUpApi = createApi({
         method: "GET",
       }),
     }),
+    cities: builder.query<Array<LookUpModel>, string>({
+      query: (countryId) => ({
+        url: `cities/${countryId}`,
+        method: "GET",
+      }),
+    }),
     publicPlaceCategories: builder.query<Array<LookUpModel>, void>({
       query: () => ({
         url: "PublicPlacesCategories/getCategories",
@@ -23,4 +29,8 @@ export const LookUpApi = createApi({
   }),
 });
 
-export const { useCountriesQuery, usePublicPlaceCategoriesQuery } = LookUpApi;
+export const {
+  useCountriesQuery,
+  usePublicPlaceCategoriesQuery,
+  useLazyCitiesQuery,
+} = LookUpApi;

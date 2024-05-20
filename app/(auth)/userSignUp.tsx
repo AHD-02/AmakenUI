@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   ButtonComponent,
   PhoneInput,
@@ -20,12 +20,19 @@ import { Link } from "expo-router";
 import { colors } from "../theme/Colors";
 import PasswordInput from "@/components/sharedComponents/PasswordInput";
 import Dropdown from "@/components/sharedComponents/simpleDropdown";
-import { useCountriesQuery } from "../data/lookup";
-import DatePickerComponent from "@/components/sharedComponents/dateTimePicker";
+import { useCountriesQuery, useLazyCitiesQuery } from "../data/lookup";
+
 
 const UserSignUp = () => {
-  const { values, setFieldValue, errors, submitForm } = useSignUp({});
-  const { data } = useCountriesQuery();
+  const { values, setFieldValue, errors, submitForm } = useSignUp();
+  const { data: countries } = useCountriesQuery();
+  const [getCities, res] = useLazyCitiesQuery();
+
+  useEffect(() => {
+    if (values.country) {
+      getCities(values?.country);
+    }
+  }, [values?.country]);
 
   return (
     <KeyboardAvoidingView style={styles.container}>
@@ -89,7 +96,7 @@ const UserSignUp = () => {
 
           <Stack>
             <Dropdown
-              items={data}
+              items={countries}
               placeHolder="Select Country"
               label="Country"
               setSelectedValue={(value) => setFieldValue("country", value)}
@@ -99,7 +106,7 @@ const UserSignUp = () => {
 
           <Stack>
             <Dropdown
-              items={data ?? []}
+              items={res?.data ?? []}
               placeHolder="Select City"
               label="City"
               setSelectedValue={(value) => setFieldValue("city", value)}

@@ -11,13 +11,10 @@ import Animated, {
   withSpring,
   withTiming,
 } from "react-native-reanimated";
-import { AntDesign, Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { colors } from "@/app/theme/Colors";
 import { router } from "expo-router";
 import { useIsLoggedIn } from "@/app/state/user/hooks";
-import { Center, Modal, Image, Text } from "native-base";
-import { LOGO } from "@/assets/images";
-import { ButtonComponent } from "../sharedComponents";
 import GuestModal from "../sharedComponents/modal/guestModal";
 import ActionSheetScreen from "../sharedComponents/guestUserSscreen/actionsheet";
 
@@ -153,80 +150,41 @@ const AddEventsButton = () => {
         </Animated.Text>
       </Animated.View> */}
 
-      {isLoggedIn ? (
-        <TouchableOpacity
-          onPress={() => router.push("/(details)/addPublicPlace")}
+      <TouchableOpacity
+        onPress={() => {
+          isLoggedIn
+            ? router.push("/(details)/addPublicPlace")
+            : setShowAction(true);
+        }}
+      >
+        <Animated.View
+          style={[styles.contentContainer, secondIcon, secondWidthStyle]}
         >
-          <Animated.View
-            style={[styles.contentContainer, secondIcon, secondWidthStyle]}
-          >
-            <View style={styles.iconContainer}>
-              <MaterialIcons name="public" size={25} color={"white"} />
-            </View>
-            <Animated.Text style={[styles.text, opacityText]}>
-              Add Place
-            </Animated.Text>
-          </Animated.View>
-        </TouchableOpacity>
-      ) : (
-        <TouchableOpacity onPress={() => setShowAction(true)}>
-          <Animated.View
-            style={[styles.contentContainer, secondIcon, secondWidthStyle]}
-          >
-            <View style={styles.iconContainer}>
-              <MaterialIcons name="public" size={25} color={"white"} />
-            </View>
+          <View style={styles.iconContainer}>
+            <MaterialIcons name="public" size={25} color={"white"} />
+          </View>
+          <Animated.Text style={[styles.text, opacityText]}>
+            Add Place
+          </Animated.Text>
+        </Animated.View>
+      </TouchableOpacity>
 
-            <ActionSheetScreen
-              title="Sign In"
-              description="Discover events, meet new people and make memories"
-              isOpen={showAction}
-              onOpen={() => setShowAction(true)}
-              onClose={() => setShowAction(false)}
-            />
-
-            <Animated.Text style={[styles.text, opacityText]}>
-              Add Place
-            </Animated.Text>
-          </Animated.View>
-        </TouchableOpacity>
-      )}
-
-      {isLoggedIn ? (
-        <TouchableOpacity onPress={() => router.push("/(details)/addEvent")}>
-          <Animated.View
-            style={[styles.contentContainer, firstIcon, firstWidthStyle]}
-          >
-            <View style={styles.iconContainer}>
-              <MaterialIcons name="event" size={26} color={"white"} />
-            </View>
-            <Animated.Text style={[styles.text, opacityText]}>
-              Add Event
-            </Animated.Text>
-          </Animated.View>
-        </TouchableOpacity>
-      ) : (
-        <TouchableOpacity onPress={() => setShowAction(true)}>
-          <Animated.View
-            style={[styles.contentContainer, firstIcon, firstWidthStyle]}
-          >
-            <View style={styles.iconContainer}>
-              <MaterialIcons name="event" size={26} color={"white"} />
-            </View>
-
-            <ActionSheetScreen
-              title="Sign In"
-              description="Discover events, meet new people and make memories"
-              isOpen={showAction}
-              onOpen={() => setShowAction(true)}
-              onClose={() => setShowAction(false)}
-            />
-            <Animated.Text style={[styles.text, opacityText]}>
-              Add Event
-            </Animated.Text>
-          </Animated.View>
-        </TouchableOpacity>
-      )}
+      <TouchableOpacity
+        onPress={() => {
+          isLoggedIn ? router.push("/(details)/addEvent") : setShowAction(true);
+        }}
+      >
+        <Animated.View
+          style={[styles.contentContainer, firstIcon, firstWidthStyle]}
+        >
+          <View style={styles.iconContainer}>
+            <MaterialIcons name="event" size={26} color={"white"} />
+          </View>
+          <Animated.Text style={[styles.text, opacityText]}>
+            Add Event
+          </Animated.Text>
+        </Animated.View>
+      </TouchableOpacity>
 
       <Pressable
         style={styles.contentContainer}
@@ -238,6 +196,15 @@ const AddEventsButton = () => {
           <Ionicons name="add" color={"white"} size={25} />
         </Animated.View>
       </Pressable>
+
+      {showAction && (
+        <ActionSheetScreen
+          title="Sign In"
+          description="Discover places, events, meet new people and make memories"
+          isOpen={showAction}
+          onClose={() => setShowAction(false)}
+        />
+      )}
     </View>
   );
 };

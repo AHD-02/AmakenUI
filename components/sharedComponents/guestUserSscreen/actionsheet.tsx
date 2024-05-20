@@ -1,25 +1,20 @@
-import { View, Text, Pressable, TouchableOpacity } from "react-native";
+import { Text } from "react-native";
 import React from "react";
-import { Actionsheet, Box, Center, Modal, Button } from "native-base";
-import { NotificationIcon } from "@/assets/icons";
+import { Actionsheet, Box, Center } from "native-base";
 import ButtonComponent from "../buttonComponent";
 import { router } from "expo-router";
 
 interface IProps {
   title?: string;
-  description?:string;
+  description?: string;
   isOpen: boolean;
   isEvent?: boolean;
-  onOpen: () => void;
   onClose: () => void;
 }
+
 const ActionSheetScreen = (props: IProps) => {
   return (
     <Center>
-      
-      <TouchableOpacity onPress={props.onOpen}>
-
-
       <Actionsheet isOpen={props.isOpen} onClose={props.onClose}>
         <Actionsheet.Content>
           <Box w="100%" h={250} px={5} justifyContent="flex-start">
@@ -40,7 +35,7 @@ const ActionSheetScreen = (props: IProps) => {
                 fontSize: 18,
                 fontWeight: 500,
                 color: "#8E8E93",
-                paddingBottom:50
+                paddingBottom: 50,
               }}
             >
               {props.description}
@@ -52,7 +47,6 @@ const ActionSheetScreen = (props: IProps) => {
           </Box>
         </Actionsheet.Content>
       </Actionsheet>
-      </TouchableOpacity>
     </Center>
   );
 };

@@ -17,7 +17,10 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "amaken.app"
+      "bundleIdentifier": "amaken.app",
+      "config": {
+        "googleMapsApiKey": "AIzaSyBroBuyKqhKMXSUyQq1_Awwik1AZqU-UI8"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -28,7 +31,12 @@
       "permissions": [
         "CAMERA",
         "CAMERA_ROLL"
-      ]
+      ],
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBroBuyKqhKMXSUyQq1_Awwik1AZqU-UI8"
+        }
+      }
     },
     "web": {
       "bundler": "metro",

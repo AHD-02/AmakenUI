@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet } from "react-native";
 import { View } from "@/components/Themed";
 import {
   Modal,
@@ -6,8 +6,6 @@ import {
   VStack,
   Text,
   HStack,
-  Center,
-  Image,
 } from "native-base";
 import { useSearchEventsQuery } from "../data/events";
 import { SearchEventsResponse } from "../types";
