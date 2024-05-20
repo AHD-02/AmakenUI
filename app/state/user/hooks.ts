@@ -20,5 +20,5 @@ export const useIsLoggedIn = () => {
 
 export const useIsEventSaved = (id: string) => {
     const user = useTypedSelector(state => state.user.userModel);
-    return useMemo(() => user?.savedEvents?.includes(id ?? ''), [user]) ?? false;
+    return useMemo(() => user?.savedEvents?.includes(id ?? ''), [user, id]) ?? false;
 }

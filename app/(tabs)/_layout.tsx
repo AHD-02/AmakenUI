@@ -7,12 +7,16 @@ import { useIsLoggedIn, useUserInfo } from "../state/user/hooks";
 import { Avatar } from "native-base";
 import { colors } from "../theme/Colors";
 import { imageUrlResolver } from "../utils/imageUtils";
+import Spinner from "react-native-loading-spinner-overlay";
+import { useTypedSelector } from "../state/store";
 
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
   const data = useUserInfo()
   const isLoggedIn = useIsLoggedIn()
+  // const isLoading = useTypedSelector(state => state.app.isLoading) ?? false
+  // <Spinner visible color={colors.primary} />
 
   const getFirstChars = (s1: string, s2: string) => {
     return `${s1?.charAt(0) ?? "-"}${s2.charAt(0) ?? "-"}`

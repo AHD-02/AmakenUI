@@ -6,9 +6,10 @@ import { colors } from "@/app/theme/Colors";
 import { useUserInfo } from "@/app/state/user/hooks";
 import { router } from "expo-router";
 import { useDispatch } from "react-redux";
-import { setTokens } from "@/app/state/user/slice";
+import { setTokens, setUser } from "@/app/state/user/slice";
 import { ButtonComponent } from "../sharedComponents";
 import { imageUrlResolver } from "@/app/utils/imageUtils";
+import { UserInitialValues } from "@/app/types";
 
 const ProfileHeader = () => {
   const userData = useUserInfo();
@@ -21,11 +22,16 @@ const ProfileHeader = () => {
         accessToken: undefined,
       })
     );
+    dispatch(
+      setUser(
+        UserInitialValues,
+      )
+    )
 
     setShowModal(false);
     router.push("/(auth)");
   };
-  
+
   return (
     <HStack justifyContent={"space-between"} marginX={4} marginY={"20"}>
       <TouchableOpacity

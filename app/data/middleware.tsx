@@ -9,6 +9,8 @@ import { persistor, RootState } from '../state/store';
 import { setTokens } from '../state/user/slice';
 import { logoutAction } from '../state/actions/logout';
 import { Mutex } from 'async-mutex';
+import { useDispatch } from 'react-redux';
+import { setIsLoading } from '../state/app/slice';
 
 const mutex = new Mutex();
 
@@ -33,10 +35,11 @@ const customFetchBase: BaseQueryFn<
     typeof args === 'string' ? urlEnd : { ...args, url: urlEnd };
 
   await mutex.waitForUnlock();
+  api.dispatch(setIsLoading(true))
   // console.debug(`${new Date()} Api Call to  ${adjustedUrl} `);
   let result = (await baseQuery(adjustedArgs, api, extraOptions)) as any;
   //console.debug(`${new Date()} Response  ${adjustedUrl} `);
-
+  api.dispatch(setIsLoading(false))
   if (result?.error?.data?.status >= 400) {
     console.warn(
       `Api Call to  ${(args as any).url} Failed`,

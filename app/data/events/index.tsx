@@ -40,8 +40,7 @@ export const EventApi = createApi({
         saveEvent: builder.mutation<void, string>({
             invalidatesTags: ['event'],
             query: id => ({
-                // url: `event/${id ?? ''}/save`,
-                url: `event/save/${id ?? ''}`,
+                url: `event/${id ?? ''}/save`,
                 method: 'POST',
                 body: {}
             })

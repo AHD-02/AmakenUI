@@ -1,10 +1,13 @@
-import { useIsEventSaved } from "@/app/state/user/hooks";
 import { colors } from "@/app/theme/Colors";
 import { Archive, ArchiveGray, LocationIcon } from "@/assets/icons";
 import { AntDesign } from "@expo/vector-icons";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { HStack, Image, Pressable, Text, View } from "native-base";
 import { useSaveEventMutation, useUnSaveEventMutation } from "@/app/data/events";
+import { useEffect, useMemo, useState } from "react";
+import { useUserInfo } from "@/app/state/user/hooks";
+import RefreshUser from "@/app/hooks/refreshUser";
+import ActionSheetScreen from "../sharedComponents/guestUserSscreen/actionsheet";
 
 interface IProps {
   title: string;
@@ -31,75 +34,96 @@ const EventPage = ({
   id,
   isBookingComponent,
 }: IProps) => {
-  const [saveEvent] = useSaveEventMutation();
-  const [unSaveEvent] = useUnSaveEventMutation();
-  const isSaved = useIsEventSaved(id ?? '');
+  const [saveEvent, saveRes] = useSaveEventMutation();
+  const [unSaveEvent, unSaveRes] = useUnSaveEventMutation();
+  const { handle } = RefreshUser()
+  const userInfo = useUserInfo()
+  const [isAskToLogin, setIsAskToLogin] = useState<boolean>(false)
+
+  const isEventSaved = useMemo(() =>
+    userInfo?.savedEvents?.includes(id ?? '')
+    , [userInfo])
+
+  const toggleSaveEvent = async () => {
+    if (userInfo.email) {
+      isEventSaved ? await unSaveEvent(id ?? '') : await saveEvent(id ?? '')
+    } else
+      setIsAskToLogin(true)
+  }
+
+  useEffect(() => {
+    if (Boolean(saveRes.isSuccess || unSaveRes.isSuccess || saveRes.error || unSaveRes.error))
+      handle()
+  }, [saveRes, unSaveRes])
 
   return (
-    <Pressable onPress={onPress} marginRight={isBookingComponent ? 1 : 4}>
-      <HStack width="100%">
-        <Image
-          source={{ uri: image }}
-          height={160}
-          width={isBookingComponent ? 'full' : 300}
-          resizeMode="cover"
-          borderTopLeftRadius={10}
-          borderTopRightRadius={10}
-          borderBottomLeftRadius={isBookingComponent ? 0 : 10}
-          borderBottomRightRadius={isBookingComponent ? 0 : 10}
-          alt="event image"
-        />
-      </HStack>
-
-      <HStack
-        justifyContent="space-between"
-        paddingTop={3}
-        paddingX={1}
-        paddingLeft={isBookingComponent ? 3 : 0}
-        backgroundColor={isBookingComponent ? "white" : ""}
-      >
-        <Text fontWeight={700} fontFamily="Poppins" fontSize={14}>
-          {`${title} - ${city}`}
-        </Text>
-        <HStack space={1}>
-          <AntDesign
-            name="star"
-            color="#F7CB15"
-            size={18}
-            style={{ alignSelf: "center" }}
+    <>
+      <Pressable onPress={onPress} marginRight={isBookingComponent ? 1 : 4}>
+        <HStack width="100%">
+          <Image
+            source={{ uri: image }}
+            height={160}
+            width={isBookingComponent ? 'full' : 300}
+            resizeMode="cover"
+            borderTopLeftRadius={10}
+            borderTopRightRadius={10}
+            borderBottomLeftRadius={isBookingComponent ? 0 : 10}
+            borderBottomRightRadius={isBookingComponent ? 0 : 10}
+            alt="event image"
           />
-          <Text fontWeight={700}>{rate}</Text>
         </HStack>
-      </HStack>
 
-      <View style={[styles.icon, isSaved ? { backgroundColor: colors.primary } : {}]}>
-        <TouchableOpacity onPress={() => isSaved ? unSaveEvent(id ?? '') : saveEvent(id ?? '')}>
-          {isSaved ? <Archive /> : <ArchiveGray />}
-        </TouchableOpacity>
-      </View>
-
-      <HStack
-        paddingTop={3}
-        paddingBottom={2}
-        paddingX={1}
-        paddingLeft={isBookingComponent ? 3 : 0}
-        marginBottom={isBookingComponent ? 3 : 0}
-        backgroundColor={isBookingComponent ? "white" : ""}
-        borderBottomLeftRadius={isBookingComponent ? 10 : 0}
-        borderBottomRightRadius={isBookingComponent ? 10 : 0}
-      >
-        <LocationIcon />
-        <Text
-          color="#8E8E93"
-          fontFamily="Poppins"
-          fontSize={12}
-          fontWeight={600}
-          paddingLeft={3}
+        <HStack
+          justifyContent="space-between"
+          paddingTop={3}
+          paddingX={1}
+          paddingLeft={isBookingComponent ? 3 : 0}
+          backgroundColor={isBookingComponent ? "white" : ""}
         >
-          {description}
-        </Text>
-      </HStack>
-    </Pressable>
+          <Text fontWeight={700} fontFamily="Poppins" fontSize={14}>
+            {`${title} - ${city}`}
+          </Text>
+          <HStack space={1}>
+            <AntDesign
+              name="star"
+              color="#F7CB15"
+              size={18}
+              style={{ alignSelf: "center" }}
+            />
+            <Text fontWeight={700}>{rate}</Text>
+          </HStack>
+        </HStack>
+
+        <View style={[styles.icon, isEventSaved ? { backgroundColor: colors.primary } : {}]}>
+          <TouchableOpacity onPress={toggleSaveEvent}>
+            {isEventSaved ? <Archive /> : <ArchiveGray />}
+          </TouchableOpacity>
+        </View>
+
+        <HStack
+          paddingTop={3}
+          paddingBottom={2}
+          paddingX={1}
+          paddingLeft={isBookingComponent ? 3 : 0}
+          marginBottom={isBookingComponent ? 3 : 0}
+          backgroundColor={isBookingComponent ? "white" : ""}
+          borderBottomLeftRadius={isBookingComponent ? 10 : 0}
+          borderBottomRightRadius={isBookingComponent ? 10 : 0}
+        >
+          <LocationIcon />
+          <Text
+            color="#8E8E93"
+            fontFamily="Poppins"
+            fontSize={12}
+            fontWeight={600}
+            paddingLeft={3}
+          >
+            {description}
+          </Text>
+        </HStack>
+      </Pressable>
+      <ActionSheetScreen isOpen={isAskToLogin} onClose={() => setIsAskToLogin(false)} />
+    </>
   );
 };
 
@@ -110,7 +134,7 @@ const styles = StyleSheet.create({
     top: 9,
     height: 30,
     width: 30,
-    borderRadius: 20,
+    borderRadius: 100,
     justifyContent: 'center',
     alignItems: 'center',
   },
