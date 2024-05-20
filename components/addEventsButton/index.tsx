@@ -19,10 +19,11 @@ import { Center, Modal, Image, Text } from "native-base";
 import { LOGO } from "@/assets/images";
 import { ButtonComponent } from "../sharedComponents";
 import GuestModal from "../sharedComponents/modal/guestModal";
+import ActionSheetScreen from "../sharedComponents/guestUserSscreen/actionsheet";
 
 const AddEventsButton = () => {
   const isLoggedIn = useIsLoggedIn();
-  const [showModal, setShowModal] = useState(false);
+  const [showAction, setShowAction] = useState(false);
   const firstValue = useSharedValue(30);
   const secondValue = useSharedValue(30);
   // const thirdValue = useSharedValue(30);
@@ -168,7 +169,7 @@ const AddEventsButton = () => {
           </Animated.View>
         </TouchableOpacity>
       ) : (
-        <TouchableOpacity onPress={() => setShowModal(true)}>
+        <TouchableOpacity onPress={() => setShowAction(true)}>
           <Animated.View
             style={[styles.contentContainer, secondIcon, secondWidthStyle]}
           >
@@ -176,10 +177,12 @@ const AddEventsButton = () => {
               <MaterialIcons name="public" size={25} color={"white"} />
             </View>
 
-            <GuestModal
-              isOpen={showModal}
-              onClose={() => setShowModal(false)}
-              header="you have to be login to amaken to procceed with this action"
+            <ActionSheetScreen
+              title="Sign In"
+              description="Discover events, meet new people and make memories"
+              isOpen={showAction}
+              onOpen={() => setShowAction(true)}
+              onClose={() => setShowAction(false)}
             />
 
             <Animated.Text style={[styles.text, opacityText]}>
@@ -203,7 +206,7 @@ const AddEventsButton = () => {
           </Animated.View>
         </TouchableOpacity>
       ) : (
-        <TouchableOpacity onPress={() => setShowModal(true)}>
+        <TouchableOpacity onPress={() => setShowAction(true)}>
           <Animated.View
             style={[styles.contentContainer, firstIcon, firstWidthStyle]}
           >
@@ -211,12 +214,13 @@ const AddEventsButton = () => {
               <MaterialIcons name="event" size={26} color={"white"} />
             </View>
 
-            <GuestModal
-              isOpen={showModal}
-              onClose={() => setShowModal(false)}
-              header="you have to be login to amaken to procceed with this action."
+            <ActionSheetScreen
+              title="Sign In"
+              description="Discover events, meet new people and make memories"
+              isOpen={showAction}
+              onOpen={() => setShowAction(true)}
+              onClose={() => setShowAction(false)}
             />
-
             <Animated.Text style={[styles.text, opacityText]}>
               Add Event
             </Animated.Text>

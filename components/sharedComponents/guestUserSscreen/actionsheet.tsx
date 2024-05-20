@@ -9,15 +9,17 @@ interface IProps {
   title?: string;
   description?:string;
   isOpen: boolean;
+  isEvent?: boolean;
   onOpen: () => void;
   onClose: () => void;
 }
 const ActionSheetScreen = (props: IProps) => {
   return (
     <Center>
+      
       <TouchableOpacity onPress={props.onOpen}>
-        <NotificationIcon />
-      </TouchableOpacity>
+
+
       <Actionsheet isOpen={props.isOpen} onClose={props.onClose}>
         <Actionsheet.Content>
           <Box w="100%" h={250} px={5} justifyContent="flex-start">
@@ -50,6 +52,7 @@ const ActionSheetScreen = (props: IProps) => {
           </Box>
         </Actionsheet.Content>
       </Actionsheet>
+      </TouchableOpacity>
     </Center>
   );
 };

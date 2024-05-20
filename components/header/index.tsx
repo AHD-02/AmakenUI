@@ -66,6 +66,7 @@ const DynamicHeader = ({ isBGHidden }: IProps) => {
                         onOpen={()=>setShowAction(true)}
                         onClose={()=>setShowAction(false)}
                         />
+                        <NotificationIcon/>
                     </TouchableOpacity>
                       )}  
 
