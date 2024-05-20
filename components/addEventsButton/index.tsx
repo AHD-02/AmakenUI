@@ -15,7 +15,6 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { colors } from "@/app/theme/Colors";
 import { router } from "expo-router";
 import { useIsLoggedIn } from "@/app/state/user/hooks";
-import GuestModal from "../sharedComponents/modal/guestModal";
 import ActionSheetScreen from "../sharedComponents/guestUserSscreen/actionsheet";
 
 const AddEventsButton = () => {

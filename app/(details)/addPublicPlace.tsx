@@ -26,17 +26,16 @@ import { imageUrlResolver } from "../utils/imageUtils";
 const AddPublicPlace = () => {
   const { data } = usePublicPlaceCategoriesQuery();
   const [createPlace, res] = useCreatePublicPlaceMutation();
-  
+
   const { values, setFieldValue, errors, submitForm } = useFormik({
     initialValues: publicPlaceInitialValues(),
     validationSchema: publicPlaceValidationSchema,
     validateOnChange: false,
     onSubmit: (values) => {
-      createPlace(values)
+      createPlace(values);
     },
   });
 
-  
   useEffect(() => {
     if (res?.error) {
       Toast.show({
@@ -86,7 +85,10 @@ const AddPublicPlace = () => {
           {Array.isArray(values?.images) && (
             <ScrollView horizontal paddingBottom={2}>
               {values.images.map((img) => (
-                <ImageContainer key={img ?? ""} imageUrl={imageUrlResolver(img ?? "")} />
+                <ImageContainer
+                  key={img ?? ""}
+                  imageUrl={imageUrlResolver(img ?? "")}
+                />
               ))}
             </ScrollView>
           )}
@@ -99,8 +101,15 @@ const AddPublicPlace = () => {
               value={values?.name}
             />
           </View>
-          
-          <AssignOnMap />
+
+          <AssignOnMap
+            latitude={values?.latitude}
+            longitude={values?.longitude}
+            setLognLat={(locatoin) => {
+              setFieldValue("latitude", locatoin.latitude);
+              setFieldValue("longitude", locatoin.longitude);
+            }}
+          />
 
           <View>
             <Dropdown
@@ -108,9 +117,7 @@ const AddPublicPlace = () => {
               placeHolder="Select"
               items={data ?? []}
               selectedValue={values?.categoryId?.toString() ?? ""}
-              setSelectedValue={(value) =>
-                setFieldValue("categoryId", value)
-              }
+              setSelectedValue={(value) => setFieldValue("categoryId", value)}
             />
           </View>
 

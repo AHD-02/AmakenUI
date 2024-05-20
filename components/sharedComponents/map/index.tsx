@@ -1,17 +1,24 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import { Keyboard, Platform, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  ActivityIndicator,
+  Keyboard,
+  Platform,
+  StyleSheet,
+  View,
+  Text,
+} from "react-native";
 import { Box, useTheme } from "native-base";
 import MapView, {
   Circle,
   Marker,
   MarkerDragStartEndEvent,
   PROVIDER_DEFAULT,
-  PROVIDER_GOOGLE,
 } from "react-native-maps";
 import MapStyle from "./style";
 import { Ionicons } from "@expo/vector-icons";
 import { primaryColor } from "@/app/types";
 import * as Location from "expo-location";
+import Toast from "react-native-toast-message";
 
 export interface CoordsType {
   longitude?: number;
@@ -40,7 +47,6 @@ const getCircles = (latitude: number, longitude: number) => [
     color: "rgba(165, 88, 58, 0.2)",
     center: { latitude, longitude },
   },
-
   {
     radius: 500,
     color: "rgba(165, 88, 58, 0.3)",
@@ -69,13 +75,9 @@ const MapComponent = ({
   setCurrentLocationCoords,
 }: IProps) => {
   const { colors } = useTheme();
-
-  const [location, setLocation] = useState<CoordsType>({
-    latitude: latitude,
-    longitude: longitude,
-  });
   const [showCircles, setShowCircles] = useState(true);
   const [circlePosition, setCirclePosition] = useState<CoordsType>({});
+  const [loading, setLoading] = useState<boolean>(true);
 
   const onDragStart = () => {
     setShowCircles(false);
@@ -84,42 +86,63 @@ const MapComponent = ({
   const onDragEnd = (e: MarkerDragStartEndEvent) => {
     setShowCircles(true);
     setCurrentLocationCoords?.(e.nativeEvent.coordinate);
-    setLocation(e.nativeEvent.coordinate);
   };
 
   const userLocation = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== "granted") {
+      Toast.show({
+        type: "error",
+        text1: "Permission to access location was denied",
+      });
+      setLoading(false);
       return;
     }
-    let location = await Location.getCurrentPositionAsync();
-    const locationCoords = {
-      latitude: location.coords.latitude,
-      longitude: location.coords.longitude,
-    };
-
-    setLocation(locationCoords);
-    setCurrentLocationCoords?.(locationCoords);
+    try {
+      let location = await Location.getCurrentPositionAsync();
+      const locationCoords = {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      };
+      setCurrentLocationCoords?.(locationCoords);
+    } catch (error) {
+      Toast.show({
+        type: "error",
+        text1: `Error getting location: ${error}`,
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     userLocation();
   }, []);
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color={primaryColor} />
+        <Text>{"Working on getting your location"}</Text>
+      </View>
+    );
+  }
 
   return (
     <MapView
       onPress={Keyboard.dismiss}
-      provider={Platform.OS === "android" ? PROVIDER_GOOGLE : PROVIDER_DEFAULT}
+      provider={PROVIDER_DEFAULT}
       customMapStyle={MapStyle}
       //@ts-ignore
       initialRegion={{
-        ...(location || { latitude, longitude }),
+        longitude: longitude,
+        latitude: latitude,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       }}
       region={{
-        latitude: location?.latitude || latitude,
-        longitude: location?.longitude || longitude,
+        latitude: latitude,
+        longitude: longitude,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       }}
@@ -162,5 +185,15 @@ const MapComponent = ({
     </MapView>
   );
 };
+
+const styles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    height: "100%",
+  },
+});
 
 export default MapComponent;

@@ -1,18 +1,16 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import { Modal, Center, HStack, Image, VStack } from "native-base";
-import { EditProfileIcon, LogoutIcon, ModalIconLogout } from "@/assets/icons";
+import { EditProfileIcon, LogoutIcon } from "@/assets/icons";
 import { colors } from "@/app/theme/Colors";
-import { useIsLoggedIn, useUserInfo } from "@/app/state/user/hooks";
+import { useUserInfo } from "@/app/state/user/hooks";
 import { router } from "expo-router";
 import { useDispatch } from "react-redux";
-import { setTokens, setUser } from "@/app/state/user/slice";
-import { reloadAsync } from "expo-updates";
+import { setTokens } from "@/app/state/user/slice";
 import { ButtonComponent } from "../sharedComponents";
 import { imageUrlResolver } from "@/app/utils/imageUtils";
 
 const ProfileHeader = () => {
-  const isLoggedIn = useIsLoggedIn();
   const userData = useUserInfo();
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
@@ -27,6 +25,7 @@ const ProfileHeader = () => {
     setShowModal(false);
     router.push("/(auth)");
   };
+  
   return (
     <HStack justifyContent={"space-between"} marginX={4} marginY={"20"}>
       <TouchableOpacity

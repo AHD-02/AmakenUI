@@ -6,14 +6,14 @@ import MapComponent, { CoordsType } from "../map";
 
 interface IProps {
   title?: string;
-  logitude?: number;
-  latitude?: number;
-  setLognLat?: (location: CoordsType) => void;
+  longitude: number;
+  latitude: number;
+  setLognLat: (location: CoordsType) => void;
 }
 
-const AssignOnMap = ({ title, latitude, logitude, setLognLat }: IProps) => {
+const AssignOnMap = ({ title, latitude, longitude, setLognLat }: IProps) => {
   const [isMapOpen, setIsMapOpen] = useState<boolean>(false);
-  
+
   return (
     <View>
       <Pressable onPress={() => setIsMapOpen(true)}>
@@ -37,14 +37,10 @@ const AssignOnMap = ({ title, latitude, logitude, setLognLat }: IProps) => {
       </Pressable>
 
       {isMapOpen && (
-        <MapModal
-          isOpen={isMapOpen}
-          onClose={() => setIsMapOpen(false)}
-          headerTitle="Assign Location On Map"
-        >
-          <MapComponent
+        <MapModal isOpen={isMapOpen} onClose={() => setIsMapOpen(false)}>
+          <MapComponent 
             latitude={latitude}
-            longitude={logitude}
+            longitude={longitude}
             setCurrentLocationCoords={setLognLat}
           />
         </MapModal>
