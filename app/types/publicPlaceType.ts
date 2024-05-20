@@ -3,8 +3,8 @@ import * as yup from "yup";
 export interface PublicPlaceCreateType {
   name: string;
   description: string;
-  longitude: number;
-  latitude: number;
+  longitude?: number;
+  latitude?: number;
   categoryId: number;
   categoryName: string;
   images: string[];
@@ -14,8 +14,8 @@ export const publicPlaceInitialValues = (values?: PublicPlaceCreateType) => {
   return {
     name: values?.name ?? "",
     description: values?.description ?? "",
-    longitude: values?.longitude ?? 31.965975,
-    latitude: values?.latitude ?? 35.898692,
+    longitude: values?.longitude ?? undefined,
+    latitude: values?.latitude ?? undefined,
     categoryId: values?.categoryId ?? 0,
     categoryName: values?.categoryName ?? "",
     images: values?.images?? [],

@@ -22,6 +22,7 @@ import { useEffect } from "react";
 import Toast from "react-native-toast-message";
 import { router } from "expo-router";
 import { imageUrlResolver } from "../utils/imageUtils";
+import CheckNameWithInput from "./place/components/checkName";
 
 const AddPublicPlace = () => {
   const { data } = usePublicPlaceCategoriesQuery();
@@ -94,17 +95,17 @@ const AddPublicPlace = () => {
           )}
 
           <View>
-            <TextInput
+            <CheckNameWithInput
               label="Place Name"
               placeholder="Name"
-              onChangeText={(value) => setFieldValue("name", value)}
+              setValue={(value) => setFieldValue("name", value)}
               value={values?.name}
             />
           </View>
 
           <AssignOnMap
-            latitude={values?.latitude}
-            longitude={values?.longitude}
+            latitude={values?.latitude ?? 0}
+            longitude={values?.longitude ?? 0}
             setLognLat={(locatoin) => {
               setFieldValue("latitude", locatoin.latitude);
               setFieldValue("longitude", locatoin.longitude);
