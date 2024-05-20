@@ -89,8 +89,8 @@ const AddEvent = () => {
             endDate.time.getMinutes()
         ))
     }
-    console.log('startDate', res)
-    console.log('errors', values)
+
+    
     return (
         <KeyboardAvoidingView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
