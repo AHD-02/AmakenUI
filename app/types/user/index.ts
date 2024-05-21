@@ -3,6 +3,7 @@ export type Locale = 'en' | 'ar';
 export interface UserModel {
     email?: string;
     password?: string;
+    confirmPassword?: string;
     firstName?: string;
     lastName?: string;
     dateOfBirth: Date;
@@ -18,6 +19,7 @@ export interface UserModel {
 export const UserInitialValues: UserModel = {
     email: "",
     password: "",
+    confirmPassword: "",
     firstName: "",
     lastName: "",
     dateOfBirth: new Date(),

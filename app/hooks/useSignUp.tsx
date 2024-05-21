@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useFormik } from "formik";
-import { router } from "expo-router";
+import { router, usePathname } from "expo-router";
 import {
   SignUpInitialValues,
   SignUpValidationSchema,
@@ -12,12 +12,18 @@ import { useDispatch } from "react-redux";
 import { setSignUpState, setTokens, setUser } from "../state/user/slice";
 import { SCREENS } from "@/components/screens";
 import { setIsLoading } from "../state/app/slice";
+import { UserInitialValues } from "../types";
+import { useTypedSelector } from "../state/store";
 
 const useSignUp = () => {
-  const [signUp, { data, error }] = useSignUpMutation();
+  const [signUp, res] = useSignUpMutation();
   const dispatch = useDispatch();
   const [getUser, userRes] = useLazyGetUserQuery();
   const { data: userData, isLoading } = userRes;
+
+  const pathname = usePathname()
+  const { data, error } = res
+  const signUpState = useTypedSelector(state => state.user.signupState)
 
   useEffect(() => {
     dispatch(setIsLoading(isLoading ?? false));
@@ -27,6 +33,9 @@ const useSignUp = () => {
           accessToken: data.token,
         })
       );
+      dispatch(
+        setSignUpState(UserInitialValues)
+      )
       getUser();
     }
 
@@ -48,18 +57,26 @@ const useSignUp = () => {
 
   const { values, setFieldValue, errors, submitForm } = useFormik({
     //@ts-ignore
-    initialValues: SignUpInitialValues(userData),
-    validationSchema: SignUpValidationSchema,
+    initialValues: SignUpInitialValues(signUpState),
+    validationSchema: SignUpValidationSchema(pathname.includes(SCREENS.Categories)),
     validateOnChange: false,
+    enableReinitialize: true,
     onSubmit: async (values: SignupModel) => {
-      if (values.intrests && values.intrests?.length > 0)
-        await signUp(values)
-      else {
+      if (pathname.includes(SCREENS.Signup)) {
         dispatch(setSignUpState(values as any))
         router.push(`/${SCREENS.Auth}/${SCREENS.Categories}`);
+      } else if (pathname.includes(SCREENS.Categories)) {
+        if (values.intrests && values.intrests?.length >= 3)
+          await signUp(values)
+        else
+          Toast.show({
+            type: 'error',
+            text1: 'Select Three At Lease'
+          })
       }
     },
   });
+
   return { values, setFieldValue, errors, submitForm };
 };
 

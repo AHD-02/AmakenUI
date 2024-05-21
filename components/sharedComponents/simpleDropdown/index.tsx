@@ -13,6 +13,7 @@ interface DropdownProps {
   items?: { label: string; value: string }[];
   isMessage?: boolean;
   label: string;
+  isReadOnly?: boolean
 }
 
 const Dropdown: React.FC<DropdownProps> = ({
@@ -22,6 +23,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   setSelectedValue,
   selectedValue,
   placeHolder,
+  isReadOnly = true,
 }: DropdownProps) => {
   return (
     <Box marginTop={2} paddingX={0}>
@@ -30,7 +32,7 @@ const Dropdown: React.FC<DropdownProps> = ({
           {label}
         </Text>
       )}
-      <FormControl isRequired isInvalid={Boolean(errorMsg)}>
+      <FormControl isRequired isInvalid={Boolean(errorMsg)} isReadOnly={isReadOnly}>
         {Boolean(errorMsg) && (
           <FormControl.ErrorMessage style={{ flexDirection: "row-reverse" }}>
             <WarningOutlineIcon size="xs" />

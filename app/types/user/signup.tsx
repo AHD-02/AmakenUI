@@ -27,12 +27,12 @@ export const SignUpInitialValues = (userData?: UserModel) => ({
   date: userData?.dateOfBirth ?? "2024-04-30T22:23:00.000Z",
   country: userData?.country ?? "",
   city: userData?.city ?? "",
-  password: "",
-  confirmPassword: "",
+  password: userData?.password ?? "",
+  confirmPassword: userData?.confirmPassword ?? "",
   status: 'OK',
 });
 
-export const SignUpValidationSchema = yup.object({
+export const SignUpValidationSchema = (skipPass?: boolean) => yup.object({
   firstName: yup.string().required("Please complete this field"),
   lastName: yup.string().required("Please complete this field"),
   email: yup
@@ -44,7 +44,7 @@ export const SignUpValidationSchema = yup.object({
   date: yup.date().nullable().required("Please complete this field"),
   country: yup.string().required("Please complete this field"),
   city: yup.string().required("Please complete this field"),
-  password: yup
+  ...{...(!skipPass) ? {password: yup
     .string()
     .min(
       8,
@@ -58,5 +58,5 @@ export const SignUpValidationSchema = yup.object({
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password"), null as any], "Password must match")
-    .required("Please complete this field"),
+    .required("Please complete this field"),} : {}}
 });
