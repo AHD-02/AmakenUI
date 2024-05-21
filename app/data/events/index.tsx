@@ -1,13 +1,13 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import customFetchBase from '../middleware';
-import { SearchEventsResponse } from '@/app/types';
+import { LookUpModel, SearchEventsResponse } from '@/app/types';
 
 export const EventApi = createApi({
     reducerPath: 'EventApi',
     baseQuery: customFetchBase,
     refetchOnMountOrArgChange: true,
     refetchOnReconnect: true,
-    tagTypes: ['event'],
+    tagTypes: ['event', 'categories'],
     endpoints: builder => ({
         searchEvents: builder.query<SearchEventsResponse[], void>({
             providesTags: ['event'],
@@ -48,9 +48,16 @@ export const EventApi = createApi({
         unSaveEvent: builder.mutation<void, string>({
             invalidatesTags: ['event'],
             query: id => ({
-                url: `event/unSave/${id ?? ''}`,
+                url: `event/${id ?? ''}/unSave`,
                 method: 'POST',
                 body: {}
+            })
+        }),
+        searchEventsCategories: builder.query<Array<LookUpModel>, void>({
+            providesTags: ['categories'],
+            query: () => ({
+                url: `EventCategories/GetCategories`,
+                method: 'GET',
             })
         })
     }),
@@ -63,4 +70,5 @@ export const {
     useCreateEventMutation,
     useSaveEventMutation,
     useUnSaveEventMutation,
+    useSearchEventsCategoriesQuery,
 } = EventApi;

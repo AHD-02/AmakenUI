@@ -42,7 +42,7 @@ const useSignUp = () => {
   useEffect(() => {
     if (userData) {
       dispatch(setUser(userData));
-      router.replace(`/${SCREENS.Main}/`);
+      router.replace(`/${SCREENS.Auth}/${SCREENS.Categories}`);
     }
   }, [userData]);
 

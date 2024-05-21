@@ -33,6 +33,7 @@ const AuthLayout = () => {
                 ),   }} />
         <Stack.Screen name={SCREENS.SetNewPassword} options={{ title: 'SetNewPssword' }} />
         <Stack.Screen name={SCREENS.OTP} options={{ title: 'OTP' }} />
+        <Stack.Screen name={SCREENS.Categories} options={{ title: 'Interestes' }} />
       </Stack>
   );
 }

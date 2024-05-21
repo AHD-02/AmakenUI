@@ -2,13 +2,14 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import customFetchBase from "../middleware";
 import { PublicPlaceResponse } from "@/app/types/places";
 import { PublicPlaceCreateType } from "@/app/types/publicPlaceType";
+import { LookUpModel } from "@/app/types";
 
 export const PublicPlace = createApi({
   baseQuery: customFetchBase,
   reducerPath: "PublicPlace",
   refetchOnMountOrArgChange: true,
   refetchOnReconnect: true,
-  tagTypes: ["addPlace"],
+  tagTypes: ["addPlace", 'categories'],
   endpoints: (builder) => ({
     searchPublicPlaces: builder.query<PublicPlaceResponse[], void>({
       providesTags: ["addPlace"],
@@ -38,6 +39,13 @@ export const PublicPlace = createApi({
         params
       }),
     }),
+    searchPublicPlacesCategories: builder.query<Array<LookUpModel>, void>({
+      providesTags: ['categories'],
+      query: () => ({
+          url: `PublicPlacesCategories/GetCategories`,
+          method: 'GET',
+      })
+  })
   }),
 });
 
@@ -46,4 +54,5 @@ export const {
   useGetPublicPlaceQuery,
   useCreatePublicPlaceMutation,
   useLazyCheckNameQuery,
+  useSearchPublicPlacesCategoriesQuery,
 } = PublicPlace;

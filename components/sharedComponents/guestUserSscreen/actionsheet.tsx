@@ -42,7 +42,10 @@ const ActionSheetScreen = (props: IProps) => {
             </Text>
             <ButtonComponent
               title="Login or Signup"
-              onPress={() => router.navigate("(auth)/")}
+              onPress={() => {
+                router.navigate("(auth)/")
+                props.onClose()
+              }}
             />
           </Box>
         </Actionsheet.Content>

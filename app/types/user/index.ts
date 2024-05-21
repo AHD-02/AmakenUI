@@ -12,6 +12,7 @@ export interface UserModel {
     country?: string;
     city?: string;
     status: string;
+    intrests?: Array<string>
 }
 
 export const UserInitialValues: UserModel = {
@@ -25,7 +26,8 @@ export const UserInitialValues: UserModel = {
     savedEvents: [],
     country: "",
     city: "",
-    status: ""
+    status: "",
+    intrests: [],
 };
 
 export const initialState: UserState = {

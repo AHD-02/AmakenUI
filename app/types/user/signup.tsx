@@ -14,6 +14,7 @@ export interface SignupModel {
   password: string;
   confirmPassword: string;
   status: string;
+  intrests?: Array<String>
 }
 
 export const SignUpInitialValues = (userData?: UserModel) => ({
