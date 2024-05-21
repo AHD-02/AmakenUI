@@ -30,16 +30,18 @@ const customFetchBase: BaseQueryFn<
   unknown,
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
+  api.dispatch(setIsLoading(true))
+  
   const urlEnd = typeof args === 'string' ? args : args.url;
   const adjustedArgs =
     typeof args === 'string' ? urlEnd : { ...args, url: urlEnd };
 
   await mutex.waitForUnlock();
-  api.dispatch(setIsLoading(true))
   // console.debug(`${new Date()} Api Call to  ${adjustedUrl} `);
   let result = (await baseQuery(adjustedArgs, api, extraOptions)) as any;
   //console.debug(`${new Date()} Response  ${adjustedUrl} `);
   api.dispatch(setIsLoading(false))
+
   if (result?.error?.data?.status >= 400) {
     console.warn(
       `Api Call to  ${(args as any).url} Failed`,

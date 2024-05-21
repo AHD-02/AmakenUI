@@ -14,6 +14,8 @@ import { Provider } from "react-redux";
 import { persistor, store } from "./state/store";
 import RootLayoutNav from "./rootLayoutNav";
 import { PersistGate } from "redux-persist/integration/react";
+import Spinner from "react-native-loading-spinner-overlay";
+import LoadingLayout from "./loadingLayout";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -66,8 +68,7 @@ export default function RootLayout() {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <StatusBar barStyle={'dark-content'}/>
-        <RootLayoutNav />
+        <LoadingLayout />
         <Toast config={toastConfig} />
       </PersistGate>
     </Provider>
