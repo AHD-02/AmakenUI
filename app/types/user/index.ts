@@ -37,7 +37,8 @@ export const initialState: UserState = {
     isGuest: false,
     phoneNumber: '',
     theme: null,
-    userModel: UserInitialValues
+    userModel: UserInitialValues,
+    signupState: UserInitialValues,
 };
 
 export interface UserState {
@@ -50,6 +51,7 @@ export interface UserState {
     phoneNumber: string;
     theme: 'dark' | 'light' | null;
     userModel: UserModel
+    signupState: UserModel
 }
 
 export type Tokens = {
@@ -71,7 +73,8 @@ export const loggedOutState: UserState = {
     isGuest: false,
     phoneNumber: '',
     theme: null,
-    userModel: UserInitialValues
+    userModel: UserInitialValues,
+    signupState: UserInitialValues,
 };
 
 export interface LoginModel {

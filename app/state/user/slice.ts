@@ -1,4 +1,5 @@
 import { Tokens, UserModel, initialState, loggedOutState } from '@/app/types';
+import { SignupModel } from '@/app/types/user/signup';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 export const userSlice = createSlice({
@@ -27,6 +28,9 @@ export const userSlice = createSlice({
         },
         setUser: (state, action: PayloadAction<UserModel>) => {
             state.userModel = action.payload;
+        },
+        setSignUpState: (state, action: PayloadAction<UserModel>) => {
+            state.signupState = action.payload
         }
     },
 });
@@ -36,6 +40,7 @@ export const {
     login,
     setTokens,
     setUser,
+    setSignUpState,
 } = userSlice.actions;
 
 export default userSlice.reducer;

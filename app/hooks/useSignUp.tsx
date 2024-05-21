@@ -9,7 +9,7 @@ import {
 import { useLazyGetUserQuery, useSignUpMutation } from "../data/user";
 import Toast from "react-native-toast-message";
 import { useDispatch } from "react-redux";
-import { setTokens, setUser } from "../state/user/slice";
+import { setSignUpState, setTokens, setUser } from "../state/user/slice";
 import { SCREENS } from "@/components/screens";
 import { setIsLoading } from "../state/app/slice";
 
@@ -42,7 +42,7 @@ const useSignUp = () => {
   useEffect(() => {
     if (userData) {
       dispatch(setUser(userData));
-      router.replace(`/${SCREENS.Auth}/${SCREENS.Categories}`);
+      router.replace(`/${SCREENS.Main}/`);
     }
   }, [userData]);
 
@@ -52,7 +52,12 @@ const useSignUp = () => {
     validationSchema: SignUpValidationSchema,
     validateOnChange: false,
     onSubmit: async (values: SignupModel) => {
-      await signUp(values)
+      if (values.intrests && values.intrests?.length > 0)
+        await signUp(values)
+      else {
+        dispatch(setSignUpState(values as any))
+        router.push(`/${SCREENS.Auth}/${SCREENS.Categories}`);
+      }
     },
   });
   return { values, setFieldValue, errors, submitForm };
