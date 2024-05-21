@@ -9,7 +9,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import Toast, { BaseToastProps, ErrorToast } from "react-native-toast-message";
 import { colors } from "./theme/Colors";
-import { StyleSheet } from 'react-native';
+import { StatusBar, StyleSheet } from 'react-native';
 import { Provider } from "react-redux";
 import { persistor, store } from "./state/store";
 import RootLayoutNav from "./rootLayoutNav";
@@ -66,6 +66,7 @@ export default function RootLayout() {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
+        <StatusBar barStyle={'dark-content'}/>
         <RootLayoutNav />
         <Toast config={toastConfig} />
       </PersistGate>

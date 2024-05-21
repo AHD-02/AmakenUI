@@ -42,7 +42,7 @@ const Categories = () => {
         {categories?.map((item: LookUpModel) => {
           const isSelected = selected?.some(id => id == item.value)
           return (
-            <TouchableOpacity onPress={async () => {
+            <TouchableOpacity onPress={() => {
               if (isSelected)
                 setSelected(prev => (prev?.filter(id => item.value != id)))
               else
