@@ -63,7 +63,6 @@ const DynamicHeader = ({ isBGHidden }: IProps) => {
                         title='Sign In'
                         description='Discover events, meet new people and make memories'
                         isOpen={showAction}
-                        onOpen={()=>setShowAction(true)}
                         onClose={()=>setShowAction(false)}
                         />
                         <NotificationIcon/>
