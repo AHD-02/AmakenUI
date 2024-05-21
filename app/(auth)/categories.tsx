@@ -19,12 +19,13 @@ import { SignupModel } from "../types/user/signup";
 import { router } from "expo-router";
 import { SCREENS } from "@/components/screens";
 import { LOGO } from "@/assets/images";
+import useSignUp from "../hooks/useSignUp";
 
 const Categories = () => {
   const { data: publicPlaceCategories } =
     useSearchPublicPlacesCategoriesQuery();
   const { data: eventsCategories } = useSearchEventsCategoriesQuery();
-  const [updateUser, { isSuccess }] = useUpdateUserMutation();
+  const {submitForm} = useSignUp()
   const [selected, setSelected] = useState<Array<string>>([]);
 
   const categories = useMemo(
@@ -32,11 +33,6 @@ const Categories = () => {
       eventsCategories ? publicPlaceCategories?.concat(eventsCategories) : [],
     [publicPlaceCategories, eventsCategories]
   );
-  const userInfo = useUserInfo();
-
-  useEffect(() => {
-    if (isSuccess) router.replace(`/${SCREENS.Main}/`);
-  }, [isSuccess]);
 
   return (
     <VStack style={styles.container}>
@@ -75,8 +71,6 @@ const Categories = () => {
                 _text={{fontSize:18,fontWeight:400,padding:1,color: isSelected ? 'white' : "#8E8E93"}}
                 variant={isSelected ? "solid" : "subtle"}
                 {...(isSelected ? { backgroundColor: colors.primary, } : {})}
-              
-
               >
                 {item.label}
               </Badge>
@@ -88,10 +82,7 @@ const Categories = () => {
       <VStack style={{paddingTop:80 ,paddingHorizontal:10,marginBottom:10,justifyContent:'space-between'}}>
       <ButtonComponent
         title="Finish"
-        onPress={() =>
-          userInfo &&
-          updateUser({ ...userInfo, intrests: selected ?? [] } as any)
-        }
+        onPress={submitForm}
       />
       </VStack>
     {/* </View> */}
