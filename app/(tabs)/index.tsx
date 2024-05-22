@@ -12,7 +12,6 @@ import PlaceCard from "@/components/homePageComponent/placeCard";
 import { PublicPlaceResponse } from "../types/places";
 import AddEventsButton from "@/components/addEventsButton";
 import { imageUrlResolver } from "../utils/imageUtils";
-import { useSelector } from "react-redux";
 
 const Home = async () => {
   const { data: events } = useSearchEventsQuery();
@@ -45,7 +44,7 @@ const Home = async () => {
                     key={`${item.eventId}-${index}`}
                     id={item.eventId ?? ""}
                     title={item.name ?? ""}
-                    city={item?.city ?? "-"}
+                    city={item.placeName ?? ""}
                     onPress={() =>
                       router.push(`/(details)/events/${item.eventId ?? ""}`)
                     }

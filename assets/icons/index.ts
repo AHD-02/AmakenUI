@@ -17,7 +17,8 @@ import LogoutIcon from "./logout";
 import EditProfileIcon from "./editProfileIcon";
 import ModalIconLogout from "./modalIconLogout";
 import CameraIcon from "./cameraIcon";
-
+import BookCalenderIcon from "./bookCalenderIcon";
+import CloseIcon from "./closeIcon";
 
 export {
     HomeIcon,
@@ -38,5 +39,7 @@ export {
     LogoutIcon,
     EditProfileIcon,
     ModalIconLogout,
-    CameraIcon
+    CameraIcon,
+    BookCalenderIcon,
+    CloseIcon,
 }

@@ -1,19 +1,42 @@
 import { View, StyleSheet, TouchableOpacity } from "react-native";
-import React from "react";
-import { Image, Text } from "native-base";
+import React, { useEffect, useMemo, useState } from "react";
+import { Image } from "native-base";
 import { Archive, ArchiveGray, ArrowLeft } from "@/assets/icons";
 import { router } from "expo-router";
 import { SearchEventsResponse } from "@/app/types";
-import { useIsEventSaved } from "@/app/state/user/hooks";
+import { useUserInfo } from "@/app/state/user/hooks";
 import { colors } from "@/app/theme/Colors";
 import { imageUrlResolver } from "@/app/utils/imageUtils";
+import { useSaveEventMutation, useUnSaveEventMutation } from "@/app/data/events";
+import RefreshUser from "@/app/hooks/refreshUser";
+import ActionSheetScreen from "@/components/sharedComponents/guestUserSscreen/actionsheet";
 
 interface IProps {
   data?: SearchEventsResponse;
 }
 
 const ImagesSection = ({ data }: IProps) => {
-  const isSaved: boolean = useIsEventSaved(data?.eventId ?? "");
+  const [saveEvent, saveRes] = useSaveEventMutation();
+  const [unSaveEvent, unSaveRes] = useUnSaveEventMutation();
+  const { handle } = RefreshUser()
+  const userInfo = useUserInfo()
+  const [isAskToLogin, setIsAskToLogin] = useState<boolean>(false)
+
+  const isSaved = useMemo(() =>
+    userInfo?.savedEvents?.includes(data?.eventId ?? '')
+    , [userInfo])
+
+  const toggleSaveEvent = async () => {
+    if (userInfo.email) {
+      isSaved ? await unSaveEvent(data?.eventId ?? '') : await saveEvent(data?.eventId ?? '')
+    } else
+      setIsAskToLogin(true)
+  }
+
+  useEffect(() => {
+    if (Boolean(saveRes.isSuccess || unSaveRes.isSuccess || saveRes.error || unSaveRes.error))
+      handle()
+  }, [saveRes, unSaveRes])
 
   return (
     <View style={styles.container}>
@@ -29,7 +52,7 @@ const ImagesSection = ({ data }: IProps) => {
             isSaved ? { backgroundColor: colors.primary } : {},
           ]}
         >
-          <TouchableOpacity onPress={() => {}}>
+          <TouchableOpacity onPress={toggleSaveEvent}>
             {isSaved ? <Archive /> : <ArchiveGray />}
           </TouchableOpacity>
         </View>
@@ -43,6 +66,7 @@ const ImagesSection = ({ data }: IProps) => {
           resizeMode="cover"
         />
       </View>
+      <ActionSheetScreen isOpen={isAskToLogin} onClose={() => setIsAskToLogin(false)} />
     </View>
   );
 };

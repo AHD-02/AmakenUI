@@ -12,11 +12,22 @@ export interface SearchEventsResponse {
     userEmail?: string;
     status?: string;
     images: string[];
-    placeID?: string
-    longitude?: number;
-    latitude?: number;
     city: string;
+    placeID?: string;
+    latitude?: number;
+    longitude?: number;
+    placeName?: string;
 }
+
+export interface BookedEventResponse {
+    reservationId: string
+    eventEnd: string
+    eventStart: string
+    eventImages: string[];
+    placeName: string;
+    eventName: string
+}
+
 
 export const EventsInitialValues: SearchEventsResponse = {
     name: '',
@@ -31,6 +42,7 @@ export const EventsInitialValues: SearchEventsResponse = {
     latitude: undefined,
     longitude: undefined,
     city: "",
+    placeName: '',
 }
 
 export const EventsValidationSchema = object({

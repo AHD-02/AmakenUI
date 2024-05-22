@@ -1,13 +1,13 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import customFetchBase from '../middleware';
-import { LookUpModel, SearchEventsResponse } from '@/app/types';
+import { BookedEventResponse, LookUpModel, SearchEventsResponse } from '@/app/types';
 
 export const EventApi = createApi({
     reducerPath: 'EventApi',
     baseQuery: customFetchBase,
     refetchOnMountOrArgChange: true,
     refetchOnReconnect: true,
-    tagTypes: ['event', 'categories'],
+    tagTypes: ['event', 'categories', 'reservation'],
     endpoints: builder => ({
         searchEvents: builder.query<SearchEventsResponse[], void>({
             providesTags: ['event'],
@@ -59,7 +59,21 @@ export const EventApi = createApi({
                 url: `EventCategories/GetCategories`,
                 method: 'GET',
             })
-        })
+        }),
+        bookEvent: builder.mutation<string, string>({
+            invalidatesTags: ['reservation'],
+            query: (eventId) => ({
+                url: `Reservation/CreateReservation`,
+                method: 'POST',
+                body: {eventId}
+            })
+        }),
+        getBookedEvent: builder.query<BookedEventResponse, string>({
+            query: (id) => ({
+                url: `Reservation/GetReservation?id=${id}`,
+                method: 'GET',
+            })
+        }),
     }),
 });
 
@@ -71,4 +85,6 @@ export const {
     useSaveEventMutation,
     useUnSaveEventMutation,
     useSearchEventsCategoriesQuery,
+    useBookEventMutation,
+    useGetBookedEventQuery,
 } = EventApi;
