@@ -5,6 +5,7 @@ import { router } from "expo-router";
 import { VStack, HStack } from "native-base";
 import EventCard from "../homePageComponent/eventCard";
 import { useMyEventsQuery } from "@/app/data/user";
+import { imageUrlResolver } from "@/app/utils/imageUtils";
 
 const Events = () => {
   const { data: events } = useMyEventsQuery();
@@ -21,7 +22,7 @@ const Events = () => {
                   isBookingComponent
                   title={item.name ?? ""}
                   city={"City"} //TODO: ADD CITY
-                  image={item.images[0] ?? ""}
+                  image={imageUrlResolver(item.images[0] ?? "") }
                   onPress={() => {}}
                   rate={"5.5"}
                   onCardPress={() =>

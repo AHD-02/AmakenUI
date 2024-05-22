@@ -7,6 +7,7 @@ import { SearchEventsResponse } from '../types';
 import { router } from 'expo-router';
 import { useIsLoggedIn } from '../state/user/hooks';
 import GuestScreen from '@/components/sharedComponents/guestUserSscreen/guestScreen';
+import { imageUrlResolver } from '../utils/imageUtils';
 
 const Saved = () => {
   const { data } = useSearchSavedEventsQuery();
@@ -25,7 +26,7 @@ const Saved = () => {
               <PlaceCard
                 title={item.name ?? ""}
                 city={item.city ?? '-'}
-                image={item.images[0]}
+                image={imageUrlResolver(item.images[0] ?? "")}
                 description={item.description ?? ''}
                 onCardPress={() => router.push(`/(details)/events/${item.eventId ?? ''}`)}
               />

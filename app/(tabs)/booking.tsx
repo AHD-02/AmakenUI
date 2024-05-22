@@ -8,6 +8,7 @@ import { useIsLoggedIn } from "../state/user/hooks";
 import { router } from "expo-router";
 import GuestScreen from "@/components/sharedComponents/guestUserSscreen/guestScreen";
 import { useEffect } from "react";
+import { imageUrlResolver } from "../utils/imageUtils";
 
 const Booking = () => {
   const res = useSearchReservedEventsQuery();
@@ -28,7 +29,7 @@ const Booking = () => {
                     isBookingComponent
                     title={item.name ?? ""}
                     city={item.placeName ?? ""}
-                    image={item.images[0] ?? ""}
+                    image={imageUrlResolver(item.images[0] ?? "") }
                     onPress={() =>
                       router.push(`/(bookEvent)/ticket/${item?.reservationId}`)
                     }

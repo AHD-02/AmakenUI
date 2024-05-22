@@ -5,6 +5,7 @@ import { router } from "expo-router";
 import { VStack, HStack } from "native-base";
 import { useSearchPublicPlacesQuery } from "../../data/publicPlace";
 import PlaceCard from "@/components/homePageComponent/placeCard";
+import { imageUrlResolver } from "@/app/utils/imageUtils";
 
 const viewAllPlaces = () => {
   const { data } = useSearchPublicPlacesQuery();
@@ -24,7 +25,7 @@ const viewAllPlaces = () => {
                   key={`${item?.publicPlaceId}-${item.userEmail}`}
                   title={item.name ?? ""}
                   city={item.city ?? "-"}
-                  image={item.images[0] ?? ""}
+                  image={imageUrlResolver(item.images[0] ?? "")}
                   description={item.description ?? ""}
                   onCardPress={() =>
                     router.push(`/(details)/place/${item.publicPlaceId}`)
