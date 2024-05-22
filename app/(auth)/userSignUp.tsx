@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
   box:{
     alignItems:'center',
 
-  }
+  },
   keyboardContainer: {
     flexGrow: 1,
     backgroundColor: "white",

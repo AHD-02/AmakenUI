@@ -28,8 +28,8 @@ export const EventsInitialValues: SearchEventsResponse = {
     images: [],
     placeID: '',
     eventId: '',
-    latitude: LATITUDE,
-    longitude: LONGITUDE,
+    latitude: undefined,
+    longitude: undefined,
     city: "",
 }
 

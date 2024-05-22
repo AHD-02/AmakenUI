@@ -1,10 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  View,
-  VStack,
-  ScrollView,
-  Button,
-} from "native-base";
+import { View, VStack, ScrollView, Button } from "native-base";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import UploadPhotos from "./components/uploadPhotos";
 import Dropdown from "@/components/sharedComponents/simpleDropdown";
@@ -28,13 +23,13 @@ import { router } from "expo-router";
 import { imageUrlResolver } from "../utils/imageUtils";
 import CheckNameWithInput from "./place/components/checkName";
 import { useEnhanceTextMutation } from "../data/user";
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 const AddPublicPlace = () => {
   const { data } = usePublicPlaceCategoriesQuery();
   const [createPlace, res] = useCreatePublicPlaceMutation();
   const [enhance, resp] = useEnhanceTextMutation();
-  
+
   const { values, setFieldValue, errors, submitForm } = useFormik({
     initialValues: publicPlaceInitialValues(),
     validationSchema: publicPlaceValidationSchema,
@@ -150,8 +145,12 @@ const AddPublicPlace = () => {
               value={values?.description}
             />
             {values?.description && (
-              <View>
-                <Button size={"sm"} onPress={() => handleEnhanceDescription()}>
+              <View justifyContent={"flex-start"} flex={1}>
+                <Button
+                  size={"sm"}
+                  onPress={() => handleEnhanceDescription()}
+                  color={"#74AA9C"}
+                >
                   Enhance By AI
                 </Button>
               </View>

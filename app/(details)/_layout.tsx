@@ -8,7 +8,9 @@ const NotificationsLayout = () => {
     <Stack screenOptions={{}}>
       <Stack.Screen name="events/[eventId]" options={{ headerShown: false }} />
       <Stack.Screen name="place/[placeId]" options={{ headerShown: false }} />
-      <Stack.Screen name="viewAll/viewAllEvents"    options={{
+      <Stack.Screen
+        name="viewAll/viewAllEvents"
+        options={{
           headerShown: true,
           headerBackTitle: "ArrowLeft",
           headerTitle: "View All Events ",
@@ -21,8 +23,11 @@ const NotificationsLayout = () => {
               <ArrowLeft />
             </TouchableOpacity>
           ),
-        }} />
-      <Stack.Screen name="viewAll/viewAllPlaces"    options={{
+        }}
+      />
+      <Stack.Screen
+        name="viewAll/viewAllPlaces"
+        options={{
           headerShown: true,
           headerBackTitle: "ArrowLeft",
           headerTitle: "View All Public Place",
@@ -35,7 +40,8 @@ const NotificationsLayout = () => {
               <ArrowLeft />
             </TouchableOpacity>
           ),
-        }} />
+        }}
+      />
 
       <Stack.Screen
         name="addPublicPlace"
