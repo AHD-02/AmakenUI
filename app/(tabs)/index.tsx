@@ -35,7 +35,7 @@ const Home = () => {
               <HStack justifyContent={"space-between"}>
                 <Text>Events for you</Text>
                 <Link
-                  href={"/(tabs)/"}
+                  href={"/(details)/viewAll/viewAllEvents"}
                   style={{ alignSelf: "center", color: colors.primary }}
                 >
                   view all
@@ -69,7 +69,7 @@ const Home = () => {
               <HStack justifyContent={"space-between"}>
                 <Text>Places for you</Text>
                 <Link
-                  href={"/(tabs)/"}
+                  href={"/(details)/viewAll/viewAllPlaces"}
                   style={{ alignSelf: "center", color: colors.primary }}
                 >
                   view all

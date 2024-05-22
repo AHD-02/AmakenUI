@@ -21,6 +21,7 @@ import { colors } from "../theme/Colors";
 import PasswordInput from "@/components/sharedComponents/PasswordInput";
 import Dropdown from "@/components/sharedComponents/simpleDropdown";
 import { useCountriesQuery, useLazyCitiesQuery } from "../data/lookup";
+import DatePickerComponent from "@/components/sharedComponents/dateTimePicker";
 
 
 const UserSignUp = () => {
@@ -64,13 +65,13 @@ const UserSignUp = () => {
               />
             </Stack>
           </HStack>
-          {/* <Stack>
+          <Stack>
             <DatePickerComponent
               label="Date Of Birth"
               setValue={(val: string) => setFieldValue("date", val)}
               value={values?.date?.toString() ?? ""}
             />
-          </Stack> */}
+          </Stack>
           <Stack>
             <TextInput
               value={values.email}
@@ -168,5 +169,14 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     color: colors.primary,
   },
+  text:{
+    fontSize:18,
+    fontWeight:'bold',
+    marginLeft:30,
+  },
+  box:{
+    alignItems:'center',
+
+  }
 });
 export default UserSignUp;
