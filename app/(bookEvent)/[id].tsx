@@ -62,6 +62,7 @@ const BookEvent = () => {
                         placeholder="1"
                         keyboardType="numeric"
                         errorMsg={errors.person}
+                        editable={false}
                     />
                     <TextInput
                         onChangeText={(val: string) => setFieldValue("promoCode", val)}
@@ -69,6 +70,7 @@ const BookEvent = () => {
                         label="Promo Code"
                         placeholder="promocode"
                         errorMsg={errors.promoCode}
+                        editable={false}
                     />
                 </VStack>
                 <VStack mt={'3'} space={3}>

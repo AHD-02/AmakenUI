@@ -44,7 +44,7 @@ const BookEvent = () => {
                         </VStack>
                         <View style={styles.line} />
                         <VStack justifyContent={'center'} alignItems={'center'}>
-                            <QRCode value='hello' size={200} />
+                            <QRCode value={data?.reservationId?.toString()} size={200} />
                         </VStack>
                     </VStack>
                 </VStack>
