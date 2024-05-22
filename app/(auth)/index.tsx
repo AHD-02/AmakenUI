@@ -59,7 +59,7 @@ const Login = () => {
         <VStack marginBottom={"16"} space={2}>
           <HStack justifyContent={"center"}>
             <Text style={styles.dontHaveAccountText}>
-              Don't have an account?{" "}
+              Don't have an account?
             </Text>
             <Link push href={`/${SCREENS.Signup}`} style={styles.signupText}>
               Sign up

@@ -33,7 +33,6 @@ const UserSignUp = () => {
       enableOnAndroid
       extraScrollHeight={20}
     >
-      {" "}
       <ScrollView showsVerticalScrollIndicator={false}>
         <View>
           <ProfileImageUploader
