@@ -10,5 +10,5 @@ export interface PublicPlaceResponse {
   rate: number;
   longitude?: number;
   latitude?: number;
-  city: string;
+  city?: string;
 }

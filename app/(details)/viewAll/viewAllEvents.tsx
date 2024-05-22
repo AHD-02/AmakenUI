@@ -6,7 +6,6 @@ import { imageUrlResolver } from "@/app/utils/imageUtils";
 import { router } from "expo-router";
 import { VStack, HStack, ScrollView } from "native-base";
 import EventCard from "@/components/homePageComponent/eventCard";
-import { useIsLoggedIn } from "@/app/state/user/hooks";
 
 const ViewAllEvents = () => {
   const { data: events } = useSearchEventsQuery();

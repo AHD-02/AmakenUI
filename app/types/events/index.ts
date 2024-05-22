@@ -24,7 +24,7 @@ export interface BookedEventResponse {
     eventEnd: string
     eventStart: string
     eventImages: string[];
-    placeName: string;
+    placeName?: string;
     eventName: string
 }
 
