@@ -36,22 +36,28 @@ const PlaceCard = ({
             </TouchableOpacity>
           </View>
 
-          <VStack space={3} mx={2} mb={3}>
-            <Text
-              fontWeight={600}
-              fontFamily="Cairo"
-              fontSize={14}
-              color="white"
-            >{`${title} - ${city}`}</Text>
+          <VStack space={1} mx={2} mb={7}>
+            <View>
+              <Text
+                fontWeight={600}
+                fontFamily="Cairo"
+                fontSize={14}
+                color="white"
+              >{`${title} - ${city}`}</Text>
+            </View>
 
-            <Text
-              fontWeight={500}
-              fontFamily="Cairo"
-              fontSize={10}
-              color="#C8C8C8"
-            >
-              {description}
-            </Text>
+            {description && (
+              <View>
+                <Text
+                  fontWeight={500}
+                  fontFamily="Cairo"
+                  fontSize={10}
+                  color="#C8C8C8"
+                >
+                  {description}
+                </Text>
+              </View>
+            )}
           </VStack>
         </VStack>
       </ImageBackground>
@@ -65,21 +71,21 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   backgroundImage: {
-    width: '100%',
+    width: "100%",
     flex: 1,
   },
   imageBackground: {
     height: 200,
     borderRadius: 8,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   icon: {
     borderRadius: 50,
     width: 30,
     height: 30,
     backgroundColor: colors.primary,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

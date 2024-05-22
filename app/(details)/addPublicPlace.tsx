@@ -1,13 +1,18 @@
-import { View, VStack, KeyboardAvoidingView, ScrollView } from "native-base";
+import React, { useEffect } from "react";
+import {
+  View,
+  VStack,
+  ScrollView,
+  Button,
+} from "native-base";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import UploadPhotos from "./components/uploadPhotos";
 import Dropdown from "@/components/sharedComponents/simpleDropdown";
 import {
   AssignOnMap,
   ButtonComponent,
   TextAreaInput,
-  TextInput,
 } from "@/components/sharedComponents";
-import { StyleSheet } from "react-native";
 import { usePublicPlaceCategoriesQuery } from "../data/lookup";
 import { useFormik } from "formik";
 import {
@@ -16,18 +21,20 @@ import {
 } from "../types/publicPlaceType";
 import WarningMessage from "@/components/sharedComponents/warningMessage";
 import ImageContainer from "@/components/sharedComponents/imageContainer";
-import { useTakeImage, useUploadImage } from "../hooks";
+import { usePickImage, useUploadImage } from "../hooks";
 import { useCreatePublicPlaceMutation } from "../data/publicPlace";
-import { useEffect } from "react";
 import Toast from "react-native-toast-message";
 import { router } from "expo-router";
 import { imageUrlResolver } from "../utils/imageUtils";
 import CheckNameWithInput from "./place/components/checkName";
+import { useEnhanceTextMutation } from "../data/user";
+import { StyleSheet } from 'react-native';
 
 const AddPublicPlace = () => {
   const { data } = usePublicPlaceCategoriesQuery();
   const [createPlace, res] = useCreatePublicPlaceMutation();
-
+  const [enhance, resp] = useEnhanceTextMutation();
+  
   const { values, setFieldValue, errors, submitForm } = useFormik({
     initialValues: publicPlaceInitialValues(),
     validationSchema: publicPlaceValidationSchema,
@@ -38,7 +45,7 @@ const AddPublicPlace = () => {
   });
 
   useEffect(() => {
-    if (res?.error) {
+    if (res?.isError) {
       Toast.show({
         type: "error",
         text1: JSON.stringify((res?.error as any)?.data),
@@ -47,15 +54,14 @@ const AddPublicPlace = () => {
 
     if (res.isSuccess) {
       Toast.show({
-        type: "sucess",
+        type: "success",
         text1: "Place have been created successfully",
       });
-
-      router.push("/(tabs)/index");
+      router.push("/(tabs)");
     }
   }, [res]);
 
-  const { upload, images, isLoading } = useUploadImage();
+  const { upload, images } = useUploadImage();
 
   useEffect(() => {
     if (Array.isArray(images) && images.length > 0) {
@@ -63,18 +69,32 @@ const AddPublicPlace = () => {
     }
   }, [images]);
 
-  const handleTakeImage = async () => {
-    const image = await useTakeImage();
+  const handleUploadImage = async () => {
+    const image = await usePickImage();
     if (image) {
       upload([image]);
     }
   };
 
+  const handleEnhanceDescription = () => {
+    enhance(values?.description);
+  };
+
+  useEffect(() => {
+    if (resp?.data?.generatedDescription) {
+      setFieldValue("description", resp?.data?.generatedDescription);
+    }
+  }, [resp?.data]);
+
   return (
-    <KeyboardAvoidingView style={styles.container}>
+    <KeyboardAwareScrollView
+      contentContainerStyle={styles.container}
+      enableOnAndroid
+      extraScrollHeight={20}
+    >
       <ScrollView showsVerticalScrollIndicator={false}>
         <VStack flex={1} paddingY={3} space={"2"}>
-          <UploadPhotos onPress={handleTakeImage} />
+          <UploadPhotos onPress={handleUploadImage} />
 
           {Boolean(errors.images) && (
             <WarningMessage
@@ -106,9 +126,9 @@ const AddPublicPlace = () => {
           <AssignOnMap
             latitude={values?.latitude ?? 0}
             longitude={values?.longitude ?? 0}
-            setLognLat={(locatoin) => {
-              setFieldValue("latitude", locatoin.latitude);
-              setFieldValue("longitude", locatoin.longitude);
+            setLognLat={(location) => {
+              setFieldValue("latitude", location.latitude);
+              setFieldValue("longitude", location.longitude);
             }}
           />
 
@@ -129,6 +149,13 @@ const AddPublicPlace = () => {
               onChangeText={(value) => setFieldValue("description", value)}
               value={values?.description}
             />
+            {values?.description && (
+              <View>
+                <Button size={"sm"} onPress={() => handleEnhanceDescription()}>
+                  Enhance By AI
+                </Button>
+              </View>
+            )}
           </View>
         </VStack>
 
@@ -136,20 +163,16 @@ const AddPublicPlace = () => {
           <ButtonComponent title="Create Place" onPress={submitForm} />
         </View>
       </ScrollView>
-    </KeyboardAvoidingView>
+    </KeyboardAwareScrollView>
   );
 };
+
 export default AddPublicPlace;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-    padding: 25,
-    paddingTop: 0,
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexGrow: 1,
+    padding: 15,
     backgroundColor: "white",
   },
 });

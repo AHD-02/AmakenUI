@@ -27,7 +27,7 @@ const Saved = () => {
             <View style={{ width: '48%', marginBottom: 10 }}>
               <PlaceCard
                 title={item.name ?? ""}
-                city={item.location ?? ''}
+                city={item.city ?? '-'}
                 image={item.images[0]}
                 description={item.description ?? ''}
                 onCardPress={() => router.push(`/(details)/events/${item.eventId ?? ''}`)}

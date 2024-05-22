@@ -1,6 +1,12 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import customFetchBase from "../middleware";
-import { LoginModel, RefreshToken, UserModel } from "@/app/types";
+import {
+  LoginModel,
+  PublicPlaceResponse,
+  RefreshToken,
+  SearchEventsResponse,
+  UserModel,
+} from "@/app/types";
 import { SignupModel } from "@/app/types/user/signup";
 
 export const UserApi = createApi({
@@ -43,6 +49,25 @@ export const UserApi = createApi({
         body,
       }),
     }),
+    myPlaces: builder.query<Array<PublicPlaceResponse>, void>({
+      query: () => ({
+        url: "user/myPublicPlaces",
+        method: "GET",
+      }),
+    }),
+    myEvents: builder.query<Array<SearchEventsResponse>, void>({
+      query: () => ({
+        url: "user/myAllEvents",
+        method: "GET",
+      }),
+    }),
+    enhanceText: builder.mutation<{ generatedDescription: string }, string>({
+      query: (body) => ({
+        url: "openAI/enhanceDescription",
+        method: "POST",
+        body: { userDescription: JSON.stringify(body) },
+      }),
+    }),
   }),
 });
 
@@ -53,4 +78,7 @@ export const {
   useLazyGetUserQuery,
   useImageUploadMutation,
   useUpdateUserMutation,
+  useMyPlacesQuery,
+  useMyEventsQuery,
+  useEnhanceTextMutation,
 } = UserApi;

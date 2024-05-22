@@ -1,4 +1,5 @@
 import {string, object, date, number, array} from 'yup'
+import { LATITUDE, LONGITUDE } from '..';
 
 export interface SearchEventsResponse {
     eventId?: string;
@@ -12,6 +13,9 @@ export interface SearchEventsResponse {
     status?: string;
     images: string[];
     placeID?: string
+    longitude?: number;
+    latitude?: number;
+    city: string;
 }
 
 export const EventsInitialValues: SearchEventsResponse = {
@@ -24,6 +28,9 @@ export const EventsInitialValues: SearchEventsResponse = {
     images: [],
     placeID: '',
     eventId: '',
+    latitude: LATITUDE,
+    longitude: LONGITUDE,
+    city: "",
 }
 
 export const EventsValidationSchema = object({

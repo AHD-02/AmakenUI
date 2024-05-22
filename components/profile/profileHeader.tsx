@@ -22,11 +22,7 @@ const ProfileHeader = () => {
         accessToken: undefined,
       })
     );
-    dispatch(
-      setUser(
-        UserInitialValues,
-      )
-    )
+    dispatch(setUser(UserInitialValues));
 
     setShowModal(false);
     router.push("/(auth)");
@@ -81,6 +77,7 @@ const ProfileHeader = () => {
           </Modal>
         </Center>
       </TouchableOpacity>
+
       <VStack space={2}>
         <VStack>
           <View style={styles.profileImage}>

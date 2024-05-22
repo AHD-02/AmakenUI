@@ -23,7 +23,7 @@ export const colors = {
   solidGray: '#CCCCCC',
   lightRed: '#FFA199',
   markerBg: '#1bac4b14',
-  green: '#1BAC4B',
+  successGreen: '#4BB543',
 };
 
 const light = {

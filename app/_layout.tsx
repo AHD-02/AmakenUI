@@ -7,7 +7,7 @@ import {
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
-import Toast, { BaseToastProps, ErrorToast } from "react-native-toast-message";
+import Toast, { BaseToastProps, ErrorToast, SuccessToast } from "react-native-toast-message";
 import { colors } from "./theme/Colors";
 import { StatusBar, StyleSheet } from 'react-native';
 import { Provider } from "react-redux";
@@ -61,7 +61,17 @@ export default function RootLayout() {
         text1Style={styles.text}
         text2Style={styles.text2}
       />
-    )
+    ),
+    success: (props: JSX.IntrinsicAttributes & BaseToastProps) => (
+      <SuccessToast
+        {...props}
+        style={{ borderLeftColor: colors.successGreen }}
+        contentContainerStyle={styles.contentContainer}
+        text1Style={styles.text}
+        text2Style={styles.text2}
+        text1={props.text1}
+      />
+    ),
   };
 
 

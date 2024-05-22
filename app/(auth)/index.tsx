@@ -1,5 +1,5 @@
 import { SafeAreaView, StyleSheet } from "react-native";
-import { Platform, KeyboardAvoidingView } from "react-native";
+import { Platform } from "react-native";
 import {
   Center,
   Image,

@@ -1,12 +1,6 @@
 import { StyleSheet } from "react-native";
 import { View } from "@/components/Themed";
-import {
-  Modal,
-  ScrollView,
-  VStack,
-  Text,
-  HStack,
-} from "native-base";
+import { Modal, ScrollView, VStack, Text, HStack } from "native-base";
 import { useSearchEventsQuery } from "../data/events";
 import { SearchEventsResponse } from "../types";
 import DynamicHeader from "@/components/header";
@@ -20,7 +14,7 @@ import AddEventsButton from "@/components/addEventsButton";
 import { imageUrlResolver } from "../utils/imageUtils";
 import { useSelector } from "react-redux";
 
-const Home = () => {
+const Home = async () => {
   const { data: events } = useSearchEventsQuery();
   const { data: publicPlaces } = useSearchPublicPlacesQuery();
 
@@ -51,7 +45,7 @@ const Home = () => {
                     key={`${item.eventId}-${index}`}
                     id={item.eventId ?? ""}
                     title={item.name ?? ""}
-                    city={item.placeID ?? ""}
+                    city={item?.city ?? "-"}
                     onPress={() =>
                       router.push(`/(details)/events/${item.eventId ?? ""}`)
                     }
@@ -84,7 +78,7 @@ const Home = () => {
                   <PlaceCard
                     key={`${item?.publicPlaceId}-${item.userEmail}`}
                     title={item.name ?? ""}
-                    city={item.location ?? ""}
+                    city={item.city ?? "-"}
                     image={imageUrlResolver(item.images[0] ?? "")}
                     description={item.description ?? ""}
                     onCardPress={() =>

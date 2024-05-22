@@ -27,6 +27,6 @@ export const publicPlaceValidationSchema = yup.object({
   description: yup.string().required("Please complete this field"),
   longitude: yup.number().required("Please complete this field"),
   latitude: yup.number().required("Please complete this field"),
-  categoryId: yup.number().required("Please complete this field"),
+  categoryId: yup.string().required("Please complete this field"),
   images: yup.array().min(1, "Please upload take atleast one image")
 });

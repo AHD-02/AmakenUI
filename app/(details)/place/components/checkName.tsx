@@ -50,7 +50,7 @@ const CheckNameWithInput = ({
       onChangeText={(value) => setValue(value)}
       value={value}
       rightIcon={
-        (res.isLoading || isLoading) ? (
+        res.isLoading || isLoading ? (
           <Spinner color={primaryColor} size={"sm"} />
         ) : Boolean(value) && res.data ? (
           <Ionicons

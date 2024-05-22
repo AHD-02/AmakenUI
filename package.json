@@ -40,6 +40,7 @@
     "react-native-country-picker-modal": "^2.0.0",
     "react-native-date-picker": "^5.0.0",
     "react-native-gesture-handler": "~2.16.1",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-loading-spinner-overlay": "^3.0.1",
     "react-native-maps": "1.14.0",
     "react-native-pager-view": "^6.3.1",

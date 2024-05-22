@@ -23,13 +23,7 @@ const TabbssScreen = () => {
         setSelectedTab={setSelectedTab}
       />
       <View style={{ marginTop: 20, alignItems: "center" }}>
-        {/* {selectedTab === CustomTab.tab1 ? (
-          <View>{buttons[selectedTab].component}</View>
-        ) : (
-          <View>{buttons[selectedTab].component}</View>
-        )} */}
         <View>{buttons[selectedTab].component}</View>
-
       </View>
     </>
   );

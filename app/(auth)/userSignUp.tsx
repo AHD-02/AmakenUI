@@ -5,15 +5,7 @@ import {
   ProfileImageUploader,
   TextInput,
 } from "@/components/sharedComponents";
-import {
-  KeyboardAvoidingView,
-  Text,
-  HStack,
-  Stack,
-  VStack,
-  ScrollView,
-  View,
-} from "native-base";
+import { Text, HStack, Stack, VStack, ScrollView, View } from "native-base";
 import { StyleSheet } from "react-native";
 import useSignUp from "../hooks/useSignUp";
 import { Link } from "expo-router";
@@ -22,7 +14,7 @@ import PasswordInput from "@/components/sharedComponents/PasswordInput";
 import Dropdown from "@/components/sharedComponents/simpleDropdown";
 import { useCountriesQuery, useLazyCitiesQuery } from "../data/lookup";
 import DatePickerComponent from "@/components/sharedComponents/dateTimePicker";
-
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const UserSignUp = () => {
   const { values, setFieldValue, errors, submitForm } = useSignUp();
@@ -36,7 +28,12 @@ const UserSignUp = () => {
   }, [values?.country]);
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
+    <KeyboardAwareScrollView
+      contentContainerStyle={styles.keyboardContainer}
+      enableOnAndroid
+      extraScrollHeight={20}
+    >
+      {" "}
       <ScrollView showsVerticalScrollIndicator={false}>
         <View>
           <ProfileImageUploader
@@ -138,14 +135,14 @@ const UserSignUp = () => {
         </VStack>
         <HStack justifyContent={"center"} marginTop={"16"}>
           <Text color={colors.black} style={styles.haveAnAccountText}>
-            Have an account?{" "}
+            Have an account?
           </Text>
           <Link push href={`/`} style={styles.signinText}>
             Signin
           </Link>
         </HStack>
       </ScrollView>
-    </KeyboardAvoidingView>
+    </KeyboardAwareScrollView>
   );
 };
 
@@ -178,5 +175,9 @@ const styles = StyleSheet.create({
     alignItems:'center',
 
   }
+  keyboardContainer: {
+    flexGrow: 1,
+    backgroundColor: "white",
+  },
 });
 export default UserSignUp;

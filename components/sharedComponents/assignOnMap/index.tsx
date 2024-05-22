@@ -28,7 +28,7 @@ const AssignOnMap = ({ title, latitude, longitude, setLognLat }: IProps) => {
           flex={1}
           height={55}
           borderRadius={10}
-          borderWidth={hasCoords ? 2 : 0}
+          borderWidth={hasCoords ? 0.5 : 0}
           borderColor={primaryColor ? primaryColor : "none"}
         >
           <View>

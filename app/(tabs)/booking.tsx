@@ -34,7 +34,7 @@ const Booking = () => {
                   key={`${item?.userEmail}-${item.eventId}`}
                   isBookingComponent
                   title={item.name ?? ''}
-                  city={item.location ?? ''} //TODO: ADD CITY
+                  city={item.city ?? ''}
                   image={item.images[0] ?? ''}
                   onPress={() => {}}
                   rate={'5.5'}
