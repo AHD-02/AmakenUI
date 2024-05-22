@@ -30,6 +30,7 @@ const AddPublicPlace = () => {
   const [createPlace, res] = useCreatePublicPlaceMutation();
   const [enhance, resp] = useEnhanceTextMutation();
 
+
   const { values, setFieldValue, errors, submitForm } = useFormik({
     initialValues: publicPlaceInitialValues(),
     validationSchema: publicPlaceValidationSchema,
@@ -146,10 +147,7 @@ const AddPublicPlace = () => {
             />
             {values?.description && (
               <View>
-                <Button
-                  size={"sm"}
-                  onPress={handleEnhanceDescription}
-                >
+                <Button size={"sm"} onPress={handleEnhanceDescription} isDisabled>
                   Enhance By AI
                 </Button>
               </View>
