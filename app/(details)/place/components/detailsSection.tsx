@@ -15,7 +15,7 @@ const DetailsSection = ({ data }: IProps) => {
     <View style={styles.container}>
       <VStack space={6}>
         <Text style={styles.title}>
-          {data?.name ?? ""} - {data?.city ?? ""}
+          {data?.name ?? ""} {data?.city && "-"} {data?.city ?? ""}
         </Text>
         <HStack space={1}>
           <HStack>
@@ -25,7 +25,7 @@ const DetailsSection = ({ data }: IProps) => {
               size={18}
               style={{ alignSelf: "center" }}
             />
-            <Text style={styles.rate}>3.5 {/* TODO: add rate */}</Text>
+            <Text style={styles.rate}>4.5 {/* TODO: add rate */}</Text>
           </HStack>
           <Text style={styles.reviews}>
             {`(4 Reviews)`}
@@ -36,9 +36,7 @@ const DetailsSection = ({ data }: IProps) => {
         </HStack>
         <HStack space={1}>
           <LocationIcon />
-          <Text style={styles.location}>
-            Crowne Plaza Dead Sea Resort & Spa، Balqa'a, Jordan
-          </Text>
+          <Text style={styles.location}>Balqa'a, Jordan</Text>
         </HStack>
         <VStack space={3}>
           <Text style={styles.descriptionTitle}>Description</Text>

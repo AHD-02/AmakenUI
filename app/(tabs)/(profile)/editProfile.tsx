@@ -166,6 +166,7 @@ const styles = StyleSheet.create({
   },
   keyboardContainer: {
     flexGrow: 1,
+    padding: 15,
     backgroundColor: "white",
   },
 });

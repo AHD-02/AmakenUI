@@ -28,7 +28,6 @@ const EventPage = ({
   description,
   image,
   onPress,
-  onCardPress,
   onSavedPress,
   rate,
   id,

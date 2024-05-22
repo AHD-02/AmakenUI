@@ -74,6 +74,12 @@ export const EventApi = createApi({
                 method: 'GET',
             })
         }),
+        searchReservedEvents: builder.query<any, void>({
+            query: (id) => ({
+                url: `Reservation/searchReservations`,
+                method: 'GET',
+            })
+        }),
     }),
 });
 
@@ -87,4 +93,5 @@ export const {
     useSearchEventsCategoriesQuery,
     useBookEventMutation,
     useGetBookedEventQuery,
+    useSearchReservedEventsQuery
 } = EventApi;
