@@ -7,9 +7,10 @@ import EventCard from "@/components/homePageComponent/eventCard";
 import { useIsLoggedIn } from "../state/user/hooks";
 import { router } from "expo-router";
 import GuestScreen from "@/components/sharedComponents/guestUserSscreen/guestScreen";
+import { useEffect } from "react";
 
 const Booking = () => {
-  const { data: events } = useSearchReservedEventsQuery();
+  const res = useSearchReservedEventsQuery();
   const isLoggedIn = useIsLoggedIn();
 
   return (
@@ -21,7 +22,7 @@ const Booking = () => {
           <VStack style={{ paddingHorizontal: 20 }} space={5}>
             <HStack space={2} mt={4}>
               <ScrollView paddingBottom={2}>
-                {events?.map((item: any) => (
+                {Array.isArray(res?.data) && res?.data?.map((item: any) => (
                   <EventCard
                     key={`${item?.userEmail}-${item.eventId}`}
                     isBookingComponent
