@@ -1,13 +1,10 @@
 import { View } from '@/components/Themed';
 import { HStack, ScrollView, VStack } from 'native-base';
-import { EventImage } from '@/assets/images';
 import DynamicHeader from '@/components/header';
 import PlaceCard from '@/components/homePageComponent/placeCard';
 import { useSearchSavedEventsQuery } from '../data/events';
 import { SearchEventsResponse } from '../types';
 import { router } from 'expo-router';
-import { useEffect } from 'react';
-import Toast from 'react-native-toast-message';
 import { useIsLoggedIn } from '../state/user/hooks';
 import GuestScreen from '@/components/sharedComponents/guestUserSscreen/guestScreen';
 

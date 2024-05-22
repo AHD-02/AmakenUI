@@ -61,7 +61,7 @@ export const UserApi = createApi({
         method: "GET",
       }),
     }),
-    enhanceText: builder.mutation<{ generatedDescription: string }, string>({
+    enhanceText: builder.mutation<string, string>({
       query: (body) => ({
         url: "openAI/enhanceDescription",
         method: "POST",

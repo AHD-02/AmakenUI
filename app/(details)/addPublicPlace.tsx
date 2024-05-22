@@ -76,8 +76,8 @@ const AddPublicPlace = () => {
   };
 
   useEffect(() => {
-    if (resp?.data?.generatedDescription) {
-      setFieldValue("description", resp?.data?.generatedDescription);
+    if (resp?.data) {
+      setFieldValue("description", resp?.data);
     }
   }, [resp?.data]);
 
@@ -145,11 +145,10 @@ const AddPublicPlace = () => {
               value={values?.description}
             />
             {values?.description && (
-              <View justifyContent={"flex-start"} flex={1}>
+              <View>
                 <Button
                   size={"sm"}
-                  onPress={() => handleEnhanceDescription()}
-                  color={"#74AA9C"}
+                  onPress={handleEnhanceDescription}
                 >
                   Enhance By AI
                 </Button>

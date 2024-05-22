@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { View } from "@/components/Themed";
-import { Modal, ScrollView, VStack, Text, HStack } from "native-base";
+import { ScrollView, VStack, Text, HStack } from "native-base";
 import { useSearchEventsQuery } from "../data/events";
 import { SearchEventsResponse } from "../types";
 import DynamicHeader from "@/components/header";
@@ -13,7 +13,7 @@ import { PublicPlaceResponse } from "../types/places";
 import AddEventsButton from "@/components/addEventsButton";
 import { imageUrlResolver } from "../utils/imageUtils";
 
-const Home = async () => {
+const Home = () => {
   const { data: events } = useSearchEventsQuery();
   const { data: publicPlaces } = useSearchPublicPlacesQuery();
 
@@ -39,20 +39,22 @@ const Home = async () => {
                 showsHorizontalScrollIndicator={false}
                 style={styles.horizontalScroll}
               >
-                {events.map((item: SearchEventsResponse, index: number) => (
-                  <EventPage
-                    key={`${item.eventId}-${index}`}
-                    id={item.eventId ?? ""}
-                    title={item.name ?? ""}
-                    city={item.placeName ?? ""}
-                    onPress={() =>
-                      router.push(`/(details)/events/${item.eventId ?? ""}`)
-                    }
-                    image={imageUrlResolver(item.images[0] ?? "")}
-                    rate={"3.5"}
-                    description={item.description ?? ""}
-                  />
-                ))}
+                {events
+                  ?.slice(0, 5)
+                  .map((item: SearchEventsResponse, index: number) => (
+                    <EventPage
+                      key={`${item.eventId}-${index}`}
+                      id={item.eventId ?? ""}
+                      title={item.name ?? ""}
+                      city={item.placeName ?? ""}
+                      onPress={() =>
+                        router.push(`/(details)/events/${item.eventId ?? ""}`)
+                      }
+                      image={imageUrlResolver(item.images[0] ?? "")}
+                      rate={"3.5"}
+                      description={item.description ?? ""}
+                    />
+                  ))}
               </ScrollView>
             </VStack>
           )}
@@ -73,7 +75,7 @@ const Home = async () => {
                 showsHorizontalScrollIndicator={false}
                 style={styles.horizontalScroll}
               >
-                {publicPlaces.map((item: PublicPlaceResponse) => (
+                {publicPlaces?.slice(0, 5).map((item: PublicPlaceResponse) => (
                   <PlaceCard
                     key={`${item?.publicPlaceId}-${item.userEmail}`}
                     title={item.name ?? ""}
