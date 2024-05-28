@@ -1,21 +1,30 @@
 import { View, Text, StyleSheet } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { HStack, VStack } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 import { LocationIcon } from "@/assets/icons";
 import MapView from "react-native-maps";
 import { LATITUDE, LONGITUDE, PublicPlaceResponse } from "@/app/types";
+import useGetLocationInfo from "@/app/hooks/useGetLocationInfo";
 
 interface IProps {
   data?: PublicPlaceResponse;
 }
 
 const DetailsSection = ({ data }: IProps) => {
+  const { getLocation, locationInfo } = useGetLocationInfo();
+
+  useEffect(() => {
+    if (data?.longitude && data?.latitude) {
+      getLocation(data?.latitude, data?.longitude);
+    }
+  }, [data?.longitude, data?.latitude]);
+
   return (
     <View style={styles.container}>
       <VStack space={6}>
         <Text style={styles.title}>
-          {data?.name ?? ""} {data?.city && "-"} {data?.city ?? ""}
+          {`${data?.name ?? ""} - ${locationInfo?.city?.long_name ?? ""}`}
         </Text>
         <HStack space={1}>
           <HStack>
@@ -36,7 +45,9 @@ const DetailsSection = ({ data }: IProps) => {
         </HStack>
         <HStack space={1}>
           <LocationIcon />
-          <Text style={styles.location}>Balqa'a, Jordan</Text>
+          <Text
+            style={styles.location}
+          >{`${locationInfo?.city?.long_name}, ${locationInfo?.country?.long_name}`}</Text>
         </HStack>
         <VStack space={3}>
           <Text style={styles.descriptionTitle}>Description</Text>

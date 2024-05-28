@@ -65,7 +65,7 @@ export const UserApi = createApi({
       query: (body) => ({
         url: "openAI/enhanceDescription",
         method: "POST",
-        body: { userDescription: JSON.stringify(body) },
+        body: { prompt: body },
       }),
     }),
   }),

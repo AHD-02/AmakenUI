@@ -36,7 +36,7 @@ const AddEvent = () => {
       createEvent(values);
     },
   });
-  const { upload, images, isLoading } = useUploadImage();
+  const { upload, images } = useUploadImage();
 
   useEffect(() => {
     if (Array.isArray(images) && images.length > 0) {

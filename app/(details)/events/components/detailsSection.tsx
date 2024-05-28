@@ -1,20 +1,14 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  Linking,
-  Platform,
-} from "react-native";
-import React, { useState } from "react";
+import { View, Text, StyleSheet, Linking, Platform } from "react-native";
+import React, { useEffect, useState } from "react";
 import { SearchEventsResponse } from "@/app/types";
 import { HStack, VStack } from "native-base";
-import { AntDesign } from "@expo/vector-icons";
 import { LocationIcon } from "@/assets/icons";
 import MapView, { Marker } from "react-native-maps";
 import { ButtonComponent } from "@/components/sharedComponents";
 import { router } from "expo-router";
 import { useIsLoggedIn } from "@/app/state/user/hooks";
 import ActionSheetScreen from "@/components/sharedComponents/guestUserSscreen/actionsheet";
+import useGetLocationInfo from "@/app/hooks/useGetLocationInfo";
 
 interface IProps {
   data?: SearchEventsResponse;
@@ -23,6 +17,13 @@ interface IProps {
 const DetailsSection = ({ data }: IProps) => {
   const isLoggedIn = useIsLoggedIn();
   const [showAction, setShowAction] = useState(false);
+  const { getLocation, locationInfo } = useGetLocationInfo();
+
+  useEffect(() => {
+    if (data?.longitude && data?.latitude) {
+      getLocation(data?.latitude, data?.longitude);
+    }
+  }, [data?.longitude, data?.latitude]);
 
   const openGoogleMaps = (lat?: string, long?: string) => {
     const url =
@@ -42,10 +43,14 @@ const DetailsSection = ({ data }: IProps) => {
   return (
     <View style={styles.container}>
       <VStack space={6}>
-        <Text style={styles.title}>{data?.name ?? ""}</Text>
+        <Text style={styles.title}>
+          {`${data?.name ?? ""} - ${locationInfo?.city?.long_name ?? ""}`}
+        </Text>
         <HStack space={1}>
           <LocationIcon />
-          <Text style={styles.location}>{data?.placeName ?? ""}</Text>
+          <Text style={styles.location}>
+            {`${data?.placeName ?? ""}` ?? ""}
+          </Text>
         </HStack>
         <VStack space={3}>
           <Text style={styles.descriptionTitle}>Description</Text>
