@@ -7,10 +7,10 @@ interface IProps {
   onPress: () => void;
   isEdit?: boolean;
   isLogout?: boolean;
-
+  isLoading?: boolean
 }
 
-const ButtonComponent = ({ title, onPress, isEdit ,isLogout}: IProps) => {
+const ButtonComponent = ({ title, onPress, isEdit ,isLogout, isLoading}: IProps) => {
   return (
     <HStack width="100%" justifyContent={"center"}>
       <Button
@@ -20,8 +20,8 @@ const ButtonComponent = ({ title, onPress, isEdit ,isLogout}: IProps) => {
           styles.shadow,
           isEdit ? { backgroundColor: "green" } : { backgroundColor: "#A5583A" },
           isLogout ? { backgroundColor: "#C32B43" } : { backgroundColor: "#A5583A" },
-        
         ]}
+        isLoading={isLoading}
       >
         <Text style={styles.label}>{title}</Text>
       </Button>

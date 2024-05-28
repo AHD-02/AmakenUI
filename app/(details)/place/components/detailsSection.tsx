@@ -1,11 +1,13 @@
 import { View, Text, StyleSheet } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { HStack, VStack } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 import { LocationIcon } from "@/assets/icons";
 import MapView from "react-native-maps";
 import { LATITUDE, LONGITUDE, PublicPlaceResponse } from "@/app/types";
 import useGetLocationInfo from "@/app/hooks/useGetLocationInfo";
+import { ButtonComponent } from "@/components/sharedComponents";
+import RatePlaceModal from "./ratePlaceModal";
 
 interface IProps {
   data?: PublicPlaceResponse;
@@ -13,6 +15,7 @@ interface IProps {
 
 const DetailsSection = ({ data }: IProps) => {
   const { getLocation, locationInfo } = useGetLocationInfo();
+  const [isRateOpen, setIsRateOpen] = useState<boolean>(false)
 
   useEffect(() => {
     if (data?.longitude && data?.latitude) {
@@ -28,20 +31,20 @@ const DetailsSection = ({ data }: IProps) => {
         </Text>
         <HStack space={1}>
           <HStack>
-            <AntDesign
-              name="star"
-              color={"#F7CB15"}
-              size={18}
-              style={{ alignSelf: "center" }}
-            />
-            <Text style={styles.rate}>4.5 {/* TODO: add rate */}</Text>
+            {data?.averageRate && <>
+              <AntDesign
+                name="star"
+                color={"#F7CB15"}
+                size={18}
+                style={{ alignSelf: "center" }}
+              />
+              <Text style={styles.rate}>{data?.averageRate}</Text>
+            </>
+            }
           </HStack>
           <Text style={styles.reviews}>
-            {`(4 Reviews)`}
-            {/* TODO: ADD REVIEWS */}
+            {`(${data?.totalRates ?? 0} Rates)`}
           </Text>
-          <Text style={styles.rate}>-</Text>
-          <Text style={styles.rate}>Booking</Text>
         </HStack>
         <HStack space={1}>
           <LocationIcon />
@@ -62,9 +65,13 @@ const DetailsSection = ({ data }: IProps) => {
                 longitudeDelta: 0.05,
               }}
             />
+            {!data?.myRate && <View style={{position: 'absolute', bottom: -12}}>
+              <ButtonComponent title="Rate the place" onPress={() => setIsRateOpen(true)} />
+            </View>}
           </View>
         </VStack>
       </VStack>
+      {isRateOpen && <RatePlaceModal id={data?.publicPlaceId ?? ''} isOpen={isRateOpen} onClose={() => setIsRateOpen(false)} />}
     </View>
   );
 };

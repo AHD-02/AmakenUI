@@ -64,8 +64,8 @@ const UserSignUp = () => {
           <Stack>
             <DatePickerComponent
               label="Date Of Birth"
-              setValue={(val: string) => setFieldValue("date", val)}
-              value={values?.date?.toString() ?? ""}
+              setValue={(val: string) => setFieldValue("dateOfBirth", val)}
+              value={values?.dateOfBirth?.toString() ?? ""}
             />
           </Stack>
           <Stack>

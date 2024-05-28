@@ -8,7 +8,7 @@ export interface SignupModel {
   email: string;
   countryCode: string;
   phone: string;
-  date: Date | null | string;
+  dateOfBirth: Date | null | string;
   country: string;
   city: string;
   password: string;
@@ -24,12 +24,13 @@ export const SignUpInitialValues = (userData?: UserModel) => ({
   email: userData?.email ?? "",
   countryCode: "JO",
   phone: userData?.phone ?? "",
-  date: userData?.dateOfBirth ?? "2024-04-30T22:23:00.000Z",
+  dateOfBirth: userData?.dateOfBirth ?? '',
   country: userData?.country ?? "",
   city: userData?.city ?? "",
   password: userData?.password ?? "",
   confirmPassword: userData?.confirmPassword ?? "",
   status: 'OK',
+  intrests: userData?.intrests ?? []
 });
 
 export const SignUpValidationSchema = (skipPass?: boolean) => yup.object({
@@ -41,7 +42,7 @@ export const SignUpValidationSchema = (skipPass?: boolean) => yup.object({
     .required("Please complete this field"),
   countryCode: yup.string().required("Please complete this field"),
   phone: yup.string().required("Please complete this field"),
-  date: yup.date().nullable().required("Please complete this field"),
+  dateOfBirth: yup.date().nullable().required("Please complete this field"),
   country: yup.string().required("Please complete this field"),
   city: yup.string().required("Please complete this field"),
   ...{...(!skipPass) ? {password: yup

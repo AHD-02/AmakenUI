@@ -11,20 +11,21 @@ export const unstable_settings = {
 const ProfileLayout = () => {
     return (
         <Stack screenOptions={{ headerShown: false, }}>
-            <Stack.Screen name="index" options={{headerShown: false}}
-            />
-                 <Stack.Screen name="editProfile" options={{   headerShown: true,
+            <Stack.Screen name="index" options={{ headerShown: false }} />
+            <Stack.Screen name="editProfile" options={{
+                headerShown: true,
                 headerBackTitle: 'ArrowLeft',
                 headerTitle: 'Edit Profile',
                 headerTitleAlign: 'center',
-                headerTitleStyle:{fontSize:16},
-                headerStyle:{backgroundColor:'white'},
-                headerShadowVisible:false   ,
+                headerTitleStyle: { fontSize: 16 },
+                headerStyle: { backgroundColor: 'white' },
+                headerShadowVisible: false,
                 headerLeft: () => (
                     <TouchableOpacity onPress={() => router.back()}>
                         <ArrowLeft />
                     </TouchableOpacity>
-                ),   }} />
+                ),
+            }} />
         </Stack>
     )
 }

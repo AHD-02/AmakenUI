@@ -79,7 +79,7 @@ const ProfileHeader = () => {
       </TouchableOpacity>
 
       <VStack space={2}>
-        <VStack>
+        <VStack alignItems={'center'}>
           <View style={styles.profileImage}>
             <Image
               src={imageUrlResolver(userData?.images?.[0] ?? "")}

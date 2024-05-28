@@ -15,25 +15,49 @@ import {
 } from "native-base";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import Dropdown from "@/components/sharedComponents/simpleDropdown";
-import useSignUp from "@/app/hooks/useSignUp";
 import { useCountriesQuery, useLazyCitiesQuery } from "@/app/data/lookup";
 import { colors } from "@/app/theme/Colors";
 import { useUserInfo } from "@/app/state/user/hooks";
 import { imageUrlResolver } from "@/app/utils/imageUtils";
 import { CameraIcon } from "@/assets/icons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { useFormik } from "formik";
+import { SignUpInitialValues, SignupModel, SignUpValidationSchema } from "@/app/types/user/signup";
+import { useUpdateUserMutation } from "@/app/data/user";
+import Toast from "react-native-toast-message";
 
 const EditProfile = () => {
   const userData = useUserInfo();
-  const { values, setFieldValue, errors, submitForm } = useSignUp();
-  const { data } = useCountriesQuery();
+  const [updateUser, res] = useUpdateUserMutation()
+  const { data, error } = res
+  const { data: countries } = useCountriesQuery();
   const [getCity, { data: cities }] = useLazyCitiesQuery();
 
+  const { values, setFieldValue, errors, submitForm } = useFormik({
+    initialValues: SignUpInitialValues(userData),
+    validationSchema: SignUpValidationSchema(true),
+    validateOnChange: false,
+    enableReinitialize: true,
+    onSubmit: async (values: SignupModel) => {
+      const {password, confirmPassword, ...res} = values
+      await updateUser(res as SignupModel)
+    },
+  })
+  console.log('resssssssssssssssssssssssssssssssss', res)
   useEffect(() => {
     if (values.country) {
       getCity(values?.country);
     }
   }, [values?.country]);
+
+  useEffect(() => {
+    if (data || error)
+      Toast.show({
+        type: 'info',
+        text1: JSON.stringify(data ?? (error as any)?.data)
+      })
+  }, [data, error])
+
 
   return (
     <KeyboardAwareScrollView
@@ -84,15 +108,6 @@ const EditProfile = () => {
           </HStack>
 
           <Stack>
-            <TextInput
-              value={values.email}
-              label="Email"
-              placeholder={"example@exm.com"}
-              onChangeText={(val: string) => setFieldValue("email", val)}
-              errorMsg={errors.email}
-            />
-          </Stack>
-          <Stack>
             <PhoneInput
               label="Phone Number"
               showErrorMsg={false}
@@ -102,13 +117,13 @@ const EditProfile = () => {
               setCountryCode={(value: any) =>
                 setFieldValue("countryCode", value)
               }
-              countryCode={values.countryCode}
+              countryCode={values.countryCode ?? 'JO'}
             />
           </Stack>
 
           <Stack>
             <Dropdown
-              items={data}
+              items={countries}
               placeHolder={"Select country"}
               label="Country"
               setSelectedValue={(value) => setFieldValue("country", value)}
@@ -170,4 +185,5 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
 });
+
 export default EditProfile;

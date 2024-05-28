@@ -11,4 +11,12 @@ export interface PublicPlaceResponse {
   longitude?: number;
   latitude?: number;
   city?: string;
+  totalRates?: number;
+  myRate?: number;
+  averageRate?: number;
+}
+
+export interface RatePlaceModel {
+  id: string
+  score: number
 }

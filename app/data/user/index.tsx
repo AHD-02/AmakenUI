@@ -14,6 +14,7 @@ export const UserApi = createApi({
   baseQuery: customFetchBase,
   refetchOnMountOrArgChange: true,
   refetchOnReconnect: true,
+  tagTypes: ['user'],
   endpoints: (builder) => ({
     login: builder.mutation<RefreshToken, LoginModel>({
       query: (body) => ({
@@ -30,6 +31,7 @@ export const UserApi = createApi({
       }),
     }),
     updateUser: builder.mutation<void, SignupModel>({
+      invalidatesTags: ['user'],
       query: (body) => ({
         url: "user/update",
         method: "POST",
@@ -37,6 +39,7 @@ export const UserApi = createApi({
       }),
     }),
     getUser: builder.query<UserModel, void>({
+      providesTags: ['user'],
       query: () => ({
         url: "user/me",
         method: "GET",
