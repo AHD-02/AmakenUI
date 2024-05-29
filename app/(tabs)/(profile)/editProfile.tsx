@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import {
   ButtonComponent,
   PhoneInput,
+  ProfileImageUploader,
   TextInput,
 } from "@/components/sharedComponents";
 import {
@@ -12,6 +13,7 @@ import {
   View,
   Image,
   Center,
+  Avatar,
 } from "native-base";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import Dropdown from "@/components/sharedComponents/simpleDropdown";
@@ -25,6 +27,7 @@ import { useFormik } from "formik";
 import { SignUpInitialValues, SignupModel, SignUpValidationSchema } from "@/app/types/user/signup";
 import { useUpdateUserMutation } from "@/app/data/user";
 import Toast from "react-native-toast-message";
+import { getFirstChars } from "@/app/utils/globalUtils";
 
 const EditProfile = () => {
   const userData = useUserInfo();
@@ -68,21 +71,12 @@ const EditProfile = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View justifyContent={"center"} flexDirection={"column"}>
           <Center padding={8}>
-            <Image
-              source={{
-                uri: imageUrlResolver(userData?.images?.[0] ?? ""),
-              }}
-              alt="User Image"
-              width={"100"}
-              height={"100"}
-              borderRadius={50}
-              alignItems={"center"}
-            />
-            <View style={styles.icon}>
-              <TouchableOpacity onPress={() => {}}>
-                <CameraIcon />
-              </TouchableOpacity>
-            </View>
+            <View>
+          <ProfileImageUploader
+            image={values.images?.[0] ?? ""}
+            setImage={(image) => setFieldValue("images", image)}
+          />
+        </View>
           </Center>
         </View>
         <VStack space={"2"}>
@@ -141,7 +135,7 @@ const EditProfile = () => {
             />
           </Stack>
           <Stack mt={6}>
-            <ButtonComponent onPress={() => submitForm()} title="Edit" isEdit />
+            <ButtonComponent onPress={() => submitForm()} title="Edit" backgroundColor="#27AE60" />
           </Stack>
         </VStack>
       </ScrollView>
@@ -171,7 +165,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     position: "absolute",
-    right: 187,
+    right: 197,
     top: 47,
     height: 0,
     width: 0,

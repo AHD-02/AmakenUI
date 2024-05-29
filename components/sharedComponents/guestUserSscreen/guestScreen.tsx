@@ -29,11 +29,21 @@ const GuestScreen = (props:Iprop) => {
       </Stack>
 
       <Stack>
-        <VStack style={{marginHorizontal:36}}>
+        <VStack style={{marginHorizontal:30,}}>
+          <Stack paddingBottom={5}>
     <ButtonComponent
-      title="Login or Signup"
+      title="Create account"
+      onPress={() => router.navigate("(auth)/userSignUp")}
+      backgroundColor='#c08a75'
+    />
+    </Stack>
+    <Stack>
+
+     <ButtonComponent
+      title="Login"
       onPress={() => router.navigate("(auth)/")}
     />
+    </Stack>
     </VStack>
     </Stack>
   </VStack>

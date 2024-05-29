@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import React, { useState } from "react";
-import { Modal, Center, HStack, Image, VStack } from "native-base";
-import { EditProfileIcon, LogoutIcon } from "@/assets/icons";
+import { Modal, Center, HStack, Image, VStack, Avatar } from "native-base";
+import { EditProfileIcon, LogoutIcon, LogoutModalIcon } from "@/assets/icons";
 import { colors } from "@/app/theme/Colors";
 import { useUserInfo } from "@/app/state/user/hooks";
 import { router } from "expo-router";
@@ -10,6 +10,7 @@ import { setTokens, setUser } from "@/app/state/user/slice";
 import { ButtonComponent } from "../sharedComponents";
 import { imageUrlResolver } from "@/app/utils/imageUtils";
 import { UserInitialValues } from "@/app/types";
+import { getFirstChars } from "@/app/utils/globalUtils";
 
 const ProfileHeader = () => {
   const userData = useUserInfo();
@@ -37,8 +38,11 @@ const ProfileHeader = () => {
         <Center>
           <LogoutIcon />
           <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
-            <Modal.Content maxWidth="400px">
+            <Modal.Content maxWidth="600px">
               <Modal.Body justifyContent={"center"}>
+                <Center>
+                <LogoutModalIcon/>
+                </Center>
                 <Center>
                   <Text
                     style={{
@@ -55,8 +59,8 @@ const ProfileHeader = () => {
                   <ButtonComponent
                     title="Yes, Logout"
                     onPress={handleLogout}
-                    isLogout
-                  />
+                    backgroundColor="#C32B43"
+                    />
                 </Center>
                 <Center>
                   <TouchableOpacity onPress={() => setShowModal(false)}>
@@ -80,14 +84,15 @@ const ProfileHeader = () => {
 
       <VStack space={2}>
         <VStack alignItems={'center'}>
+        
           <View style={styles.profileImage}>
-            <Image
-              src={imageUrlResolver(userData?.images?.[0] ?? "")}
-              alt="User Image"
-              width={"full"}
-              height={"full"}
-              borderRadius={50}
-            />
+            <Center>
+          <Avatar size="xl" source={{
+              uri: (Array.isArray(userData?.images) && userData?.images?.length > 0) ? imageUrlResolver(userData?.images[0] ?? "") : undefined
+            }}>{getFirstChars(userData?.firstName ?? "", userData?.lastName ?? "")}
+            </Avatar>
+            </Center>
+
           </View>
           <Text style={styles.userName}>
             {`${userData?.firstName ?? ""} ${userData?.lastName ?? ""}`}
@@ -124,12 +129,13 @@ const styles = StyleSheet.create({
     marginTop: 6,
   },
   profileImage: {
-    height: 100,
-    width: 100,
-    padding: 8,
+    height: 110,
+    width: 110,
+    margin:14,
+    paddingTop:5,
     borderWidth: 1,
     borderColor: colors.primary,
-    borderRadius: 50,
+    borderRadius: 60,
   },
   userName: {
     color: "#191E3A",

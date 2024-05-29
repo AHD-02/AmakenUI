@@ -31,7 +31,7 @@ const Profile = () => {
         ) : (
           <View style={{flex:1,paddingTop:150}}>
           <GuestScreen
-          title="Searching for your Bookinngs?"
+          title="Welcome to Amaken"
           description="Login to find them all"
           />
           </View>

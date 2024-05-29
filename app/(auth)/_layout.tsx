@@ -34,12 +34,17 @@ const AuthLayout = () => {
         <Stack.Screen name={SCREENS.SetNewPassword} options={{ title: 'SetNewPssword' }} />
         <Stack.Screen name={SCREENS.OTP} options={{ title: 'OTP' }} />
         <Stack.Screen name={SCREENS.Categories} options={{   headerShown: true,
+                headerBackTitle: 'ArrowLeft',
                 headerTitle: 'Interests',
                 headerTitleAlign: 'center',
                 headerTitleStyle:{fontSize:16},
                 headerStyle:{backgroundColor:'white'},
                 headerShadowVisible:false   ,
-            
+                headerLeft: () => (
+                    <TouchableOpacity onPress={() => router.back()}>
+                        <ArrowLeft />
+                    </TouchableOpacity>
+                ),
             }} />
       </Stack>
   );

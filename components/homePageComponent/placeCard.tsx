@@ -21,7 +21,7 @@ const PlaceCard = ({
   onSavedPress,
 }: IProps) => {
   return (
-    <TouchableOpacity style={styles.cardContainer} onPress={onCardPress}>
+    <TouchableOpacity style={[styles.cardContainer,styles.shadow]} onPress={onCardPress}>
       <ImageBackground
         resizeMode="cover"
         source={{ uri: image ?? undefined }}
@@ -87,6 +87,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+    shadow: {
+      elevation: 5,
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 3,
+      },
+      shadowOpacity: 0.27,
+      shadowRadius: 4.65,
+    },
 });
 
 export default PlaceCard;

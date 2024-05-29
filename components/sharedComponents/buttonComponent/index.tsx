@@ -7,14 +7,23 @@ interface IProps {
   onPress: () => void;
   isEdit?: boolean;
   isLogout?: boolean;
-  isLoading?: boolean
+  backgroundColor?: string;
+  isLoading?: boolean;
 }
 
-const ButtonComponent = ({ title, onPress, isEdit ,isLogout, isLoading}: IProps) => {
+const ButtonComponent = ({
+  title,
+  onPress,
+  isEdit,
+  isLogout,
+  backgroundColor,
+  isLoading,
+}: IProps) => {
   return (
     <HStack width="100%" justifyContent={"center"}>
       <Button
         onPress={onPress}
+        backgroundColor={ backgroundColor ??"#A5583A"}
         style={[
           styles.button,
           styles.shadow,

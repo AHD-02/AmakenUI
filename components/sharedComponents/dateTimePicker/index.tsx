@@ -98,7 +98,7 @@ const DatePickerComponent = ({
               <Box w="100%" h={250} px={5} justifyContent="flex-start">
                 <DateTimePicker
                   testID="dateTimePicker"
-                  timeZoneOffsetInMinutes={0}
+                  // timeZoneOffsetInMinutes={0}
                   value={!Boolean(value) ? new Date() : new Date(value)}
                   mode={mode ?? "date"}
                   display={Platform.OS === "ios" ? "spinner" : "default"}

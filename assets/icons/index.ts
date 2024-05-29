@@ -19,6 +19,8 @@ import ModalIconLogout from "./modalIconLogout";
 import CameraIcon from "./cameraIcon";
 import BookCalenderIcon from "./bookCalenderIcon";
 import CloseIcon from "./closeIcon";
+import LogoutModalIcon from "./logoutModalIcon";
+
 
 export {
     HomeIcon,
@@ -42,4 +44,5 @@ export {
     CameraIcon,
     BookCalenderIcon,
     CloseIcon,
+    LogoutModalIcon,
 }

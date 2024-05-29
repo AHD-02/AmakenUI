@@ -13,4 +13,9 @@ export function debounce<T extends (...args: any[]) => void>(func: T, delay: num
       }, delay);
     } as T;
   }
+
+  export const getFirstChars = (s1: string, s2: string) => {
+    return `${s1?.charAt(0) ?? "-"}${s2.charAt(0) ?? "-"}`
+  }
+  
   

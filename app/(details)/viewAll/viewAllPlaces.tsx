@@ -14,13 +14,14 @@ const viewAllPlaces = () => {
     <View style={{ backgroundColor: "white", padding: 10 }}>
       <ScrollView>
         <VStack style={{ paddingHorizontal: 20 }} space={5}>
-          <ScrollView>
+          <ScrollView >
             <HStack
               justifyContent={"space-between"}
               space={3}
               flexWrap={"wrap"}
             >
               {data?.map((item: PublicPlaceResponse) => (
+              <View style={{ width: '35%', marginBottom: 25 }}>
                 <PlaceCard
                   key={`${item?.publicPlaceId}-${item.userEmail}`}
                   title={item.name ?? ""}
@@ -31,6 +32,7 @@ const viewAllPlaces = () => {
                     router.push(`/(details)/place/${item.publicPlaceId}`)
                   }
                 />
+            </View>
               ))}
             </HStack>
           </ScrollView>

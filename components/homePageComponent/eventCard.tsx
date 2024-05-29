@@ -57,7 +57,7 @@ const EventPage = ({
 
   return (
     <>
-      <Pressable onPress={onPress} marginRight={isBookingComponent ? 1 : 4}>
+      <Pressable onPress={onPress} marginRight={isBookingComponent ? 1 : 4} style={[styles.shadow]}>
         <HStack width="100%">
           <Image
             source={{ uri: image }}
@@ -68,7 +68,7 @@ const EventPage = ({
             borderTopRightRadius={10}
             borderBottomLeftRadius={isBookingComponent ? 0 : 10}
             borderBottomRightRadius={isBookingComponent ? 0 : 10}
-            alt="event image"
+            alt="event image" 
           />
         </HStack>
 
@@ -116,6 +116,8 @@ const EventPage = ({
             fontSize={12}
             fontWeight={600}
             paddingLeft={3}
+            maxWidth={290}
+            noOfLines={1}
           >
             {description}
           </Text>
@@ -141,6 +143,17 @@ const styles = StyleSheet.create({
     width: "100%",
     flex: 1,
   },
+    shadow: {
+      elevation: 5,
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 3,
+        
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+    },
 });
 
 export default EventPage;
