@@ -6,7 +6,7 @@ import { colors } from "@/app/theme/Colors";
 import { useUserInfo } from "@/app/state/user/hooks";
 import { router } from "expo-router";
 import { useDispatch } from "react-redux";
-import { setTokens, setUser } from "@/app/state/user/slice";
+import { setSignUpState, setTokens, setUser } from "@/app/state/user/slice";
 import { ButtonComponent } from "../sharedComponents";
 import { imageUrlResolver } from "@/app/utils/imageUtils";
 import { UserInitialValues } from "@/app/types";
@@ -24,7 +24,7 @@ const ProfileHeader = () => {
       })
     );
     dispatch(setUser(UserInitialValues));
-
+    dispatch(setSignUpState(UserInitialValues))
     setShowModal(false);
     router.push("/(auth)");
   };
