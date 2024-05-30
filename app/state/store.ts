@@ -6,6 +6,7 @@ import { userSlice } from "./user/slice";
 import { appSlice } from "./app/slice";
 import { PublicPlace, EventApi, UserApi } from "../data";
 import { LookUpApi } from "../data/lookup";
+import { PrivatePlaceApi } from "../data/privatePlace";
 
 const reducers = combineReducers({
   user: userSlice.reducer,
@@ -14,6 +15,7 @@ const reducers = combineReducers({
   [EventApi.reducerPath]: EventApi.reducer,
   [PublicPlace.reducerPath]: PublicPlace.reducer,
   [LookUpApi.reducerPath]: LookUpApi.reducer,
+  [PrivatePlaceApi.reducerPath]: PrivatePlaceApi.reducer
 });
 const persistConfig = {
   key: "root",
@@ -34,6 +36,7 @@ export const store = configureStore({
           EventApi.middleware,
           PublicPlace.middleware,
           LookUpApi.middleware,
+          PrivatePlaceApi.middleware,
         ])
       : getDefaultMiddleware({
           serializableCheck: false,
@@ -42,6 +45,7 @@ export const store = configureStore({
           EventApi.middleware,
           PublicPlace.middleware,
           LookUpApi.middleware,
+          PrivatePlaceApi.middleware,
         ]),
 });
 export const persistor = persistStore(store);

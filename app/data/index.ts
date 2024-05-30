@@ -3,7 +3,7 @@ import { EventApi } from "./events";
 import { UserApi } from "./user";
 
 export {
-    PublicPlace,
-    EventApi,
-    UserApi,
+  PublicPlace,
+  EventApi,
+  UserApi,
 }

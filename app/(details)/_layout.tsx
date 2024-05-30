@@ -77,6 +77,24 @@ const NotificationsLayout = () => {
           ),
         }}
       />
+
+      <Stack.Screen
+        name="addPrivatePlace"
+        options={{
+          headerShown: true,
+          headerBackTitle: "ArrowLeft",
+          headerTitle: "Create Private Place",
+          headerTitleAlign: "center",
+          headerTitleStyle: { fontSize: 16 },
+          headerStyle: { backgroundColor: "white" },
+          headerShadowVisible: false,
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => router.back()}>
+              <ArrowLeft />
+            </TouchableOpacity>
+          ),
+        }}
+      />
     </Stack>
   );
 };

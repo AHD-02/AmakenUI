@@ -15,7 +15,7 @@ import { getFirstChars } from "@/app/utils/globalUtils";
 const ProfileHeader = () => {
   const userData = useUserInfo();
   const dispatch = useDispatch();
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   const handleLogout = () => {
     dispatch(
@@ -24,88 +24,100 @@ const ProfileHeader = () => {
       })
     );
     dispatch(setUser(UserInitialValues));
-    dispatch(setSignUpState(UserInitialValues))
+    dispatch(setSignUpState(UserInitialValues));
     setShowModal(false);
     router.push("/(auth)");
   };
 
   return (
-    <HStack justifyContent={"space-between"} marginX={4} marginY={"20"}>
-      <TouchableOpacity
-        style={styles.logoutButton}
-        onPress={() => setShowModal(true)}
-      >
-        <Center>
-          <LogoutIcon />
-          <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
-            <Modal.Content maxWidth="600px">
-              <Modal.Body justifyContent={"center"}>
-                <Center>
-                <LogoutModalIcon/>
-                </Center>
-                <Center>
+    <VStack>
+      <HStack justifyContent={"space-between"} marginX={4} marginY={"20"}>
+        <TouchableOpacity
+          style={styles.logoutButton}
+          onPress={() => setShowModal(true)}
+        >
+          <Center>
+            <LogoutIcon />
+          </Center>
+        </TouchableOpacity>
+
+        <VStack space={2}>
+          <VStack alignItems={"center"}>
+            <View style={styles.profileImage}>
+              <Center>
+                <Avatar
+                  size="xl"
+                  source={{
+                    uri:
+                      Array.isArray(userData?.images) &&
+                      userData?.images?.length > 0
+                        ? imageUrlResolver(userData?.images[0] ?? "")
+                        : undefined,
+                  }}
+                >
+                  {getFirstChars(
+                    userData?.firstName ?? "",
+                    userData?.lastName ?? ""
+                  )}
+                </Avatar>
+              </Center>
+            </View>
+            <Text style={styles.userName}>
+              {`${userData?.firstName ?? ""} ${userData?.lastName ?? ""}`}
+            </Text>
+          </VStack>
+        </VStack>
+
+        <TouchableOpacity
+          onPress={() => router.push("/(profile)/editProfile")}
+          style={styles.editButton}
+        >
+          <EditProfileIcon />
+        </TouchableOpacity>
+      </HStack>
+
+      {showModal && (
+        <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+          <Modal.Content maxWidth="400px">
+            <Modal.Body justifyContent={"center"}>
+              <Center>
+                <Text
+                  style={{
+                    fontWeight: "500",
+                    fontSize: 20,
+                    paddingTop: 15,
+                    paddingBottom: 10,
+                  }}
+                >
+                  Are you sure you want to leave ?
+                </Text>
+              </Center>
+              <Center>
+                <ButtonComponent
+                  title="Yes, Logout"
+                  onPress={handleLogout}
+                  isLogout
+                />
+              </Center>
+              <Center>
+                <TouchableOpacity onPress={() => setShowModal(false)}>
                   <Text
                     style={{
+                      fontSize: 18,
                       fontWeight: "500",
-                      fontSize: 20,
-                      paddingTop: 15,
-                      paddingBottom: 10,
+                      color: "#8E8E93",
+                      paddingTop: 30,
                     }}
                   >
-                    Are you sure you want to leave ?
+                    No, I am stying
                   </Text>
-                </Center>
-                <Center>
-                  <ButtonComponent
-                    title="Yes, Logout"
-                    onPress={handleLogout}
-                    backgroundColor="#C32B43"
-                    />
-                </Center>
-                <Center>
-                  <TouchableOpacity onPress={() => setShowModal(false)}>
-                    <Text
-                      style={{
-                        fontSize: 18,
-                        fontWeight: "500",
-                        color: "#8E8E93",
-                        paddingTop: 30,
-                      }}
-                    >
-                      No, I am stying
-                    </Text>
-                  </TouchableOpacity>
-                </Center>
-              </Modal.Body>
-            </Modal.Content>
-          </Modal>
-        </Center>
-      </TouchableOpacity>
-
-      <VStack space={2}>
-        <VStack alignItems={'center'}>
-        
-          <View style={styles.profileImage}>
-            <Center>
-          <Avatar size="xl" source={{
-              uri: (Array.isArray(userData?.images) && userData?.images?.length > 0) ? imageUrlResolver(userData?.images[0] ?? "") : undefined
-            }}>{getFirstChars(userData?.firstName ?? "", userData?.lastName ?? "")}
-            </Avatar>
-            </Center>
-
-          </View>
-          <Text style={styles.userName}>
-            {`${userData?.firstName ?? ""} ${userData?.lastName ?? ""}`}
-          </Text>
-        </VStack>
-      </VStack>
-      <TouchableOpacity
-        onPress={() => router.push("/(profile)/editProfile")}
-        style={styles.editButton}
-      >
-        <EditProfileIcon />
-      </TouchableOpacity>
-    </HStack>
+                </TouchableOpacity>
+              </Center>
+            </Modal.Body>
+          </Modal.Content>
+        </Modal>
+      )}
+    </VStack>
   );
 };
 
@@ -131,8 +143,8 @@ const styles = StyleSheet.create({
   profileImage: {
     height: 110,
     width: 110,
-    margin:14,
-    paddingTop:5,
+    margin: 14,
+    paddingTop: 5,
     borderWidth: 1,
     borderColor: colors.primary,
     borderRadius: 60,

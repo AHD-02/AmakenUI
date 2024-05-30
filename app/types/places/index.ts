@@ -1,5 +1,11 @@
 
 export interface PublicPlaceResponse {
+  numberOfRates: number;
+  averageScore: number; 
+  place: IPublicPlaceType
+}
+
+interface IPublicPlaceType {
   publicPlaceId?: string;
   description?: string;
   images: string[];

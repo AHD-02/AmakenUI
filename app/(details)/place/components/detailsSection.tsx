@@ -18,16 +18,18 @@ const DetailsSection = ({ data }: IProps) => {
   const [isRateOpen, setIsRateOpen] = useState<boolean>(false)
 
   useEffect(() => {
-    if (data?.longitude && data?.latitude) {
-      getLocation(data?.latitude, data?.longitude);
+    if (data?.place?.longitude && data?.place?.latitude) {
+      getLocation(data?.place?.latitude, data?.place?.longitude);
     }
-  }, [data?.longitude, data?.latitude]);
+  }, [data?.place?.longitude, data?.place?.latitude]);
 
   return (
     <View style={styles.container}>
       <VStack space={6}>
         <Text style={styles.title}>
-          {`${data?.name ?? ""} - ${locationInfo?.city?.long_name ?? ""}`}
+          {`${data?.place?.name ?? ""} - ${
+            locationInfo?.city?.long_name ?? ""
+          }`}
         </Text>
         <HStack space={1}>
           <HStack>
@@ -54,13 +56,15 @@ const DetailsSection = ({ data }: IProps) => {
         </HStack>
         <VStack space={3}>
           <Text style={styles.descriptionTitle}>Description</Text>
-          <Text style={styles.description}>{data?.description ?? ""}</Text>
+          <Text style={styles.description}>
+            {data?.place?.description ?? ""}
+          </Text>
           <View style={{ height: "auto" }}>
             <MapView
               style={{ width: "100%", height: 250 }}
               initialRegion={{
-                latitude: data?.latitude ?? LATITUDE,
-                longitude: data?.longitude ?? LONGITUDE,
+                latitude: data?.place?.latitude ?? LATITUDE,
+                longitude: data?.place?.longitude ?? LONGITUDE,
                 latitudeDelta: 0.05,
                 longitudeDelta: 0.05,
               }}

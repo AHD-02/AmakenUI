@@ -27,7 +27,7 @@ import { imageUrlResolver } from "../utils/imageUtils";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const AddEvent = () => {
-  const [createEvent, res] = useCreateEventMutation();
+  const [createEvent] = useCreateEventMutation();
   const { values, setFieldValue, handleSubmit, errors } = useFormik({
     initialValues: EventsInitialValues,
     validationSchema: EventsValidationSchema,
@@ -53,11 +53,12 @@ const AddEvent = () => {
 
   const { data: categories } = useSearchEventsCategoriesQuery();
   const { data: publicPlaces } = useSearchPublicPlacesQuery();
+
   const publicPlacesItems = useMemo(
     () =>
       publicPlaces?.map((item: PublicPlaceResponse) => ({
-        label: item.name ?? "",
-        value: item.publicPlaceId ?? "",
+        label: item.place?.name ?? "",
+        value: item.place?.publicPlaceId ?? "",
       })) ?? [],
     [publicPlaces]
   );
@@ -97,6 +98,13 @@ const AddEvent = () => {
     );
   };
 
+  const handleDelete = (image: string) => {
+    setFieldValue(
+      "images",
+      values.images.filter((img) => img != image)
+    );
+  };
+
   return (
     <KeyboardAwareScrollView
       contentContainerStyle={styles.keyboardContainer}
@@ -121,6 +129,7 @@ const AddEvent = () => {
                   <ImageContainer
                     key={img ?? ""}
                     imageUrl={imageUrlResolver(img ?? "")}
+                    onDelete={() => handleDelete(img)}
                   />
                 ))}
               </ScrollView>

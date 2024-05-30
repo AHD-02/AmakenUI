@@ -5,11 +5,7 @@ import {
   FetchBaseQueryError,
 } from '@reduxjs/toolkit/query';
 import { BASE_URL } from '../env';
-import { persistor, RootState } from '../state/store';
-import { setTokens } from '../state/user/slice';
-import { logoutAction } from '../state/actions/logout';
 import { Mutex } from 'async-mutex';
-import { useDispatch } from 'react-redux';
 import { setIsLoading } from '../state/app/slice';
 
 const mutex = new Mutex();

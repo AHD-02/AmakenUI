@@ -1,42 +1,80 @@
+import React, { useState } from "react";
 import {
+  ScrollView,
   View,
   Text,
-} from "react-native";
-import React from "react";
-import { ScrollView, VStack ,Image, Stack} from "native-base";
-import Events from "@/components/profile/events";
-import PublicPlaces from "@/components/profile/publicPlaces";
+  Modal,
+  Button,
+  Center,
+} from "native-base";
 import { useIsLoggedIn } from "@/app/state/user/hooks";
 import TabbssScreen from "@/components/editProfile/tabbssScreen";
 import ProfileHeader from "@/components/profile/profileHeader";
 import GuestScreen from "@/components/sharedComponents/guestUserSscreen/guestScreen";
-
-interface TabsType {
-  title: string;
-  component: React.JSX.Element;
-}
+import { router } from "expo-router";
+import { ButtonComponent } from "@/components/sharedComponents";
 
 const Profile = () => {
   const isLoggedIn = useIsLoggedIn();
+  const [ShowOwner, setShowOwner] = useState<boolean>(false);
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
-      <VStack space={3} height={"100%"}>
-        {isLoggedIn ? (
+    <View style={{ flex: 1 }}>
+      {isLoggedIn ? (
+        <View style={{ flex: 1, backgroundColor: "white" }}>
           <ScrollView>
-              <ProfileHeader />
-              <TabbssScreen/>
+            <ProfileHeader />
+            <TabbssScreen />
           </ScrollView>
-          
-        ) : (
-          <View style={{flex:1,paddingTop:150}}>
+          <Button
+            onPress={() => setShowOwner(true)}
+            size="md"
+            style={{
+              backgroundColor: "#d3af37",
+              alignSelf: "flex-end",
+            }}
+          >
+            Become an Owner
+          </Button>
+        </View>
+      ) : (
+        <View style={{ flex: 1, paddingTop: 150 }}>
           <GuestScreen
-          title="Welcome to Amaken"
-          description="Login to find them all"
+            title="Searching for your Bookings?"
+            description="Login to find them all"
           />
-          </View>
-        )}
-      </VStack>
+        </View>
+      )}
+      
+      <Modal isOpen={ShowOwner} onClose={() => setShowOwner(false)}>
+        <Modal.Content maxWidth="400px">
+          <Modal.Body justifyContent={"center"} padding={3}>
+            <Center>
+              <Text
+                style={{
+                  fontWeight: "500",
+                  fontSize: 20,
+                  paddingTop: 15,
+                  paddingBottom: 10,
+                }}
+              >
+                Do you have a unique private place that fits one of our
+                categories? Share it with the world and let people discover its
+                charm!
+              </Text>
+            </Center>
+            <Center>
+              <ButtonComponent
+                title="Become an Owner"
+                onPress={() => {
+                  router.push("/(details)/addPrivatePlace");
+                  setShowOwner(false);
+                }}
+              />
+            </Center>
+          </Modal.Body>
+        </Modal.Content>
+      </Modal>
     </View>
   );
 };

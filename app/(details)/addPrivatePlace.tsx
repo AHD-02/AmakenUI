@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, VStack, ScrollView, Button } from "native-base";
+import { View, VStack, ScrollView, Button, HStack } from "native-base";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import UploadPhotos from "./components/uploadPhotos";
 import Dropdown from "@/components/sharedComponents/simpleDropdown";
@@ -10,30 +10,31 @@ import {
 } from "@/components/sharedComponents";
 import { usePublicPlaceCategoriesQuery } from "../data/lookup";
 import { useFormik } from "formik";
-import {
-  publicPlaceInitialValues,
-  publicPlaceValidationSchema,
-} from "../types/publicPlaceType";
 import WarningMessage from "@/components/sharedComponents/warningMessage";
 import ImageContainer from "@/components/sharedComponents/imageContainer";
 import { usePickImage, useUploadImage } from "../hooks";
-import { useCreatePublicPlaceMutation } from "../data/publicPlace";
 import Toast from "react-native-toast-message";
 import { router } from "expo-router";
 import { imageUrlResolver } from "../utils/imageUtils";
 import CheckNameWithInput from "./place/components/checkName";
 import { useEnhanceTextMutation } from "../data/user";
 import { StyleSheet } from "react-native";
+import {
+  privatePlaceInitialValues,
+  privatePlaceValidationSchema,
+} from "../types";
+import { usePrivatePlaceMutation } from "../data/privatePlace";
+import DatePickerComponent from "@/components/sharedComponents/dateTimePicker";
 import EnhanceByAi from "./components/enhanceAIButton";
 
-const AddPublicPlace = () => {
+const AddPrivatePlace = () => {
   const { data } = usePublicPlaceCategoriesQuery();
-  const [createPlace, res] = useCreatePublicPlaceMutation();
+  const [createPlace, res] = usePrivatePlaceMutation();
   const [enhance, resp] = useEnhanceTextMutation();
 
   const { values, setFieldValue, errors, submitForm } = useFormik({
-    initialValues: publicPlaceInitialValues(),
-    validationSchema: publicPlaceValidationSchema,
+    initialValues: privatePlaceInitialValues(),
+    validationSchema: privatePlaceValidationSchema,
     validateOnChange: false,
     onSubmit: (values) => {
       createPlace(values);
@@ -49,6 +50,14 @@ const AddPublicPlace = () => {
     }
 
     if (res.isSuccess) {
+      Toast.show({
+        type: "success",
+        text1: "Place have been created successfully",
+      });
+      router.push("/(tabs)");
+    }
+
+    if (resp?.error && "data" in resp?.error) {
       Toast.show({
         type: "success",
         text1: "Place have been created successfully",
@@ -110,12 +119,33 @@ const AddPublicPlace = () => {
 
           <View>
             <CheckNameWithInput
+              setValue={(value) => setFieldValue("placeName", value)}
+              value={values?.placeName}
               label="Place Name"
               placeholder="Name"
-              setValue={(value) => setFieldValue("name", value)}
-              value={values?.name}
             />
           </View>
+
+          <HStack justifyContent={"space-between"}>
+            <View width={"46%"}>
+              <DatePickerComponent
+                value={values.availableFrom ?? ""}
+                setValue={(val) => setFieldValue("availableFrom", val)}
+                label="Opening time"
+                mode="time"
+                placeholder="00:00"
+              />
+            </View>
+            <View width={"46%"}>
+              <DatePickerComponent
+                value={values.availableTo ?? ""}
+                setValue={(val) => setFieldValue("availableTo", val)}
+                label="Closing Time"
+                placeholder="11:59"
+                mode="time"
+              />
+            </View>
+          </HStack>
 
           <AssignOnMap
             latitude={values?.latitude ?? 0}
@@ -153,14 +183,14 @@ const AddPublicPlace = () => {
         </VStack>
 
         <View alignItems={"flex-end"} marginTop={140}>
-          <ButtonComponent title="Create Place" onPress={submitForm} />
+          <ButtonComponent title="Become an Owner" onPress={submitForm} />
         </View>
       </ScrollView>
     </KeyboardAwareScrollView>
   );
 };
 
-export default AddPublicPlace;
+export default AddPrivatePlace;
 
 const styles = StyleSheet.create({
   container: {

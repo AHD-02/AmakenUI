@@ -26,6 +26,12 @@ export const LookUpApi = createApi({
         method: "GET",
       }),
     }),
+    privatePlaceCategories: builder.query<Array<LookUpModel>, void>({
+      query: () => ({
+        url: "privatePlacesCategories/getCategories",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -33,4 +39,5 @@ export const {
   useCountriesQuery,
   usePublicPlaceCategoriesQuery,
   useLazyCitiesQuery,
+  usePrivatePlaceCategoriesQuery,
 } = LookUpApi;
