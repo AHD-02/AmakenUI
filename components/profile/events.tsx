@@ -30,9 +30,8 @@ const Events = ({ isSaved }: IProps) => {
                       title={item.name ?? ""}
                       city={"City"} //TODO: ADD CITY
                       image={imageUrlResolver(item.images[0] ?? "")}
-                      onPress={() => {}}
                       rate={"5.5"}
-                      onCardPress={() =>
+                      onPress={() =>
                         router.push(`/(details)/event/${item.eventId ?? ""}`)
                       }
                       description={item.description ?? ""}
@@ -48,10 +47,9 @@ const Events = ({ isSaved }: IProps) => {
                       title={item.name ?? ""}
                       city={"City"} //TODO: ADD CITY
                       image={imageUrlResolver(item.images[0] ?? "")}
-                      onPress={() => {}}
                       rate={"5.5"}
-                      onCardPress={() =>
-                        router.push(`/(details)/event/${item.eventId ?? ""}`)
+                      onPress={() =>
+                        router.push(`/(details)/events/${item.eventId ?? ""}`)
                       }
                       description={item.description ?? ""}
                     />

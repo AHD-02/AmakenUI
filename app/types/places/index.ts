@@ -1,7 +1,8 @@
 
 export interface PublicPlaceResponse {
   numberOfRates: number;
-  averageScore: number; 
+  averageScore: number;
+  didUserRate: boolean;
   place: IPublicPlaceType
 }
 
@@ -25,4 +26,22 @@ interface IPublicPlaceType {
 export interface RatePlaceModel {
   id: string
   score: number
+}
+
+export interface MyPrivatePlacesModel {
+  placeId?: string;
+  description?: string;
+  images: string[];
+  placeName?: string;
+  userEmail?: string;
+  status?: string;
+  addedOn: Date;
+  longitude?: number;
+  latitude?: number;
+  registerNumber?: number;
+  imageOfOwnerID?: string
+  imageOfOwnershipProof?: string;
+  categoryID: string
+  availableFrom: Date | null
+  availableTo: Date | null
 }

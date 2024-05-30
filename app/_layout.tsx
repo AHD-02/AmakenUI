@@ -16,6 +16,7 @@ import RootLayoutNav from "./rootLayoutNav";
 import { PersistGate } from "redux-persist/integration/react";
 import Spinner from "react-native-loading-spinner-overlay";
 import LoadingLayout from "./loadingLayout";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -76,12 +77,14 @@ export default function RootLayout() {
 
 
   return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <LoadingLayout />
-        <Toast config={toastConfig} />
-      </PersistGate>
-    </Provider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <LoadingLayout />
+          <Toast config={toastConfig} />
+        </PersistGate>
+      </Provider>
+    </GestureHandlerRootView>
   );
 }
 

@@ -28,6 +28,10 @@ export interface BookedEventResponse {
     eventName: string
 }
 
+export interface CheckTicketModel {
+    eventID: string
+    reservationID: string
+}
 
 export const EventsInitialValues: SearchEventsResponse = {
     name: '',

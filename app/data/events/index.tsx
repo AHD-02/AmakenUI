@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import customFetchBase from '../middleware';
-import { BookedEventResponse, LookUpModel, SearchEventsResponse } from '@/app/types';
+import { BookedEventResponse, CheckTicketModel, LookUpModel, SearchEventsResponse } from '@/app/types';
 
 export const EventApi = createApi({
     reducerPath: 'EventApi',
@@ -80,6 +80,13 @@ export const EventApi = createApi({
                 method: 'GET',
             })
         }),
+        checkTicket: builder.mutation<boolean, CheckTicketModel>({
+            query: (body) => ({
+                url: `Reservation/checkReservation`,
+                method: 'POST',
+                body: body,
+            })
+        }),
     }),
 });
 
@@ -93,5 +100,6 @@ export const {
     useSearchEventsCategoriesQuery,
     useBookEventMutation,
     useGetBookedEventQuery,
-    useSearchReservedEventsQuery
+    useSearchReservedEventsQuery,
+    useCheckTicketMutation,
 } = EventApi;

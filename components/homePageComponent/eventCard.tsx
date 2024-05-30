@@ -8,6 +8,8 @@ import { useEffect, useMemo, useState } from "react";
 import { useUserInfo } from "@/app/state/user/hooks";
 import RefreshUser from "@/app/hooks/refreshUser";
 import ActionSheetScreen from "../sharedComponents/guestUserSscreen/actionsheet";
+import { useDispatch } from "react-redux";
+import { UserApi } from "@/app/data";
 
 interface IProps {
   title: string;
@@ -38,6 +40,7 @@ const EventPage = ({
   const { handle } = RefreshUser()
   const userInfo = useUserInfo()
   const [isAskToLogin, setIsAskToLogin] = useState<boolean>(false)
+  const dispatch = useDispatch()
 
   const isEventSaved = useMemo(() =>
     userInfo?.savedEvents?.includes(id ?? '')
@@ -51,8 +54,10 @@ const EventPage = ({
   }
 
   useEffect(() => {
-    if (Boolean(saveRes.isSuccess || unSaveRes.isSuccess || saveRes.error || unSaveRes.error))
+    if (Boolean(saveRes.isSuccess || unSaveRes.isSuccess || saveRes.error || unSaveRes.error)) {
       handle()
+      dispatch(UserApi.util.invalidateTags(['refreshSaved']))
+    }
   }, [saveRes, unSaveRes])
 
   return (

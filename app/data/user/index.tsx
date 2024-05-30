@@ -2,6 +2,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import customFetchBase from "../middleware";
 import {
   LoginModel,
+  MyPrivatePlacesModel,
   PublicPlaceResponse,
   RefreshToken,
   SearchEventsResponse,
@@ -14,7 +15,7 @@ export const UserApi = createApi({
   baseQuery: customFetchBase,
   refetchOnMountOrArgChange: true,
   refetchOnReconnect: true,
-  tagTypes: ['user'],
+  tagTypes: ['user', 'refreshSaved'],
   endpoints: (builder) => ({
     login: builder.mutation<RefreshToken, LoginModel>({
       query: (body) => ({
@@ -53,12 +54,20 @@ export const UserApi = createApi({
       }),
     }),
     myPlaces: builder.query<Array<PublicPlaceResponse>, void>({
+      providesTags: ['refreshSaved'],
       query: () => ({
         url: "user/myPublicPlaces",
         method: "GET",
       }),
     }),
+    myPrivatePlaces: builder.query<Array<MyPrivatePlacesModel>, void>({
+      query: () => ({
+        url: "private_Place/MyPrivatePlaces",
+        method: "GET",
+      }),
+    }),
     myEvents: builder.query<Array<SearchEventsResponse>, void>({
+      providesTags: ['refreshSaved'],
       query: () => ({
         url: "user/myAllEvents",
         method: "GET",
@@ -84,4 +93,5 @@ export const {
   useMyPlacesQuery,
   useMyEventsQuery,
   useEnhanceTextMutation,
+  useMyPrivatePlacesQuery,
 } = UserApi;

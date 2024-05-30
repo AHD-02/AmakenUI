@@ -6,9 +6,10 @@ import { LocationIcon } from "@/assets/icons";
 import MapView, { Marker } from "react-native-maps";
 import { ButtonComponent } from "@/components/sharedComponents";
 import { router } from "expo-router";
-import { useIsLoggedIn } from "@/app/state/user/hooks";
+import { useIsLoggedIn, useUserInfo } from "@/app/state/user/hooks";
 import ActionSheetScreen from "@/components/sharedComponents/guestUserSscreen/actionsheet";
 import useGetLocationInfo from "@/app/hooks/useGetLocationInfo";
+import ScanTicketModal from "./scanTicketModal";
 
 interface IProps {
   data?: SearchEventsResponse;
@@ -16,9 +17,11 @@ interface IProps {
 
 const DetailsSection = ({ data }: IProps) => {
   const isLoggedIn = useIsLoggedIn();
+  const userInfo = useUserInfo();
   const [showAction, setShowAction] = useState(false);
+  const [isScanModalOpen, setIsScanModalOpen] = useState<boolean>(false);
   const { getLocation, locationInfo } = useGetLocationInfo();
-
+  
   useEffect(() => {
     if (data?.longitude && data?.latitude) {
       getLocation(data?.latitude, data?.longitude);
@@ -40,6 +43,7 @@ const DetailsSection = ({ data }: IProps) => {
       }
     });
   };
+
   return (
     <View style={styles.container}>
       <VStack space={6}>
@@ -61,13 +65,13 @@ const DetailsSection = ({ data }: IProps) => {
                 style={{ width: "100%", height: 250 }}
                 {...(data?.longitude && data?.latitude
                   ? {
-                      initialRegion: {
-                        latitude: data?.latitude,
-                        longitude: data?.longitude,
-                        latitudeDelta: 0.005,
-                        longitudeDelta: 0.005,
-                      },
-                    }
+                    initialRegion: {
+                      latitude: data?.latitude,
+                      longitude: data?.longitude,
+                      latitudeDelta: 0.005,
+                      longitudeDelta: 0.005,
+                    },
+                  }
                   : {})}
                 onMarkerDrag={(e) => console.log(e)}
               >
@@ -87,16 +91,29 @@ const DetailsSection = ({ data }: IProps) => {
                 )}
               </MapView>
               <View style={styles.bookButton}>
-                <ButtonComponent
-                  title="Book Now"
-                  onPress={() =>
-                    isLoggedIn
-                      ? router.push(`(bookEvent)/${data?.eventId}`)
-                      : setShowAction(true)
-                  }
-                />
+                {data?.userEmail?.toLowerCase() == userInfo.email?.toLowerCase() ?
+                  <ButtonComponent
+                    title="Scan Ticket"
+                    onPress={() => setIsScanModalOpen(true)}
+                  />
+                  : <ButtonComponent
+                    title="Book Now"
+                    onPress={() =>
+                      isLoggedIn
+                        ? router.push(`(bookEvent)/${data?.eventId}`)
+                        : setShowAction(true)
+                    }
+                  />}
               </View>
             </View>
+
+            {isScanModalOpen && (
+              <ScanTicketModal
+                isOpen={isScanModalOpen}
+                onClose={() => setIsScanModalOpen(false)}
+                eventID={data?.eventId ?? ''}
+              />
+            )}
 
             {showAction && (
               <ActionSheetScreen
@@ -106,6 +123,7 @@ const DetailsSection = ({ data }: IProps) => {
                 onClose={() => setShowAction(false)}
               />
             )}
+
           </View>
         </VStack>
       </VStack>
@@ -148,8 +166,7 @@ const styles = StyleSheet.create({
     color: "#8E8E93",
   },
   bookButton: {
-    position: "absolute",
-    bottom: -22,
+    marginTop: 12,
     elevation: 4,
   },
 });

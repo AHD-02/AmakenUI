@@ -32,20 +32,20 @@ const DetailsSection = ({ data }: IProps) => {
           }`}
         </Text>
         <HStack space={1}>
-          <HStack>
-            {data?.place?.averageRate && <>
+          <HStack alignItems={'center'}>
+            {data?.averageScore && <>
               <AntDesign
                 name="star"
                 color={"#F7CB15"}
                 size={18}
                 style={{ alignSelf: "center" }}
               />
-              <Text style={styles.rate}>{data?.place?.averageRate}</Text>
+              <Text style={styles.rate}>{data?.averageScore}</Text>
             </>
             }
           </HStack>
           <Text style={styles.reviews}>
-            {`(${data?.place?.totalRates ?? 0} Rates)`}
+            {`(${data?.numberOfRates ?? 0} Rates)`}
           </Text>
         </HStack>
         <HStack space={1}>
@@ -69,7 +69,7 @@ const DetailsSection = ({ data }: IProps) => {
                 longitudeDelta: 0.05,
               }}
             />
-            {!data?.place?.myRate && <View style={{position: 'absolute', bottom: -12}}>
+            {data && !data.didUserRate && <View style={{position: 'absolute', bottom: -12}}>
               <ButtonComponent title="Rate the place" onPress={() => setIsRateOpen(true)} />
             </View>}
           </View>

@@ -48,9 +48,11 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "The app accesses your photos."
+          "photosPermission": "The app accesses your photos.",
+          "cameraPermission": "Allow Amaken to access your camera"
         }
       ],
+      "expo-camera",
       "expo-font"
     ],
     "experiments": {
