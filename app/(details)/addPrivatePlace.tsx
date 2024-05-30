@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, VStack, ScrollView, Button, HStack } from "native-base";
+import { View, VStack, ScrollView, HStack } from "native-base";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import UploadPhotos from "./components/uploadPhotos";
 import Dropdown from "@/components/sharedComponents/simpleDropdown";
@@ -9,7 +9,7 @@ import {
   TextAreaInput,
   TextInput,
 } from "@/components/sharedComponents";
-import { usePublicPlaceCategoriesQuery } from "../data/lookup";
+import { usePrivatePlaceCategoriesQuery } from "../data/lookup";
 import { useFormik } from "formik";
 import WarningMessage from "@/components/sharedComponents/warningMessage";
 import ImageContainer from "@/components/sharedComponents/imageContainer";
@@ -31,7 +31,7 @@ import EnhanceByAi from "./components/enhanceAIButton";
 type imagesType = "None" | "Images" | "OwnerId" | "OwnerShip";
 
 const AddPrivatePlace = () => {
-  const { data } = usePublicPlaceCategoriesQuery();
+  const { data } = usePrivatePlaceCategoriesQuery();
   const [createPlace, res] = usePrivatePlaceMutation();
   const [enhance, resp] = useEnhanceTextMutation();
   const [imageType, setImageType] = useState<imagesType>("None");

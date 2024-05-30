@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import customFetchBase from "../middleware";
-import { IPrivatePlace, IPrivatePlaceResponse } from "@/app/types";
+import { IPrivatePlace, IPrivatePlaceResponse, LookUpModel } from "@/app/types";
 
 export const PrivatePlaceApi = createApi({
   baseQuery: customFetchBase,
@@ -35,15 +35,22 @@ export const PrivatePlaceApi = createApi({
       query: (params) => ({
         url: `private_Place/isNameUnique`,
         method: "GET",
-        params
+        params,
+      }),
+    }),
+    privatePlaceCategories: builder.query<Array<LookUpModel>, void>({
+      query: () => ({
+        url: "PublicPlacesCategories/getCategories",
+        method: "GET",
       }),
     }),
   }),
 });
 
-export const { 
-  usePrivatePlacesQuery, 
+export const {
+  usePrivatePlacesQuery,
   usePrivatePlaceMutation,
   useGetPrivatePlacesQuery,
   useLazyCheckNamePrivateQuery,
+  usePrivatePlaceCategoriesQuery,
 } = PrivatePlaceApi;
