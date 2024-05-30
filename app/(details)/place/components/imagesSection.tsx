@@ -29,7 +29,7 @@ const ImagesSection = ({ data }: IProps) => {
                 </View>
             </View>
             <View>
-                <Image src={imageUrlResolver(data?.images?.[0] ?? "")} width={'full'} height={'full'} alt={'image'} resizeMode='cover' />
+                <Image src={imageUrlResolver(data?.place?.images?.[0] ?? "")} width={'full'} height={'full'} alt={'image'} resizeMode='cover' />
             </View>
         </View>
     )

@@ -23,13 +23,13 @@ const viewAllPlaces = () => {
               {data?.map((item: PublicPlaceResponse) => (
               <View style={{ width: '35%', marginBottom: 25 }}>
                 <PlaceCard
-                  key={`${item?.publicPlaceId}-${item.userEmail}`}
-                  title={item.name ?? ""}
-                  city={item.city ?? "-"}
-                  image={imageUrlResolver(item.images[0] ?? "")}
-                  description={item.description ?? ""}
+                  key={`${item?.place?.publicPlaceId}-${item.place?.userEmail}`}
+                  title={item.place?.name ?? ""}
+                  city={item.place?.city ?? "-"}
+                  image={imageUrlResolver(item.place?.images[0] ?? "")}
+                  description={item.place?.description ?? ""}
                   onCardPress={() =>
-                    router.push(`/(details)/place/${item.publicPlaceId}`)
+                    router.push(`/(details)/place/${item.place?.publicPlaceId}`)
                   }
                 />
             </View>

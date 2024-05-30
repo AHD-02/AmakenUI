@@ -44,13 +44,13 @@ const PublicPlaces = ({ isSaved }: IProps) => {
                 <View style={{ width: '32%', marginBottom: 25 }}>
                 <PlaceCard
               
-                  key={`${item?.publicPlaceId}-${item.userEmail}`}
-                  title={item.name ?? ""}
+                  key={`${item?.place?.publicPlaceId}-${item.place?.userEmail}`}
+                  title={item.place?.name ?? ""}
                   city={"City"}
-                  image={imageUrlResolver(item.images[0] ?? "") }
-                  description={item.description ?? ""}
+                  image={imageUrlResolver(item.place?.images[0] ?? "") }
+                  description={item.place?.description ?? ""}
                   onCardPress={() =>
-                    router.push(`/(details)/place/${item.publicPlaceId}`)
+                    router.push(`/(details)/place/${item.place?.publicPlaceId}`)
                   }
                 />
             </View>

@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import React, { useState } from "react";
-import { Modal, Center, HStack, Image, VStack, Avatar } from "native-base";
-import { EditProfileIcon, LogoutIcon, LogoutModalIcon } from "@/assets/icons";
+import { Modal, Center, HStack, VStack, Avatar } from "native-base";
+import { EditProfileIcon, LogoutIcon } from "@/assets/icons";
 import { colors } from "@/app/theme/Colors";
 import { useUserInfo } from "@/app/state/user/hooks";
 import { router } from "expo-router";

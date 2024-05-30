@@ -33,19 +33,19 @@ const DetailsSection = ({ data }: IProps) => {
         </Text>
         <HStack space={1}>
           <HStack>
-            {data?.averageRate && <>
+            {data?.place?.averageRate && <>
               <AntDesign
                 name="star"
                 color={"#F7CB15"}
                 size={18}
                 style={{ alignSelf: "center" }}
               />
-              <Text style={styles.rate}>{data?.averageRate}</Text>
+              <Text style={styles.rate}>{data?.place?.averageRate}</Text>
             </>
             }
           </HStack>
           <Text style={styles.reviews}>
-            {`(${data?.totalRates ?? 0} Rates)`}
+            {`(${data?.place?.totalRates ?? 0} Rates)`}
           </Text>
         </HStack>
         <HStack space={1}>
@@ -69,13 +69,13 @@ const DetailsSection = ({ data }: IProps) => {
                 longitudeDelta: 0.05,
               }}
             />
-            {!data?.myRate && <View style={{position: 'absolute', bottom: -12}}>
+            {!data?.place?.myRate && <View style={{position: 'absolute', bottom: -12}}>
               <ButtonComponent title="Rate the place" onPress={() => setIsRateOpen(true)} />
             </View>}
           </View>
         </VStack>
       </VStack>
-      {isRateOpen && <RatePlaceModal id={data?.publicPlaceId ?? ''} isOpen={isRateOpen} onClose={() => setIsRateOpen(false)} />}
+      {isRateOpen && <RatePlaceModal id={data?.place?.publicPlaceId ?? ''} isOpen={isRateOpen} onClose={() => setIsRateOpen(false)} />}
     </View>
   );
 };
