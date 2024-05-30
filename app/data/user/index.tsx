@@ -3,6 +3,7 @@ import customFetchBase from "../middleware";
 import {
   LoginModel,
   MyPrivatePlacesModel,
+  PrivateModel,
   PublicPlaceResponse,
   RefreshToken,
   SearchEventsResponse,
@@ -60,7 +61,7 @@ export const UserApi = createApi({
         method: "GET",
       }),
     }),
-    myPrivatePlaces: builder.query<Array<MyPrivatePlacesModel>, void>({
+    myPrivatePlaces: builder.query<Array<PrivateModel>, void>({
       query: () => ({
         url: "private_Place/MyPrivatePlaces",
         method: "GET",

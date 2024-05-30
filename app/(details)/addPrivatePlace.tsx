@@ -41,10 +41,12 @@ const AddPrivatePlace = () => {
     validationSchema: privatePlaceValidationSchema,
     validateOnChange: false,
     onSubmit: (values) => {
-      createPlace(values);
+      router.replace('/(tabs)/')
+      // createPlace(values);
     },
   });
 
+  console.log("resssssssssssssssss", res);
   useEffect(() => {
     if (res?.isError) {
       Toast.show({
@@ -79,7 +81,11 @@ const AddPrivatePlace = () => {
     if (Array.isArray(images) && images.length > 0 && imageType == "OwnerId") {
       setFieldValue("imageOfOwnerID", images?.[0]);
     }
-    if (Array.isArray(images) && images.length > 0 && imageType == "OwnerShip") {
+    if (
+      Array.isArray(images) &&
+      images.length > 0 &&
+      imageType == "OwnerShip"
+    ) {
       setFieldValue("imageOfOwnershipProof", images?.[0]);
     }
   }, [images]);
@@ -141,8 +147,10 @@ const AddPrivatePlace = () => {
           <HStack justifyContent={"space-between"}>
             <View width={"46%"}>
               <DatePickerComponent
-                value={values.availableFrom ?? ""}
-                setValue={(val) => setFieldValue("availableFrom", val)}
+                value={values.availableFrom?.toString() ?? ""}
+                setValue={(val) =>
+                  setFieldValue("availableFrom", new Date(val))
+                }
                 label="Opening time"
                 mode="time"
                 placeholder="00:00"
@@ -150,8 +158,10 @@ const AddPrivatePlace = () => {
             </View>
             <View width={"46%"}>
               <DatePickerComponent
-                value={values.availableTo ?? ""}
-                setValue={(val) => setFieldValue("availableTo", val)}
+                value={values.availableTo?.toString() ?? ""}
+                setValue={(val) =>
+                  setFieldValue("availableTo", new Date(val))
+                }
                 label="Closing Time"
                 placeholder="11:59"
                 mode="time"
@@ -173,8 +183,8 @@ const AddPrivatePlace = () => {
               label="Categories"
               placeHolder="Select"
               items={data ?? []}
-              selectedValue={values?.categoryId?.toString() ?? ""}
-              setSelectedValue={(value) => setFieldValue("categoryId", value)}
+              selectedValue={values?.categoryID ?? ""}
+              setSelectedValue={(value) => setFieldValue("categoryID", value)}
             />
           </View>
 

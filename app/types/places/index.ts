@@ -1,9 +1,8 @@
-
 export interface PublicPlaceResponse {
   numberOfRates: number;
   averageScore: number;
   didUserRate: boolean;
-  place: IPublicPlaceType
+  place: IPublicPlaceType;
 }
 
 export interface IPublicPlaceType {
@@ -24,10 +23,13 @@ export interface IPublicPlaceType {
 }
 
 export interface RatePlaceModel {
-  id: string
-  score: number
+  id: string;
+  score: number;
 }
 
+export interface PrivateModel {
+  place: MyPrivatePlacesModel;
+}
 export interface MyPrivatePlacesModel {
   placeId?: string;
   description?: string;
@@ -39,9 +41,9 @@ export interface MyPrivatePlacesModel {
   longitude?: number;
   latitude?: number;
   registerNumber?: number;
-  imageOfOwnerID?: string
+  imageOfOwnerID?: string;
   imageOfOwnershipProof?: string;
-  categoryID: string
-  availableFrom: Date | null
-  availableTo: Date | null
+  categoryID: string;
+  availableFrom: Date | null;
+  availableTo: Date | null;
 }

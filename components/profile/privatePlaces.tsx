@@ -1,6 +1,6 @@
 import { View, ScrollView } from "react-native";
 import React from "react";
-import { MyPrivatePlacesModel } from "@/app/types";
+import { MyPrivatePlacesModel, PrivateModel } from "@/app/types";
 import { router } from "expo-router";
 import { VStack, HStack } from "native-base";
 import PlaceCard from "../homePageComponent/placeCard";
@@ -21,16 +21,18 @@ const PrivatePlaces = () => {
                             space={2}
                             flexWrap={"wrap"}
                         >
-                            {data?.map((item: MyPrivatePlacesModel) => (
+                            {data?.map((item: PrivateModel) => (
                                 <View style={{ width: '32%', marginBottom: 25 }}>
                                     <PlaceCard
-                                        key={`${item?.placeId}-${item.userEmail}`}
-                                        title={item.placeName ?? ""}
+                                        key={`${item?.place?.placeId}-${item.place?.userEmail}`}
+                                        title={item.place?.placeName ?? ""}
                                         city={"City"}
-                                        image={imageUrlResolver(item.images[0] ?? "")}
-                                        description={item.description ?? ""}
-                                        onCardPress={() =>
-                                            router.push(`/(details)/privatePlace/${item.placeId}`)
+                                        image={imageUrlResolver(item.place?.images[0] ?? "")}
+                                        description={item.place?.description ?? ""}
+                                        onCardPress={() =>{
+                                            // router.push(`/(details)/privatePlace/${item.place?.placeId}`)
+                                            
+                                        }
                                         }
                                     />
                                 </View>

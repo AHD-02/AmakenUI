@@ -25,11 +25,13 @@ export const PrivatePlaceApi = createApi({
     }),
     privatePlace: builder.mutation<void, IPrivatePlace>({
       invalidatesTags: ["addPrivatePlace"],
-      query: (body) => ({
+      query: (body) => {
+        const {availableTo, availableFrom, ...res} = body;
+         return ({
         url: `private_Place/create`,
         method: "POST",
-        body,
-      }),
+        body: {...res, availableTo: "2024-05-30 08:03:39 +00:00", availableFrom: "2024-05-30 06:03:39 +00:00"},
+      })},
     }),
     checkNamePrivate: builder.query<boolean, { name: string }>({
       query: (params) => ({

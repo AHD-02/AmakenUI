@@ -6,10 +6,12 @@ import ProfileHeader from "@/components/profile/profileHeader";
 import GuestScreen from "@/components/sharedComponents/guestUserSscreen/guestScreen";
 import { router } from "expo-router";
 import { ButtonComponent } from "@/components/sharedComponents";
+import { useMyPrivatePlacesQuery } from "@/app/data/user";
 
 const Profile = () => {
   const isLoggedIn = useIsLoggedIn();
   const [ShowOwner, setShowOwner] = useState<boolean>(false);
+  const {data: myPrivate} = useMyPrivatePlacesQuery()
 
   return (
     <View style={{ flex: 1 }}>
@@ -19,7 +21,7 @@ const Profile = () => {
             <ProfileHeader />
             <TabbssScreen />
           </ScrollView>
-          <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
+          {(myPrivate && myPrivate?.length != 0) && <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
             <Button
               onPress={() => setShowOwner(true)}
               size="md"
@@ -32,7 +34,7 @@ const Profile = () => {
             >
               Become an Owner
             </Button>
-          </View>
+          </View>}
         </View>
       ) : (
         <View style={{ flex: 1, paddingTop: 150 }}>
