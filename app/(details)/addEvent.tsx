@@ -1,4 +1,4 @@
-import { View, VStack, ScrollView, HStack } from "native-base";
+import { View, VStack, ScrollView, HStack, Text } from "native-base";
 import UploadPhotos from "./components/uploadPhotos";
 import Dropdown from "@/components/sharedComponents/simpleDropdown";
 import {
@@ -8,7 +8,7 @@ import {
   TextInput,
   WarningMessage,
 } from "@/components/sharedComponents";
-import { StyleSheet } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { useEffect, useMemo, useState } from "react";
 import { useSearchPublicPlacesQuery } from "../data/publicPlace";
 import {
@@ -28,13 +28,17 @@ import { usePickImage, useUploadImage } from "../hooks";
 import { imageUrlResolver } from "../utils/imageUtils";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { usePrivatePlacesQuery } from "../data/privatePlace";
-import { useEnhanceTextMutation } from "../data/user";
+import { useEnhanceImageMutation, useEnhanceTextMutation } from "../data/user";
 import EnhanceByAi from "./components/enhanceAIButton";
+import Toast from "react-native-toast-message";
+import ImageModal from "./components/imageModal";
 
 const AddEvent = () => {
   const [createEvent] = useCreateEventMutation();
   const [enhance, resp] = useEnhanceTextMutation();
-
+  const [enhanceImage, tasneem] = useEnhanceImageMutation();
+  const [aiImage, setAiImage] = useState<string>('')
+  const { data: aiImageData } = tasneem
   const { values, setFieldValue, handleSubmit, errors } = useFormik({
     initialValues: EventsInitialValues,
     validationSchema: EventsValidationSchema,
@@ -60,7 +64,7 @@ const AddEvent = () => {
 
   const { data: categories } = useSearchEventsCategoriesQuery();
   const { data: publicPlaces } = useSearchPublicPlacesQuery();
-  const {data: privatePlaces } = usePrivatePlacesQuery();
+  const { data: privatePlaces } = usePrivatePlacesQuery();
 
   const publicPlacesItems = useMemo(
     () =>
@@ -122,6 +126,22 @@ const AddEvent = () => {
     );
   };
 
+  const generateAIImage = () => {
+    if (values.description) {
+      enhanceImage(values.description);
+    } else {
+      Toast.show({
+        type: 'error',
+        text1: 'Complete discription field first',
+      })
+    }
+  }
+
+  useEffect(() => {
+    if (aiImageData?.value)
+      setAiImage(aiImageData.value);
+  }, [aiImageData])
+
   return (
     <KeyboardAwareScrollView
       contentContainerStyle={styles.keyboardContainer}
@@ -132,7 +152,6 @@ const AddEvent = () => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <VStack flex={1} paddingY={3} space={"2"}>
             <UploadPhotos onPress={handleUploadImage} />
-
             {Boolean(errors.images) && (
               <WarningMessage
                 title={errors.images?.[0] ?? ""}
@@ -140,9 +159,12 @@ const AddEvent = () => {
               />
             )}
 
+            <TouchableOpacity onPress={generateAIImage}>
+              <Text fontSize={12} fontWeight={'400'} color={'#74AA9C'}>Generate image By AI?</Text>
+            </TouchableOpacity>
             {Array.isArray(values?.images) && (
               <ScrollView horizontal paddingBottom={2}>
-                {values.images.map((img) => (
+                {values.images?.map((img) => (
                   <ImageContainer
                     key={img ?? ""}
                     imageUrl={imageUrlResolver(img ?? "")}
@@ -157,7 +179,7 @@ const AddEvent = () => {
                 label="Public Place"
                 items={publicPlacesItems}
                 placeHolder="select"
-                selectedValue={values.placeID?.includes('public') ? values.placeID : ''}
+                selectedValue={values.placeID?.includes('Public') ? values.placeID : ''}
                 setSelectedValue={(val) => setFieldValue("placeID", val)}
                 errorMsg={errors.placeID}
               />
@@ -168,7 +190,7 @@ const AddEvent = () => {
                 label="Private Place"
                 items={privatePlacesItems}
                 placeHolder="select"
-                selectedValue={values.placeID?.includes('private') ? values.placeID : ''}
+                selectedValue={values.placeID?.includes('Private') ? values.placeID : ''}
                 setSelectedValue={(val) => setFieldValue("placeID", val)}
                 errorMsg={errors.placeID}
               />
@@ -278,6 +300,11 @@ const AddEvent = () => {
             <ButtonComponent title="Create Event" onPress={handleSubmit} />
           </View>
         </ScrollView>
+        {aiImage && <ImageModal img={aiImage ?? ''} isOpen={Boolean(aiImage)} onClose={() => setAiImage('')}
+          onSave={() => {
+            setFieldValue('images', [...(values.images ?? []), (aiImage as any).value])
+            setAiImage('')
+          }} />}
       </View>
     </KeyboardAwareScrollView>
   );

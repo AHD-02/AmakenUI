@@ -80,6 +80,13 @@ export const UserApi = createApi({
         body: { prompt: body },
       }),
     }),
+    enhanceImage: builder.mutation<{value: string}, string>({
+      query: (body) => ({
+        url: "openAI/GenerateImage",
+        method: "POST",
+        body: { prompt: body },
+      }),
+    }),
   }),
 });
 
@@ -94,4 +101,5 @@ export const {
   useMyEventsQuery,
   useEnhanceTextMutation,
   useMyPrivatePlacesQuery,
+  useEnhanceImageMutation,
 } = UserApi;

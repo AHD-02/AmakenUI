@@ -12,7 +12,7 @@ export const PrivatePlaceApi = createApi({
     privatePlaces: builder.query<Array<IPrivatePlaceResponse>, void>({
       providesTags: ["addPrivatePlace"],
       query: () => ({
-        url: "private_Place/Search",
+        url: "private_Place/SearchPrivatePlaces",
         method: "GET",
       }),
     }),

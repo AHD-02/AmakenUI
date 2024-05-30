@@ -33,12 +33,6 @@ const Dropdown: React.FC<DropdownProps> = ({
         </Text>
       )}
       <FormControl isRequired isInvalid={Boolean(errorMsg)} isReadOnly={isReadOnly}>
-        {Boolean(errorMsg) && (
-          <FormControl.ErrorMessage style={{ flexDirection: "row-reverse" }}>
-            <WarningOutlineIcon size="xs" />
-            {errorMsg}
-          </FormControl.ErrorMessage>
-        )}
         <Select
           selectedValue={selectedValue}
           onValueChange={(itemValue: string) => setSelectedValue?.(itemValue)}
