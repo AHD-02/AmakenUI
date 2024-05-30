@@ -14,7 +14,7 @@ const Profile = () => {
   return (
     <View style={{ flex: 1 }}>
       {isLoggedIn ? (
-        <View style={{ backgroundColor: "white" }}>
+        <View style={{ backgroundColor: "white", height: "105%" }}>
           <ScrollView>
             <ProfileHeader />
             <TabbssScreen />
