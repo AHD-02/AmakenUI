@@ -4,9 +4,10 @@ import { Box, HStack, Pressable, Text, View } from "native-base";
 
 interface IProps {
   onPress: () => void;
+  label?: string;
 }
 
-const UploadPhotos = ({ onPress }: IProps) => {
+const UploadPhotos = ({ onPress, label }: IProps) => {
   const [isPressed, setIsPressed] = useState(false);
 
   const handlePressIn = () => {
@@ -30,7 +31,7 @@ const UploadPhotos = ({ onPress }: IProps) => {
           fontWeight={500}
           fontFamily={"Cairo"}
         >
-          {"Photos"}
+          {label ?? "Photos"}
         </Text>
       </HStack>
       <HStack

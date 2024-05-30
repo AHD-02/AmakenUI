@@ -20,11 +20,11 @@ export default EnhanceByAi;
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    flex: 1,
-    width: "38%",
     justifyContent: "flex-end",
+    flexDirection: "row",
   },
   button: {
     backgroundColor: "#74AA9C",
+    alignSelf: "flex-end",
   },
 });

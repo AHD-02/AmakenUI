@@ -31,7 +31,7 @@ const ProfileHeader = () => {
 
   return (
     <VStack>
-      <HStack justifyContent={"space-between"} marginX={4} marginY={"20"}>
+      <HStack justifyContent={"space-between"} marginX={4} marginY={16}>
         <TouchableOpacity
           style={styles.logoutButton}
           onPress={() => setShowModal(true)}

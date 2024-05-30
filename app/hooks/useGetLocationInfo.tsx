@@ -13,7 +13,6 @@ const useGetLocationInfo = () => {
         );
         
         const data = await response?.json();
-        console.log(data?.results[0]?.address_components);
 
         if (data.status === "OK") {
           const results = data?.results[0];

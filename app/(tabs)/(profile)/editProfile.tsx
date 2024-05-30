@@ -24,15 +24,19 @@ import { imageUrlResolver } from "@/app/utils/imageUtils";
 import { CameraIcon } from "@/assets/icons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useFormik } from "formik";
-import { SignUpInitialValues, SignupModel, SignUpValidationSchema } from "@/app/types/user/signup";
+import {
+  SignUpInitialValues,
+  SignupModel,
+  SignUpValidationSchema,
+} from "@/app/types/user/signup";
 import { useUpdateUserMutation } from "@/app/data/user";
 import Toast from "react-native-toast-message";
 import { getFirstChars } from "@/app/utils/globalUtils";
 
 const EditProfile = () => {
   const userData = useUserInfo();
-  const [updateUser, res] = useUpdateUserMutation()
-  const { data, error } = res
+  const [updateUser, res] = useUpdateUserMutation();
+  const { data, error } = res;
   const { data: countries } = useCountriesQuery();
   const [getCity, { data: cities }] = useLazyCitiesQuery();
 
@@ -42,11 +46,11 @@ const EditProfile = () => {
     validateOnChange: false,
     enableReinitialize: true,
     onSubmit: async (values: SignupModel) => {
-      const {password, confirmPassword, ...res} = values
-      await updateUser(res as SignupModel)
+      const { password, confirmPassword, ...res } = values;
+      await updateUser(res as SignupModel);
     },
-  })
-  console.log('resssssssssssssssssssssssssssssssss', res)
+  });
+
   useEffect(() => {
     if (values.country) {
       getCity(values?.country);
@@ -56,11 +60,10 @@ const EditProfile = () => {
   useEffect(() => {
     if (data || error)
       Toast.show({
-        type: 'info',
-        text1: JSON.stringify(data ?? (error as any)?.data)
-      })
-  }, [data, error])
-
+        type: "info",
+        text1: JSON.stringify(data ?? (error as any)?.data),
+      });
+  }, [data, error]);
 
   return (
     <KeyboardAwareScrollView
@@ -72,11 +75,11 @@ const EditProfile = () => {
         <View justifyContent={"center"} flexDirection={"column"}>
           <Center padding={8}>
             <View>
-          <ProfileImageUploader
-            image={values.images?.[0] ?? ""}
-            setImage={(image) => setFieldValue("images", image)}
-          />
-        </View>
+              <ProfileImageUploader
+                image={values.images?.[0] ?? ""}
+                setImage={(image) => setFieldValue("images", image)}
+              />
+            </View>
           </Center>
         </View>
         <VStack space={"2"}>
@@ -111,7 +114,7 @@ const EditProfile = () => {
               setCountryCode={(value: any) =>
                 setFieldValue("countryCode", value)
               }
-              countryCode={values.countryCode ?? 'JO'}
+              countryCode={values.countryCode ?? "JO"}
             />
           </Stack>
 
@@ -135,7 +138,11 @@ const EditProfile = () => {
             />
           </Stack>
           <Stack mt={6}>
-            <ButtonComponent onPress={() => submitForm()} title="Edit" backgroundColor="#27AE60" />
+            <ButtonComponent
+              onPress={() => submitForm()}
+              title="Edit"
+              backgroundColor="#27AE60"
+            />
           </Stack>
         </VStack>
       </ScrollView>
