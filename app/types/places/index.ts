@@ -6,7 +6,7 @@ export interface PublicPlaceResponse {
   place: IPublicPlaceType
 }
 
-interface IPublicPlaceType {
+export interface IPublicPlaceType {
   publicPlaceId?: string;
   description?: string;
   images: string[];

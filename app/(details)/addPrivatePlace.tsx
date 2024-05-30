@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { View, VStack, ScrollView, Button, HStack } from "native-base";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import UploadPhotos from "./components/uploadPhotos";
@@ -7,6 +7,7 @@ import {
   AssignOnMap,
   ButtonComponent,
   TextAreaInput,
+  TextInput,
 } from "@/components/sharedComponents";
 import { usePublicPlaceCategoriesQuery } from "../data/lookup";
 import { useFormik } from "formik";
@@ -27,10 +28,13 @@ import { usePrivatePlaceMutation } from "../data/privatePlace";
 import DatePickerComponent from "@/components/sharedComponents/dateTimePicker";
 import EnhanceByAi from "./components/enhanceAIButton";
 
+type imagesType = "None" | "Images" | "OwnerId" | "OwnerShip";
+
 const AddPrivatePlace = () => {
   const { data } = usePublicPlaceCategoriesQuery();
   const [createPlace, res] = usePrivatePlaceMutation();
   const [enhance, resp] = useEnhanceTextMutation();
+  const [imageType, setImageType] = useState<imagesType>("None");
 
   const { values, setFieldValue, errors, submitForm } = useFormik({
     initialValues: privatePlaceInitialValues(),
@@ -69,12 +73,19 @@ const AddPrivatePlace = () => {
   const { upload, images } = useUploadImage();
 
   useEffect(() => {
-    if (Array.isArray(images) && images.length > 0) {
+    if (Array.isArray(images) && images.length > 0 && imageType == "Images") {
       setFieldValue("images", [...(values.images || []), images?.[0]]);
+    }
+    if (imageType == "OwnerId") {
+      setFieldValue("imageOfOwnerID", images?.[0]);
+    }
+    if (imageType == "OwnerShip") {
+      setFieldValue("imageOfOwnershipProof", images?.[0]);
     }
   }, [images]);
 
-  const handleUploadImage = async () => {
+  const handleUploadImage = async (type: imagesType) => {
+    setImageType(type);
     const image = await usePickImage();
     if (image) {
       upload([image]);
@@ -96,7 +107,7 @@ const AddPrivatePlace = () => {
     >
       <ScrollView showsVerticalScrollIndicator={false}>
         <VStack flex={1} paddingY={3} space={"2"}>
-          <UploadPhotos onPress={handleUploadImage} />
+          <UploadPhotos onPress={() => handleUploadImage("Images")} />
 
           {Boolean(errors.images) && (
             <WarningMessage
@@ -107,7 +118,7 @@ const AddPrivatePlace = () => {
 
           {Array.isArray(values?.images) && (
             <ScrollView horizontal paddingBottom={2}>
-              {values.images.map((img) => (
+              {values.images?.map((img) => (
                 <ImageContainer
                   key={img ?? ""}
                   imageUrl={imageUrlResolver(img ?? "")}
@@ -123,6 +134,7 @@ const AddPrivatePlace = () => {
               value={values?.placeName}
               label="Place Name"
               placeholder="Name"
+              isPrivate
             />
           </View>
 
@@ -166,6 +178,52 @@ const AddPrivatePlace = () => {
             />
           </View>
 
+          <UploadPhotos
+            key={"imageOfOwnerID"}
+            label="Image of National ID"
+            onPress={() => handleUploadImage("OwnerId")}
+          />
+
+          {Boolean(errors.imageOfOwnerID) && (
+            <WarningMessage
+              title={errors.imageOfOwnerID ?? ""}
+              stylingBox={{ marginTop: 2, marginBottom: 8 }}
+            />
+          )}
+
+          {values?.imageOfOwnerID && (
+            <ScrollView horizontal paddingBottom={2}>
+              <ImageContainer
+                key={values?.imageOfOwnerID ?? ""}
+                imageUrl={imageUrlResolver(values?.imageOfOwnerID ?? "")}
+                onDelete={() => setFieldValue("imageOfOwnerID", "")}
+              />
+            </ScrollView>
+          )}
+
+          <UploadPhotos
+            key={"imageOfOwnershipProof"}
+            label="Image of Owner Ship Proof"
+            onPress={() => handleUploadImage("OwnerShip")}
+          />
+
+          {Boolean(errors.imageOfOwnershipProof) && (
+            <WarningMessage
+              title={errors.imageOfOwnershipProof ?? ""}
+              stylingBox={{ marginTop: 2, marginBottom: 8 }}
+            />
+          )}
+
+          {values?.imageOfOwnershipProof && (
+            <ScrollView horizontal paddingBottom={2}>
+              <ImageContainer
+                key={values?.imageOfOwnershipProof ?? ""}
+                imageUrl={imageUrlResolver(values?.imageOfOwnershipProof ?? "")}
+                onDelete={() => setFieldValue("imageOfOwnershipProof", "")}
+              />
+            </ScrollView>
+          )}
+
           <View>
             <TextAreaInput
               label="Description"
@@ -177,6 +235,7 @@ const AddPrivatePlace = () => {
               <EnhanceByAi
                 handleEnhance={() => enhance(values?.description)}
                 response={resp}
+                setValue={(value) => setFieldValue("description", value)}
               />
             )}
           </View>

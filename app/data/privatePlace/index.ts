@@ -31,6 +31,13 @@ export const PrivatePlaceApi = createApi({
         body,
       }),
     }),
+    checkNamePrivate: builder.query<boolean, { name: string }>({
+      query: (params) => ({
+        url: `private_Place/isNameUnique`,
+        method: "GET",
+        params
+      }),
+    }),
   }),
 });
 
@@ -38,4 +45,5 @@ export const {
   usePrivatePlacesQuery, 
   usePrivatePlaceMutation,
   useGetPrivatePlacesQuery,
+  useLazyCheckNamePrivateQuery,
 } = PrivatePlaceApi;

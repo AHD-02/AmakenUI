@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  ScrollView,
-  View,
-  Text,
-  Modal,
-  Button,
-  Center,
-} from "native-base";
+import { ScrollView, View, Text, Modal, Button, Center } from "native-base";
 import { useIsLoggedIn } from "@/app/state/user/hooks";
 import TabbssScreen from "@/components/editProfile/tabbssScreen";
 import ProfileHeader from "@/components/profile/profileHeader";
@@ -21,21 +14,25 @@ const Profile = () => {
   return (
     <View style={{ flex: 1 }}>
       {isLoggedIn ? (
-        <View style={{ flex: 1, backgroundColor: "white" }}>
+        <View style={{ backgroundColor: "white", height: "105%" }}>
           <ScrollView>
             <ProfileHeader />
             <TabbssScreen />
           </ScrollView>
-          <Button
-            onPress={() => setShowOwner(true)}
-            size="md"
-            style={{
-              backgroundColor: "#d3af37",
-              alignSelf: "flex-end",
-            }}
-          >
-            Become an Owner
-          </Button>
+          <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
+            <Button
+              onPress={() => setShowOwner(true)}
+              size="md"
+              style={{
+                backgroundColor: "#d3af37",
+                alignSelf: "flex-end",
+                bottom: 50,
+                right: 20,
+              }}
+            >
+              Become an Owner
+            </Button>
+          </View>
         </View>
       ) : (
         <View style={{ flex: 1, paddingTop: 150 }}>
@@ -45,7 +42,7 @@ const Profile = () => {
           />
         </View>
       )}
-      
+
       <Modal isOpen={ShowOwner} onClose={() => setShowOwner(false)}>
         <Modal.Content maxWidth="400px">
           <Modal.Body justifyContent={"center"} padding={3}>

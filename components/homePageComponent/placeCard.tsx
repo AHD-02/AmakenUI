@@ -21,11 +21,12 @@ const PlaceCard = ({
   onSavedPress,
 }: IProps) => {
   return (
-    <TouchableOpacity style={[styles.cardContainer,styles.shadow]} onPress={onCardPress}>
+    <TouchableOpacity style={[styles.cardContainer, styles.shadow]} onPress={onCardPress}>
       <ImageBackground
         resizeMode="cover"
-        source={{ uri: image ?? undefined }}
+        src={image ?? ""}
         borderRadius={8}
+        alt="image"
         imageStyle={styles.backgroundImage}
         style={styles.imageBackground}
       >

@@ -1,3 +1,4 @@
+import { useLazyCheckNamePrivateQuery } from "@/app/data/privatePlace";
 import { useLazyCheckNameQuery } from "@/app/data/publicPlace";
 import { primaryColor } from "@/app/types";
 import { debounce } from "@/app/utils/globalUtils";
@@ -11,6 +12,7 @@ interface IProps {
   setValue: (value: string) => void;
   label: string;
   placeholder: string;
+  isPrivate?: boolean;
 }
 
 const CheckNameWithInput = ({
@@ -18,8 +20,11 @@ const CheckNameWithInput = ({
   placeholder,
   setValue,
   value,
+  isPrivate = false,
 }: IProps) => {
-  const [checkName, res] = useLazyCheckNameQuery();
+  const [checkName, res] = isPrivate
+    ? useLazyCheckNamePrivateQuery()
+    : useLazyCheckNameQuery();
   const [debouncedValue, setDebouncedValue] = useState(value);
   const [isLoading, setIsLoading] = useState(false);
 
