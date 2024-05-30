@@ -235,6 +235,7 @@ const AddPrivatePlace = () => {
               <EnhanceByAi
                 handleEnhance={() => enhance(values?.description)}
                 response={resp}
+                setValue={(value) => setFieldValue("description", value)}
               />
             )}
           </View>

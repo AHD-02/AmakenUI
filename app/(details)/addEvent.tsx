@@ -4,6 +4,7 @@ import Dropdown from "@/components/sharedComponents/simpleDropdown";
 import {
   ButtonComponent,
   ImageContainer,
+  TextAreaInput,
   TextInput,
   WarningMessage,
 } from "@/components/sharedComponents";
@@ -25,9 +26,13 @@ import { useFormik } from "formik";
 import { usePickImage, useUploadImage } from "../hooks";
 import { imageUrlResolver } from "../utils/imageUtils";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { useEnhanceTextMutation } from "../data/user";
+import EnhanceByAi from "./components/enhanceAIButton";
 
 const AddEvent = () => {
   const [createEvent] = useCreateEventMutation();
+  const [enhance, resp] = useEnhanceTextMutation();
+
   const { values, setFieldValue, handleSubmit, errors } = useFormik({
     initialValues: EventsInitialValues,
     validationSchema: EventsValidationSchema,
@@ -226,7 +231,7 @@ const AddEvent = () => {
             </View>
 
             <View>
-              <TextInput
+              <TextAreaInput
                 onChangeText={(val: string) =>
                   setFieldValue("description", val)
                 }
@@ -235,6 +240,13 @@ const AddEvent = () => {
                 placeholder="description"
                 errorMsg={errors.description}
               />
+              {values?.description && (
+                <EnhanceByAi
+                  handleEnhance={() => enhance(values?.description ?? "")}
+                  response={resp}
+                  setValue={(value) => setFieldValue("description", value)}
+                />
+              )}
             </View>
           </VStack>
 
