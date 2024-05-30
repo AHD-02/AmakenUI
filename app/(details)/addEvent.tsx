@@ -13,6 +13,7 @@ import { useSearchPublicPlacesQuery } from "../data/publicPlace";
 import {
   EventsInitialValues,
   EventsValidationSchema,
+  IPrivatePlaceResponse,
   PublicPlaceResponse,
   SearchEventsResponse,
 } from "../types";
@@ -25,6 +26,7 @@ import { useFormik } from "formik";
 import { usePickImage, useUploadImage } from "../hooks";
 import { imageUrlResolver } from "../utils/imageUtils";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { usePrivatePlacesQuery } from "../data/privatePlace";
 
 const AddEvent = () => {
   const [createEvent] = useCreateEventMutation();
@@ -53,12 +55,22 @@ const AddEvent = () => {
 
   const { data: categories } = useSearchEventsCategoriesQuery();
   const { data: publicPlaces } = useSearchPublicPlacesQuery();
+  const {data: privatePlaces } = usePrivatePlacesQuery();
 
   const publicPlacesItems = useMemo(
     () =>
       publicPlaces?.map((item: PublicPlaceResponse) => ({
         label: item.place?.name ?? "",
         value: item.place?.publicPlaceId ?? "",
+      })) ?? [],
+    [publicPlaces]
+  );
+
+  const privatePlacesItems = useMemo(
+    () =>
+      privatePlaces?.map((place: IPrivatePlaceResponse) => ({
+        label: place.placeName ?? "",
+        value: place.placeId ?? "",
       })) ?? [],
     [publicPlaces]
   );
@@ -140,6 +152,18 @@ const AddEvent = () => {
                 label="Public Place"
                 items={publicPlacesItems}
                 placeHolder="select"
+                selectedValue={values.placeID?.includes('public') ? values.placeID : ''}
+                setSelectedValue={(val) => setFieldValue("placeID", val)}
+                errorMsg={errors.placeID}
+              />
+            </View>
+
+            <View>
+              <Dropdown
+                label="Private Place"
+                items={privatePlacesItems}
+                placeHolder="select"
+                selectedValue={values.placeID?.includes('private') ? values.placeID : ''}
                 setSelectedValue={(val) => setFieldValue("placeID", val)}
                 errorMsg={errors.placeID}
               />

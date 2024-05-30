@@ -30,7 +30,7 @@ const PrivatePlaces = () => {
                                         image={imageUrlResolver(item.images[0] ?? "")}
                                         description={item.description ?? ""}
                                         onCardPress={() =>
-                                            router.push(`/(details)/place/${item.placeId}`)
+                                            router.push(`/(details)/privatePlace/${item.placeId}`)
                                         }
                                     />
                                 </View>
@@ -42,6 +42,5 @@ const PrivatePlaces = () => {
         </View>
     );
 };
-
 
 export default PrivatePlaces;

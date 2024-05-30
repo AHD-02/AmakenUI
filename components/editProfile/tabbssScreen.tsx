@@ -4,19 +4,22 @@ import TabbssButton, { TabButtonType } from "./tabbssButton";
 import Events from "../profile/events";
 import PublicPlaces from "../profile/publicPlaces";
 import PrivatePlaces from "../profile/privatePlaces";
+import { useMyPrivatePlacesQuery } from "@/app/data/user";
 
 export enum CustomTab {
   tab1,
   tab2,
+  tab3,
 }
 interface Iprops {
   isSaved?: boolean;
 }
 const TabbssScreen = ({ isSaved }: Iprops) => {
   const [selectedTab, setSelectedTab] = useState<CustomTab>(CustomTab.tab1);
+  const {data} = useMyPrivatePlacesQuery()
   const buttons: TabButtonType[] = [
     { title: "Public Place", component: <PublicPlaces isSaved={isSaved} /> },
-    { title: "Private Place", component: <PrivatePlaces /> },
+    ...(data && data?.length > 0 ? [{ title: "Private Place", component: <PrivatePlaces /> }] : []),
     { title: "Events", component: <Events isSaved={isSaved} /> },
   ];
 

@@ -52,7 +52,7 @@ export const EventsInitialValues: SearchEventsResponse = {
 export const EventsValidationSchema = object({
     name: string().required("Please complete this field"),
     eventType: string().required("Please complete this field"),
-    placeID: string().required("Please complete this field"),
+    placeID: string().required("Please select private or public place"),
     eventStart: date().nullable('Please complete this field').required("Please complete this field"),
     eventEnd: date().nullable('Please complete this field').required("Please complete this field"),
     fees: number().nullable('Please complete this field')

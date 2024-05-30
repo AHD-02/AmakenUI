@@ -16,6 +16,13 @@ export const PrivatePlaceApi = createApi({
         method: "GET",
       }),
     }),
+    getPrivatePlaces: builder.query<IPrivatePlaceResponse, string>({
+      providesTags: ["addPrivatePlace"],
+      query: (id) => ({
+        url: `private_Place/${id}`,
+        method: "GET",
+      }),
+    }),
     privatePlace: builder.mutation<void, IPrivatePlace>({
       invalidatesTags: ["addPrivatePlace"],
       query: (body) => ({
@@ -29,5 +36,6 @@ export const PrivatePlaceApi = createApi({
 
 export const { 
   usePrivatePlacesQuery, 
-  usePrivatePlaceMutation 
+  usePrivatePlaceMutation,
+  useGetPrivatePlacesQuery,
 } = PrivatePlaceApi;

@@ -8,6 +8,7 @@ const NotificationsLayout = () => {
     <Stack screenOptions={{}}>
       <Stack.Screen name="events/[eventId]" options={{ headerShown: false }} />
       <Stack.Screen name="place/[placeId]" options={{ headerShown: false }} />
+      <Stack.Screen name="privatePlace/[privatePlaceId]" options={{ headerShown: false }} />
       <Stack.Screen
         name="viewAll/viewAllEvents"
         options={{
