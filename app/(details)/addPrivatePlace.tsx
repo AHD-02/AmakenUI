@@ -76,10 +76,10 @@ const AddPrivatePlace = () => {
     if (Array.isArray(images) && images.length > 0 && imageType == "Images") {
       setFieldValue("images", [...(values.images || []), images?.[0]]);
     }
-    if (imageType == "OwnerId") {
+    if (Array.isArray(images) && images.length > 0 && imageType == "OwnerId") {
       setFieldValue("imageOfOwnerID", images?.[0]);
     }
-    if (imageType == "OwnerShip") {
+    if (Array.isArray(images) && images.length > 0 && imageType == "OwnerShip") {
       setFieldValue("imageOfOwnershipProof", images?.[0]);
     }
   }, [images]);

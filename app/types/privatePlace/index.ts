@@ -39,7 +39,7 @@ export const privatePlaceInitialValues = (initialVal?: IPrivatePlace) => {
 export const privatePlaceValidationSchema = yup.object({
   registerNumber: yup.string().required("Please complete this field"),
   placeName: yup.string().required("Please complete this field"),
-  images: yup.string().required("Please complete this field"),
+  images: yup.array().required("Please complete this field"),
   description: yup.string().required("Please complete this field"),
   status: yup.string().required("Please complete this field"),
   longitude: yup.number().required("Please complete this field"),
