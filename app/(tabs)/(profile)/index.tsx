@@ -21,7 +21,7 @@ const Profile = () => {
             <ProfileHeader />
             <TabbssScreen />
           </ScrollView>
-          {(myPrivate && myPrivate?.length != 0) && <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
+          {(myPrivate && myPrivate?.length < 1) && <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
             <Button
               onPress={() => setShowOwner(true)}
               size="md"
