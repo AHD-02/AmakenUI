@@ -17,7 +17,7 @@ const ImageContainer = ({ imageUrl, onDelete }: IProps) => {
           width={"165"}
           resizeMode="cover"
           borderRadius={10}
-          alt={""}
+          alt={"Image"}
         />
       </View>
       

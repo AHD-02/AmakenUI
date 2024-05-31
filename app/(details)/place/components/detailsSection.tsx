@@ -1,6 +1,6 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import React, { useEffect, useState } from "react";
-import { HStack, VStack } from "native-base";
+import { HStack, VStack, Text } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 import { LocationIcon } from "@/assets/icons";
 import MapView from "react-native-maps";
@@ -15,7 +15,7 @@ interface IProps {
 
 const DetailsSection = ({ data }: IProps) => {
   const { getLocation, locationInfo } = useGetLocationInfo();
-  const [isRateOpen, setIsRateOpen] = useState<boolean>(false)
+  const [isRateOpen, setIsRateOpen] = useState<boolean>(false);
 
   useEffect(() => {
     if (data?.place?.longitude && data?.place?.latitude) {
@@ -32,30 +32,35 @@ const DetailsSection = ({ data }: IProps) => {
           }`}
         </Text>
         <HStack space={1}>
-          <HStack alignItems={'center'}>
-            {data?.averageScore && <>
-              <AntDesign
-                name="star"
-                color={"#F7CB15"}
-                size={18}
-                style={{ alignSelf: "center" }}
-              />
-              <Text style={styles.rate}>{data?.averageScore}</Text>
-            </>
-            }
+          <HStack alignItems={"center"}>
+            {data?.averageScore && (
+              <>
+                <AntDesign
+                  name="star"
+                  color={"#F7CB15"}
+                  size={18}
+                  style={{ alignSelf: "center" }}
+                />
+                <Text style={styles.rate}>{data?.averageScore ?? ""}</Text>
+              </>
+            )}
           </HStack>
-          <Text style={styles.reviews}>
-            {`(${data?.numberOfRates ?? 0} Rates)`}
-          </Text>
+          <View>
+            <Text style={styles.reviews}>
+              {`(${data?.numberOfRates ?? 0} Rates)`}
+            </Text>
+          </View>
         </HStack>
         <HStack space={1}>
           <LocationIcon />
-          <Text
-            style={styles.location}
-          >{`${locationInfo?.city?.long_name}, ${locationInfo?.country?.long_name}`}</Text>
+          <Text style={styles.location}>
+            {`${locationInfo?.city?.long_name}, ${locationInfo?.country?.long_name}`}
+          </Text>
         </HStack>
         <VStack space={3}>
-          <Text style={styles.descriptionTitle}>Description</Text>
+          <Text style={styles.descriptionTitle}>
+            {"Description"}
+          </Text>
           <Text style={styles.description}>
             {data?.place?.description ?? ""}
           </Text>
@@ -69,13 +74,24 @@ const DetailsSection = ({ data }: IProps) => {
                 longitudeDelta: 0.05,
               }}
             />
-            {data && !data.didUserRate && <View style={{position: 'absolute', bottom: -12}}>
-              <ButtonComponent title="Rate the place" onPress={() => setIsRateOpen(true)} />
-            </View>}
+            {data && !data.didUserRate && (
+              <View style={{ position: "absolute", bottom: -12 }}>
+                <ButtonComponent
+                  title="Rate the place"
+                  onPress={() => setIsRateOpen(true)}
+                />
+              </View>
+            )}
           </View>
         </VStack>
       </VStack>
-      {isRateOpen && <RatePlaceModal id={data?.place?.publicPlaceId ?? ''} isOpen={isRateOpen} onClose={() => setIsRateOpen(false)} />}
+      {isRateOpen && (
+        <RatePlaceModal
+          id={data?.place?.publicPlaceId ?? ""}
+          isOpen={isRateOpen}
+          onClose={() => setIsRateOpen(false)}
+        />
+      )}
     </View>
   );
 };

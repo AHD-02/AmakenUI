@@ -53,6 +53,8 @@ const Home = () => {
                       image={imageUrlResolver(item.images[0] ?? "")}
                       rate={"3.5"}
                       description={item.description ?? ""}
+                      longitude={item?.longitude}
+                      latitude={item?.latitude}
                     />
                   ))}
               </ScrollView>
