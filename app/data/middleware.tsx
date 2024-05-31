@@ -33,9 +33,9 @@ const customFetchBase: BaseQueryFn<
     typeof args === 'string' ? urlEnd : { ...args, url: urlEnd };
 
   await mutex.waitForUnlock();
-  // console.debug(`${new Date()} Api Call to  ${adjustedUrl} `);
+
   let result = (await baseQuery(adjustedArgs, api, extraOptions)) as any;
-  //console.debug(`${new Date()} Response  ${adjustedUrl} `);
+
   api.dispatch(setIsLoading(false))
 
   if (result?.error?.data?.status >= 400) {
