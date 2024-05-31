@@ -7,7 +7,6 @@ import {
   AssignOnMap,
   ButtonComponent,
   TextAreaInput,
-  TextInput,
 } from "@/components/sharedComponents";
 import { usePrivatePlaceCategoriesQuery } from "../data/lookup";
 import { useFormik } from "formik";
@@ -40,15 +39,13 @@ const AddPrivatePlace = () => {
     initialValues: privatePlaceInitialValues(),
     validationSchema: privatePlaceValidationSchema,
     validateOnChange: false,
-    onSubmit: (values) => {
-      router.replace('/(tabs)/')
-      // createPlace(values);
+    onSubmit: () => {
+      createPlace(values);
     },
   });
-
-  console.log("resssssssssssssssss", res);
+  
   useEffect(() => {
-    if (res?.isError) {
+    if (res?.isError && !(resp?.error && "data" in resp?.error)) {
       Toast.show({
         type: "error",
         text1: JSON.stringify((res?.error as any)?.data),
@@ -60,7 +57,7 @@ const AddPrivatePlace = () => {
         type: "success",
         text1: "Place have been created successfully",
       });
-      router.push("/(tabs)");
+      router.replace("/(tabs)");
     }
 
     if (resp?.error && "data" in resp?.error) {
@@ -68,7 +65,7 @@ const AddPrivatePlace = () => {
         type: "success",
         text1: "Place have been created successfully",
       });
-      router.push("/(tabs)");
+      router.replace("/(tabs)");
     }
   }, [res]);
 
@@ -159,9 +156,7 @@ const AddPrivatePlace = () => {
             <View width={"46%"}>
               <DatePickerComponent
                 value={values.availableTo?.toString() ?? ""}
-                setValue={(val) =>
-                  setFieldValue("availableTo", new Date(val))
-                }
+                setValue={(val) => setFieldValue("availableTo", new Date(val))}
                 label="Closing Time"
                 placeholder="11:59"
                 mode="time"
