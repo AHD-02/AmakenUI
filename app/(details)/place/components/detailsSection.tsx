@@ -33,7 +33,7 @@ const DetailsSection = ({ data }: IProps) => {
         </Text>
         <HStack space={1}>
           <HStack alignItems={"center"}>
-            {data?.averageScore && (
+            {!!data?.averageScore && (
               <>
                 <AntDesign
                   name="star"
